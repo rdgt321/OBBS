@@ -532,7 +532,7 @@ public class DBOperations {
 
 	}
 
-	public static ResultMessage deletePromotion() {
+	public static ResultMessage deletePromotion() throws SQLException {
 
 	}
 
@@ -553,55 +553,58 @@ public class DBOperations {
 		}
 	}
 
-	public static ResultMessage insertCoupons() {
+	public static ResultMessage insertCoupons() throws SQLException {
 
 	}
 
-	public static ResultMessage modifyCoupons() {
+	public static ResultMessage modifyCoupons() throws SQLException {
 
 	}
 
-	public static ResultMessage deleteCoupons() {
+	public static ResultMessage deleteCoupons() throws SQLException {
 
 	}
 
-	public static ResultMessage queryCoupons() {
+	public static ResultMessage queryCoupons() throws SQLException {
 
 	}
 
-	public static ResultMessage insertEquBond() {
+	public static ResultMessage insertEquBond() throws SQLException {
 
 	}
 
-	public static ResultMessage modifyEquBond() {
+	public static ResultMessage modifyEquBond() throws SQLException {
 
 	}
 
-	public static ResultMessage deleteEquBond() {
+	public static ResultMessage deleteEquBond() throws SQLException {
 
 	}
 
-	public static ResultMessage queryEquBond() {
+	public static ResultMessage queryEquBond() throws SQLException {
 
 	}
 
-	public static ResultMessage insertCollect() {
+	public static ResultMessage insertCollect() throws SQLException {
 
 	}
 
-	public static ResultMessage deleteCollect(String memberID, String bookISBN) {
+	public static ResultMessage deleteCollect(String memberID, String bookISBN)
+			throws SQLException {
 
 	}
 
-	public static ResultMessage queryCollect(String memberID) {
+	public static ResultMessage queryCollect(String memberID)
+			throws SQLException {
 
 	}
 
-	public static ResultMessage getAllBooks() {
+	public static ResultMessage getAllBooks() throws SQLException {
 
 	}
 
-	public static ResultMessage getBooksByDirectory(String DirectoryID) {
+	public static ResultMessage getBooksByDirectory(String DirectoryID)
+			throws SQLException {
 
 	}
 

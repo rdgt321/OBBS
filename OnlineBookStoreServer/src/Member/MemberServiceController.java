@@ -26,7 +26,7 @@ public class MemberServiceController extends UnicastRemoteObject implements
 		}
 	}
 
-	protected MemberServiceController() throws RemoteException {
+	public MemberServiceController() throws RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
 		LocateRegistry.createRegistry(1099);

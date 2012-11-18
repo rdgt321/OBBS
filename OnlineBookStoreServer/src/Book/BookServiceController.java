@@ -5,14 +5,16 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
 import java.util.Calendar;
 
+import DBC.DBOperations;
 import RMI.ResultMessage;
 
 public class BookServiceController extends UnicastRemoteObject implements
 		BookService {
-
-	protected BookServiceController() throws RemoteException {
+	
+	public BookServiceController() throws RemoteException {
 		super();
 		LocateRegistry.createRegistry(1099);
 		try {
@@ -28,7 +30,13 @@ public class BookServiceController extends UnicastRemoteObject implements
 			Calendar date, double price, double specialprice)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		ResultMessage resultMessage = null;
+		try {
+			resultMessage = DBOperations.insertBook(name, ISBN, author, press, description, directoryID, date, price, specialprice);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultMessage;
 	}
 
 	@Override
@@ -41,7 +49,13 @@ public class BookServiceController extends UnicastRemoteObject implements
 	@Override
 	public ResultMessage deleteBook(String BookISBN) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		ResultMessage resultMessage = null;
+		try {
+			resultMessage = DBOperations.deleteBook(BookISBN);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultMessage;
 	}
 
 	@Override
@@ -57,7 +71,13 @@ public class BookServiceController extends UnicastRemoteObject implements
 			Calendar date, double price, double specialprice)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		ResultMessage resultMessage = null;
+		try {
+			resultMessage = DBOperations.modifyBook(name, ISBN, author, press, description, directoryID, date, price, specialprice);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultMessage;
 	}
 
 	@Override
@@ -71,14 +91,26 @@ public class BookServiceController extends UnicastRemoteObject implements
 	public ResultMessage getSelectedBook(String BookISBN)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		ResultMessage resultMessage = null;
+		try {
+			resultMessage = DBOperations.queryBook(BookISBN);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultMessage;
 	}
 
 	@Override
 	public ResultMessage getSelectedDirectory(String directoryID)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		ResultMessage resultMessage = null;
+		try {
+			resultMessage = DBOperations.getBooksByDirectory(directoryID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultMessage;
 	}
 
 	@Override
