@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Const</comment>
+<entry key="dbpass">lczw123</entry>
+<entry key="TIMEOUT">10</entry>
+<entry key="SQLPATH">Initial/SQLInit.sql</entry>
+<entry key="MEMBER">3</entry>
+<entry key="SALESMANAGER">2</entry>
+<entry key="SEARCH_BY_AUTHOR">2</entry>
+<entry key="ADMIN">0</entry>
+<entry key="dbuser">root</entry>
+<entry key="GENERALMANAGER">1</entry>
+<entry key="SEARCH_BY_MULTI">0</entry>
+<entry key="SEARCH_BY_NAME">1</entry>
+<entry key="FIRSTRUN">1</entry>
+<entry key="ROUTINE">10</entry>
+</properties>

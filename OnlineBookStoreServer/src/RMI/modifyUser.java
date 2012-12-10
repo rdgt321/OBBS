@@ -2,9 +2,10 @@ package RMI;
 
 import java.rmi.Remote;
 
+import User.UserPO;
+
 
 public interface modifyUser extends Remote {
-	public ResultMessage modifyUser(String UserID, String name,
-			String password, String type) throws java.rmi.RemoteException;
+	public ResultMessage modifyUser(UserPO userPO) throws java.rmi.RemoteException;
 
 }

@@ -3,8 +3,9 @@ package RMI;
 import java.rmi.Remote;
 import java.util.Calendar;
 
+import Member.MemberPO;
+
 
 public interface addMember extends Remote {
-	public ResultMessage addMember(String name, String password, String phone,
-			Calendar birth) throws java.rmi.RemoteException;
+	public ResultMessage addMember(MemberPO memberPO) throws java.rmi.RemoteException;
 }

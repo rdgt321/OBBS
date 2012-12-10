@@ -1,12 +1,9 @@
 package RMI;
 
 import java.rmi.Remote;
-import java.util.Calendar;
 
+import Book.BookPO;
 
 public interface addBook extends Remote {
-	public ResultMessage addBook(String name, String ISBN, String author,
-			String press, String description, String directoryID,
-			Calendar date, double price, double specialprice)
-			throws java.rmi.RemoteException;
+	public ResultMessage addBook(BookPO bookPO) throws java.rmi.RemoteException;
 }

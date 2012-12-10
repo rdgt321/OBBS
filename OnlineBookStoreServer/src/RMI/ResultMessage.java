@@ -1,13 +1,14 @@
 package RMI;
 
-import java.sql.ResultSet;
+import java.util.ArrayList;
+
 
 public class ResultMessage {
 	private boolean invokeSuccess = false;
-	private ResultSet resultSet = null;
+	private ArrayList resultSet = null;
 	private String postScript = "";
 
-	public ResultMessage(boolean invokeSuccess, ResultSet resultSet,
+	public ResultMessage(boolean invokeSuccess, ArrayList resultSet,
 			String postScript) {
 		super();
 		this.invokeSuccess = invokeSuccess;
@@ -19,7 +20,7 @@ public class ResultMessage {
 		return invokeSuccess;
 	}
 
-	public ResultSet getResultSet() {
+	public ArrayList getResultSet() {
 		return resultSet;
 	}
 

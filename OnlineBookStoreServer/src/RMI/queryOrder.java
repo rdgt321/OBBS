@@ -4,6 +4,6 @@ import java.rmi.Remote;
 
 
 public interface queryOrder extends Remote {
-	public ResultMessage orderQuery(String orderID)
+	public ResultMessage orderQuery(int orderID)
 			throws java.rmi.RemoteException;
 }

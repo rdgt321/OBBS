@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Java/jdk1.7.0/jre/lib/jmock-2.5.1/jmock-legacy-2.5.1.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Java/jdk1.7.0/jre/lib/jmock-2.5.1/jmock-script-2.5.1.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Java/jdk1.7.0/jre/lib/jmock-2.5.1/objenesis-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Java/jdk1.7.0/jre/lib/dom4j-1.6.1/dom4j-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

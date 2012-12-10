@@ -1,14 +1,12 @@
 package Sale;
 
-import RMI.Pay;
 import RMI.addOrder;
-import RMI.addToCast;
-import RMI.deleteFromCast;
-import RMI.modifyOrder;
-import RMI.queryOrder;
-import RMI.updateStock;
+import RMI.addToCart;
+import RMI.deleteFromCart;
+import RMI.getBooksInCart;
+import RMI.updateCart;
 
-public interface SaleService extends addToCast, deleteFromCast, addOrder,
-		 Pay, updateStock {
+public interface SaleService extends addToCart, deleteFromCart, addOrder,
+		getBooksInCart, updateCart {
 
 }

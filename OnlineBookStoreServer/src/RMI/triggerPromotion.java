@@ -4,6 +4,6 @@ import java.rmi.Remote;
 
 
 public interface triggerPromotion extends Remote {
-	public ResultMessage triggerPromotion(String custumorID, String promotionID)
+	public ResultMessage triggerPromotion(int memberID, int promotionID)
 			throws java.rmi.RemoteException;
 }
