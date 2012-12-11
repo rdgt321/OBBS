@@ -112,11 +112,15 @@ public class PromotionDAOImpl implements PromotionDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, promotionID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<PromotionPO> po = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (po != null) {
 			return new ResultMessage(true, null, "qeury ok,promotion return");
 		}
@@ -166,11 +170,15 @@ public class PromotionDAOImpl implements PromotionDAO {
 			ps.setDate(1, new java.sql.Date(Calendar.getInstance()
 					.getTimeInMillis()));
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<PromotionPO> po = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (po != null) {
 			return new ResultMessage(true, null, "qeury ok,promotions return");
 		}

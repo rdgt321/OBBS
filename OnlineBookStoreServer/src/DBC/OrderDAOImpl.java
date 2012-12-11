@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-
 import RMI.ResultMessage;
 import Sale.OrderPO;
 
@@ -61,6 +60,10 @@ public class OrderDAOImpl implements OrderDAO {
 					new java.sql.Date(orderPO.getDate().getTimeInMillis()));
 			ps.setInt(3, orderPO.getState());
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -89,6 +92,10 @@ public class OrderDAOImpl implements OrderDAO {
 			ps.setInt(3, orderPO.getState());
 			ps.setInt(4, orderPO.getOrderID());
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,11 +116,15 @@ public class OrderDAOImpl implements OrderDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, orderID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<OrderPO> po = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (po != null) {
 			return new ResultMessage(true, po, "query ok,order return");
 		}
@@ -122,8 +133,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public ResultMessage deleteOrder(int orderID) {
-		ResultMessage isExist = null;
-		isExist = orderQuery(orderID);
+		ResultMessage isExist = orderQuery(orderID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "no such orderID");
 		}
@@ -135,6 +145,10 @@ public class OrderDAOImpl implements OrderDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, orderID);
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -155,11 +169,15 @@ public class OrderDAOImpl implements OrderDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memberID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<OrderPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "query ok,orders return");
 		}

@@ -133,11 +133,15 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 			ps.setInt(1, orderID);
 			ps.setString(2, itemPO.getBookISBN());
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<ItemPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "query ok,item return");
 		}
@@ -154,11 +158,15 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, orderID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<ItemPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "query ok,items return");
 		}

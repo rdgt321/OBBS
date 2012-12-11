@@ -33,7 +33,8 @@ public class MemberDAOImpl implements MemberDAO {
 					phone = resultSet.getString(4);
 					birth = Calendar.getInstance();
 					birth.setTimeInMillis(resultSet.getDate(5).getTime());
-					polist.add(new MemberPO(memberid,name, password, phone, birth));
+					polist.add(new MemberPO(memberid, name, password, phone,
+							birth));
 				}
 				return polist;
 			}
@@ -61,6 +62,10 @@ public class MemberDAOImpl implements MemberDAO {
 			ps.setDate(4, new java.sql.Date(memberPO.getBirth()
 					.getTimeInMillis()));
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -72,7 +77,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public ResultMessage deleteMember(int memberID){
+	public ResultMessage deleteMember(int memberID) {
 		ResultMessage isExist = queryMember(memberID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "no such memberID");
@@ -85,6 +90,10 @@ public class MemberDAOImpl implements MemberDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memberID);
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,6 +124,10 @@ public class MemberDAOImpl implements MemberDAO {
 					.getTimeInMillis()));
 			ps.setInt(1, memberPO.getID());
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -126,7 +139,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public ResultMessage queryMember(int memberID){
+	public ResultMessage queryMember(int memberID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from member where memberid=?";
 		PreparedStatement ps;
@@ -135,11 +148,15 @@ public class MemberDAOImpl implements MemberDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memberID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<MemberPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "query ok,return member");
 		}
@@ -156,11 +173,15 @@ public class MemberDAOImpl implements MemberDAO {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, memberName);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<MemberPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "query ok,return member");
 		}
@@ -179,11 +200,15 @@ public class MemberDAOImpl implements MemberDAO {
 			ps.setInt(1, pagenum * num_per_page);
 			ps.setInt(2, num_per_page);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<MemberPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "query ok,return member");
 		}
@@ -200,10 +225,21 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
 			resultSet = ps.executeQuery();
-			con.close();
 			resultSet.next();
 			totalnum = new ArrayList<Integer>();
 			totalnum.add(resultSet.getInt(1));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			return new ResultMessage(false, null,
+					"query fail,can not get total num");
+		}
+		try {
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -211,7 +247,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public ResultMessage loginValidate(String ID, String password){
+	public ResultMessage loginValidate(String ID, String password) {
 		ResultMessage isExist = queryMemberByName(ID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "no such user");
@@ -225,11 +261,15 @@ public class MemberDAOImpl implements MemberDAO {
 			ps.setString(1, ID);
 			ps.setString(2, password);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<MemberPO> po = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (po != null) {
 			return new ResultMessage(true, po, "login success");
 		}

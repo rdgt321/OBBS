@@ -53,6 +53,10 @@ public class CollectDAOImpl implements CollectDAO {
 			ps.setInt(1, memberID);
 			ps.setString(2, bookISBN);
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -79,6 +83,10 @@ public class CollectDAOImpl implements CollectDAO {
 			ps.setInt(1, memberID);
 			ps.setString(2, bookISBN);
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -100,11 +108,15 @@ public class CollectDAOImpl implements CollectDAO {
 			ps.setInt(1, memberID);
 			ps.setString(2, bookISBN);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<BookPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist,
 					"collect isbns return,need to be cast ");
@@ -122,11 +134,15 @@ public class CollectDAOImpl implements CollectDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memebrID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<BookPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist,
 					"query ok,return collected book,collect isbns return,need to be cast ");

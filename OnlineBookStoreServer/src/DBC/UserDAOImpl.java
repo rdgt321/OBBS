@@ -71,6 +71,11 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (row != 0) {
 			return new ResultMessage(true, null, "add user success");
 		}
@@ -92,6 +97,11 @@ public class UserDAOImpl implements UserDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, userID);
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -122,6 +132,11 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (row != 0) {
 			return new ResultMessage(true, null, "update user success");
 		}
@@ -138,11 +153,16 @@ public class UserDAOImpl implements UserDAO {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, name);
 			resultSet = ps.executeQuery();
-			con.close();
+			resultSet.last();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<UserPO> po = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (po != null) {
 			return new ResultMessage(true, po, "query ok,user return");
 		}
@@ -159,11 +179,15 @@ public class UserDAOImpl implements UserDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, userID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<UserPO> po = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (po != null) {
 			return new ResultMessage(true, po, "query ok,user return");
 		}
@@ -185,11 +209,15 @@ public class UserDAOImpl implements UserDAO {
 			ps.setString(1, ID);
 			ps.setString(2, password);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<UserPO> po = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (po != null) {
 			return new ResultMessage(true, po, "login success");
 		}

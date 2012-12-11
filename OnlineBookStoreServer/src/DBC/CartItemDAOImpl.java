@@ -57,6 +57,10 @@ public class CartItemDAOImpl implements CartItemDAO {
 			ps.setDouble(3, itemPO.getNowprice());
 			ps.setInt(4, itemPO.getCount());
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -108,6 +112,10 @@ public class CartItemDAOImpl implements CartItemDAO {
 			ps.setInt(1, memberID);
 			ps.setString(2, bookISBN);
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -129,11 +137,15 @@ public class CartItemDAOImpl implements CartItemDAO {
 			ps.setInt(1, memberID);
 			ps.setString(2, booISBN);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<ItemPO> result = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (result != null) {
 			return new ResultMessage(true, result, "该物品存在 返回结果");
 		}
@@ -150,6 +162,10 @@ public class CartItemDAOImpl implements CartItemDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memberID);
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -170,11 +186,15 @@ public class CartItemDAOImpl implements CartItemDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memberID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<ItemPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "get books in cart succes");
 		}

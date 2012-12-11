@@ -62,6 +62,10 @@ public class CouponsDAOImpl implements CouponsDAO {
 					.getTime()));
 			ps.setBoolean(4, couponsPO.isUsed());
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -86,6 +90,10 @@ public class CouponsDAOImpl implements CouponsDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, couponsID);
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,6 +123,10 @@ public class CouponsDAOImpl implements CouponsDAO {
 			ps.setBoolean(4, couponsPO.isUsed());
 			ps.setInt(5, couponsPO.getCounponsID());
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -135,11 +147,15 @@ public class CouponsDAOImpl implements CouponsDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, couponsID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<CouponsPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "coupons exist ");
 		}
@@ -156,11 +172,15 @@ public class CouponsDAOImpl implements CouponsDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memberID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<CouponsPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "query ok,coupons return ");
 		}

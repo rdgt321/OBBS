@@ -22,9 +22,11 @@ public class Const {
 
 	public static int TIMEOUT = 10;
 	public static int ROUTINE = 10;
-
+	public static int BACKUP = 7;
 	public static int FIRST_RUN = 1;
 	public static String SQLPATH = null;
+	public static String BACKUPPATH = null;
+	public static String LOGPATH = null;
 	public static String dbuser = null;
 	public static String dbpass = null;
 
@@ -52,11 +54,13 @@ public class Const {
 				.getProperty("SEARCH_BY_NAME"));
 		SEARCH_BY_AUTHOR = Integer.parseInt(properties
 				.getProperty("SEARCH_BY_AUTHOR"));
-
 		ROUTINE = Integer.parseInt(properties.getProperty("ROUTINE"));
 		TIMEOUT = Integer.parseInt(properties.getProperty("TIMEOUT"));
 		FIRST_RUN = Integer.parseInt(properties.getProperty("FIRSTRUN"));
+		BACKUP = Integer.parseInt(properties.getProperty("BACKUP"));
 		SQLPATH = properties.getProperty("SQLPATH");
+		BACKUPPATH = properties.getProperty("BACKUPPATH");
+		LOGPATH = properties.getProperty("LOGPATH");
 		dbuser = properties.getProperty("dbuser");
 		dbpass = properties.getProperty("dbpass");
 	}
@@ -67,6 +71,7 @@ public class Const {
 			os = new FileOutputStream("config.xml");
 			properties.setProperty(key, value);
 			properties.storeToXML(os, "Const");
+			loadConfig();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

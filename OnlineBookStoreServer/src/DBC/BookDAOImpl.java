@@ -71,6 +71,7 @@ public class BookDAOImpl implements BookDAO {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "insert into book(name,isbn,author,press,description,directoryID,publishdate,price,specialprice) values(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement ps;
+		int row = 0;
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, bookPO.getName());
@@ -83,13 +84,17 @@ public class BookDAOImpl implements BookDAO {
 					.getTime()));
 			ps.setDouble(8, bookPO.getPrice());
 			ps.setDouble(9, bookPO.getSpecialPrice());
-			int row = ps.executeUpdate();
-			con.close();
-			if (row != 0) {
-				return new ResultMessage(true, null, "添加图书成功");
-			}
+			row = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (row != 0) {
+			return new ResultMessage(true, null, "添加图书成功");
 		}
 		return new ResultMessage(false, null, "添加图书失败，请重新再试");
 	}
@@ -103,16 +108,21 @@ public class BookDAOImpl implements BookDAO {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "delete from book where isbn = ?";
 		PreparedStatement ps;
+		int row = 0;
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, bookISBN);
-			int row = ps.executeUpdate();
-			con.close();
-			if (row != 0) {
-				return new ResultMessage(true, null, "删除图书成功");
-			}
+			row = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (row != 0) {
+			return new ResultMessage(true, null, "删除图书成功");
 		}
 		return new ResultMessage(false, null, "删除图书失败，请重新再试");
 	}
@@ -126,6 +136,7 @@ public class BookDAOImpl implements BookDAO {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "update book set name=?,author=?,press?,description=?,directoryID=?,publishdate=?,price=?,specialprice=? where isbn=?";
 		PreparedStatement ps;
+		int row = 0;
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, bookPO.getName());
@@ -138,13 +149,17 @@ public class BookDAOImpl implements BookDAO {
 			ps.setDouble(7, bookPO.getPrice());
 			ps.setDouble(8, bookPO.getSpecialPrice());
 			ps.setString(9, bookPO.getISBN());
-			int row = ps.executeUpdate();
-			con.close();
-			if (row != 0) {
-				return new ResultMessage(true, null, "修改图书成功");
-			}
+			row = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (row != 0) {
+			return new ResultMessage(true, null, "修改图书成功");
 		}
 		return new ResultMessage(false, null, "修改图书失败，请重新再试");
 	}
@@ -159,11 +174,15 @@ public class BookDAOImpl implements BookDAO {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, bookISBN);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<BookPO> result = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (result != null) {
 			return new ResultMessage(true, result, "查询成功 结果返回");
 		}
@@ -180,11 +199,15 @@ public class BookDAOImpl implements BookDAO {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, "%" + keywords + "%");
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<BookPO> result = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (result != null) {
 			return new ResultMessage(true, result, "查询成功 结果返回");
 		}
@@ -201,11 +224,15 @@ public class BookDAOImpl implements BookDAO {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, "%" + keywords + "%");
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<BookPO> result = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (result != null) {
 			return new ResultMessage(true, result, "查询成功 结果返回");
 		}
@@ -224,11 +251,15 @@ public class BookDAOImpl implements BookDAO {
 			ps.setString(2, "%" + keywords + "%");
 			ps.setString(3, "%" + keywords + "%");
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<BookPO> result = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (result != null) {
 			return new ResultMessage(true, result, "查询成功 结果返回");
 		}
@@ -244,11 +275,15 @@ public class BookDAOImpl implements BookDAO {
 		try {
 			Statement statement = con.createStatement();
 			resultSet = statement.executeQuery(sql);
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "查询成功 全部书本返回");
 		}
@@ -265,11 +300,15 @@ public class BookDAOImpl implements BookDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, directoryID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<BookPO> result = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (result != null) {
 			return new ResultMessage(true, result, "查询成功 结果返回");
 		}

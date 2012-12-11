@@ -48,6 +48,10 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, directoryPO.getName());
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -72,6 +76,10 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, directoryID);
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -98,6 +106,10 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 			ps.setString(1, directoryPO.getName());
 			ps.setInt(2, directoryPO.getID());
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -118,11 +130,15 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, directoryID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<DirectoryPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "query ok ,directory return");
 		}
@@ -139,11 +155,15 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, directroyName);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<DirectoryPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "query ok ,directory return");
 		}
@@ -159,11 +179,15 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 		try {
 			ps = con.prepareStatement(sql);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<DirectoryPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist,
 					"query ok ,all directory return");

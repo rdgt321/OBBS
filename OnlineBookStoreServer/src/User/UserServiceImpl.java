@@ -60,6 +60,9 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
 			UserAgent userAgent = new UserAgent(user.getID(), user.getName(),
 					user.getPassword(), user.getType());
 			userAgent.lastRequest = System.currentTimeMillis();
+			if (UserPool.isOnline(userAgent)) {
+				return new ResultMessage(false, null, "用户已经登录，请稍后再试");
+			}
 			UserPool.connect(userAgent);
 			ArrayList<UserAgent> agent = new ArrayList<UserAgent>();
 			agent.add(userAgent);

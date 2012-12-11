@@ -11,16 +11,12 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.sun.org.apache.xml.internal.dtm.ref.DTMDefaultBaseIterators.RootIterator;
-
 import Book.BookService;
 import Book.BookServiceImpl;
 import Member.MemberService;
 import Member.MemberServiceImpl;
-import Promotion.PromotionPO;
 import Promotion.PromotionService;
 import Promotion.PromotionServiceImpl;
-import RMI.ResultMessage;
 import Sale.SaleService;
 import Sale.SaleServiceImpl;
 import User.UserService;
@@ -33,10 +29,13 @@ public class Server extends JFrame {
 	PromotionService promotionService = null;
 	SaleService saleService = null;
 	UserService userService = null;
+	ServerView serverView = null;
 
 	public Server() {
+		super();
 		init();
 		checkEnvironment();
+		createView();
 		startService();
 		startRoutines();
 	}
@@ -72,7 +71,7 @@ public class Server extends JFrame {
 	}
 
 	public void startRoutines() {
-		routines = new Routines();
+		routines = Routines.getInstance();
 		routines.run();
 	}
 
@@ -133,6 +132,16 @@ public class Server extends JFrame {
 			e.printStackTrace();
 		}
 		return out != null;
+	}
+
+	public void createView() {
+		setSize(806, 628);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		setTitle("在线图书销售系统客户端");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		serverView = new ServerView(Const.FIRST_RUN);
+		setContentPane(serverView);
 	}
 
 	public static void main(String[] args) {

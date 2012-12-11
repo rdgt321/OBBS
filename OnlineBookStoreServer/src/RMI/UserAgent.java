@@ -1,8 +1,10 @@
 package RMI;
 
-import java.util.Calendar;
+import java.io.Serializable;
 
-public class UserAgent {
+import Server.Const;
+
+public class UserAgent implements Serializable {
 	private int id;
 	private String name;
 	private String password;
@@ -40,5 +42,21 @@ public class UserAgent {
 
 	public void setOnline(boolean online) {
 		this.online = online;
+	}
+
+	public String toString() {
+		String id = "userID:" + this.id;
+		String type = null;
+		if (userType == Const.ADMIN) {
+			type = "admin";
+		} else if (userType == Const.GENERALMANAGER) {
+			type = "general maanger";
+		} else if (userType == Const.SALESMANAGER) {
+			type = "sales manager";
+		} else if (userType == Const.MEMBER) {
+			id = "memberID:" + this.id;
+			type = "member";
+		}
+		return id + " name:" + name + " type:" + type;
 	}
 }

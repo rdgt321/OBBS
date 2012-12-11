@@ -1,9 +1,10 @@
 package RMI;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class ResultMessage {
+public class ResultMessage implements Serializable{
 	private boolean invokeSuccess = false;
 	private ArrayList resultSet = null;
 	private String postScript = "";

@@ -61,6 +61,9 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 			UserAgent userAgent = new UserAgent(member.getID(),
 					member.getName(), member.getPassword(), Const.MEMBER);
 			userAgent.lastRequest = System.currentTimeMillis();
+			if (UserPool.isOnline(userAgent)) {
+				return new ResultMessage(false, null, "用户已经登录，请稍后再试");
+			}
 			UserPool.connect(userAgent);
 			ArrayList<UserAgent> agent = new ArrayList<UserAgent>();
 			agent.add(userAgent);

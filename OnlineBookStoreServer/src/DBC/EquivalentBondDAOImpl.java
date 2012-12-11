@@ -69,6 +69,11 @@ public class EquivalentBondDAOImpl implements EquivalentBondDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (row != 0) {
 			return new ResultMessage(true, null, "add equivalentbond success");
 		}
@@ -85,11 +90,15 @@ public class EquivalentBondDAOImpl implements EquivalentBondDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, equivalentBondID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<EquivalentBondPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "query success");
 		}
@@ -110,6 +119,11 @@ public class EquivalentBondDAOImpl implements EquivalentBondDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, equivalentBondID);
 			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -144,6 +158,11 @@ public class EquivalentBondDAOImpl implements EquivalentBondDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (row != 0) {
 			return new ResultMessage(true, null, "add equivalentbond success");
 		}
@@ -160,11 +179,15 @@ public class EquivalentBondDAOImpl implements EquivalentBondDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memberID);
 			resultSet = ps.executeQuery();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ArrayList<EquivalentBondPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (polist != null) {
 			return new ResultMessage(true, polist, "query ok,bonds return");
 		}
