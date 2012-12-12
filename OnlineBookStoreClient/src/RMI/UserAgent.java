@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import ClientRunner.Const;
 
+
 public class UserAgent implements Serializable {
 	private int id;
 	private String name;

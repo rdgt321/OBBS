@@ -57,7 +57,7 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, memberPO.getName());
-			ps.setString(2, memberPO.getPassword());
+			ps.setString(2, Encrypt.md5(memberPO.getPassword()));
 			ps.setString(3, memberPO.getPhone());
 			ps.setDate(4, new java.sql.Date(memberPO.getBirth()
 					.getTimeInMillis()));
@@ -118,7 +118,7 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, memberPO.getName());
-			ps.setString(2, memberPO.getPassword());
+			ps.setString(2, Encrypt.md5(memberPO.getPassword()));
 			ps.setString(3, memberPO.getPhone());
 			ps.setDate(4, new java.sql.Date(memberPO.getBirth()
 					.getTimeInMillis()));
@@ -259,7 +259,7 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, ID);
-			ps.setString(2, password);
+			ps.setString(2, Encrypt.md5(password));
 			resultSet = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();

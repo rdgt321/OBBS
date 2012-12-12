@@ -72,6 +72,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public ResultMessage getCoupons(int memberID) throws RemoteException {
+		return service_stub.getCoupons(memberID);
+	}
+
+	@Override
+	public ResultMessage getEquivalentBond(int memberID) throws RemoteException {
+		return service_stub.getEquivalentBond(memberID);
+	}
+
+	@Override
 	public ResultMessage onlineValidate(UserAgent userAgent)
 			throws RemoteException {
 		return service_stub.onlineValidate(userAgent);

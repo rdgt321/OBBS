@@ -1,10 +1,13 @@
 package DBC;
 
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.sun.swing.internal.plaf.metal.resources.metal;
 
 import Member.MemberPO;
 import RMI.ResultMessage;
@@ -65,7 +68,7 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, userPO.getName());
-			ps.setString(2, userPO.getPassword());
+			ps.setString(2, Encrypt.md5(userPO.getPassword()));
 			ps.setInt(3, userPO.getType());
 			row = ps.executeUpdate();
 		} catch (SQLException e) {
@@ -125,7 +128,7 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, userPO.getName());
-			ps.setString(2, userPO.getPassword());
+			ps.setString(2, Encrypt.md5(userPO.getPassword()));
 			ps.setInt(3, userPO.getType());
 			ps.setInt(4, userPO.getID());
 			row = ps.executeUpdate();
@@ -207,7 +210,7 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, ID);
-			ps.setString(2, password);
+			ps.setString(2, Encrypt.md5(password));
 			resultSet = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -223,5 +226,4 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return new ResultMessage(false, null, "login failed,password wrong");
 	}
-
 }

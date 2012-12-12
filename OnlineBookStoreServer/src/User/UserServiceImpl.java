@@ -22,6 +22,7 @@ import RMI.ResultMessage;
 import RMI.UserAgent;
 import Sale.ItemPO;
 import Sale.OrderPO;
+import Server.Const;
 import Server.UserPool;
 
 public class UserServiceImpl extends UnicastRemoteObject implements UserService {
@@ -54,6 +55,9 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
 	@Override
 	public ResultMessage login(String ID, String password)
 			throws RemoteException {
+		if (UserPool.getAgents().size() >= Const.MAX_CLIENT) {
+			return new ResultMessage(false, null, "服务器繁忙，请稍后再试");
+		}
 		ResultMessage resultMessage = userDAO.loginValidate(ID, password);
 		if (resultMessage.isInvokeSuccess()) {
 			UserPO user = (UserPO) resultMessage.getResultSet().get(0);

@@ -35,6 +35,8 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 	private MemberDAO memberDAO = null;
 	private OrderDAO orderDAO = null;
 	private OrderItemDAO orderItemDAO = null;
+	private CouponsDAO couponsDAO = null;
+	private EquivalentBondDAO equivalentBondDAO = null;
 
 	public MemberServiceImpl() throws RemoteException {
 		super();
@@ -50,11 +52,16 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 		memberDAO = DAOFactory.getMemberDAO();
 		orderDAO = DAOFactory.getOrderDAO();
 		orderItemDAO = DAOFactory.getOrderItemDAO();
+		couponsDAO = DAOFactory.getCouponsDAO();
+		equivalentBondDAO = DAOFactory.getEquivalentBondDAO();
 	}
 
 	@Override
 	public ResultMessage login(String ID, String password)
 			throws RemoteException {
+		if (UserPool.getAgents().size() >= Const.MAX_CLIENT) {
+			return new ResultMessage(false, null, "服务器繁忙，请稍后再试");
+		}
 		ResultMessage resultMessage = memberDAO.loginValidate(ID, password);
 		if (resultMessage.isInvokeSuccess()) {
 			MemberPO member = (MemberPO) resultMessage.getResultSet().get(0);
@@ -133,6 +140,16 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 			return new ResultMessage(true, books, "collected books return");
 		}
 		return collectMessage;
+	}
+
+	@Override
+	public ResultMessage getCoupons(int memberID) throws RemoteException {
+		return couponsDAO.getCoupons(memberID);
+	}
+
+	@Override
+	public ResultMessage getEquivalentBond(int memberID) throws RemoteException {
+		return equivalentBondDAO.getEquivalentBond(memberID);
 	}
 
 	@Override

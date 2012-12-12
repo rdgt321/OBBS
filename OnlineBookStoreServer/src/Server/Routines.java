@@ -126,7 +126,7 @@ public class Routines implements Runnable, Observer {
 		try {
 			process = runtime
 					.exec("reg query "
-							+ "HKEY_LOCAL_MACHINE\\SYSTEM\\CURRENTCONTROLSET\\SERVICES\\MYSQL");
+							+ "HKEY_LOCAL_MACHINE\\SYSTEM\\CURRENTCONTROLSET\\SERVICES\\MYSQL /v ImagePath");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -24,6 +24,9 @@ public class Const {
 	public static int ROUTINE = 10;
 	public static int BACKUP = 7;
 	public static int FIRST_RUN = 1;
+	public static int MAX_CLIENT = 0;
+	public static int CON_FAIL = 0;
+
 	public static String SQLPATH = null;
 	public static String BACKUPPATH = null;
 	public static String LOGPATH = null;
@@ -54,10 +57,14 @@ public class Const {
 				.getProperty("SEARCH_BY_NAME"));
 		SEARCH_BY_AUTHOR = Integer.parseInt(properties
 				.getProperty("SEARCH_BY_AUTHOR"));
+
 		ROUTINE = Integer.parseInt(properties.getProperty("ROUTINE"));
 		TIMEOUT = Integer.parseInt(properties.getProperty("TIMEOUT"));
 		FIRST_RUN = Integer.parseInt(properties.getProperty("FIRSTRUN"));
 		BACKUP = Integer.parseInt(properties.getProperty("BACKUP"));
+		MAX_CLIENT = Integer.parseInt(properties.getProperty("MAX_CLIENT"));
+		CON_FAIL = Integer.parseInt(properties.getProperty("CON_FAIL"));
+
 		SQLPATH = properties.getProperty("SQLPATH");
 		BACKUPPATH = properties.getProperty("BACKUPPATH");
 		LOGPATH = properties.getProperty("LOGPATH");
@@ -67,6 +74,9 @@ public class Const {
 
 	public static void store(String key, String value) {
 		OutputStream os;
+		if (properties.getProperty(key) == null) {
+			return;
+		}
 		try {
 			os = new FileOutputStream("config.xml");
 			properties.setProperty(key, value);

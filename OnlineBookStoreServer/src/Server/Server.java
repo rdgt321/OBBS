@@ -79,7 +79,7 @@ public class Server extends JFrame {
 		boolean mysql = mysqlInstalled();
 		if (!mysql) {
 			int ok = JOptionPane.showConfirmDialog(this,
-					"您的机器尚未安装MYSQL，无法运行本系统，请点击确定下载官方最新版本");
+					"您的机器尚未安装MYSQL(或独立版)，无法运行本系统，请点击确定下载官方最新版本");
 			if (ok == JOptionPane.OK_OPTION) {
 				if (java.awt.Desktop.isDesktopSupported()) {
 					try {
@@ -138,9 +138,9 @@ public class Server extends JFrame {
 		setSize(806, 628);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		setTitle("在线图书销售系统客户端");
+		setTitle("在线图书销售系统服务器端");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		serverView = new ServerView(Const.FIRST_RUN);
+		serverView = new ServerView();
 		setContentPane(serverView);
 	}
 

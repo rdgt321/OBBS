@@ -5,6 +5,8 @@ import RMI.addMember;
 import RMI.bookCollect;
 import RMI.cancelCollect;
 import RMI.getCollectedBook;
+import RMI.getCoupons;
+import RMI.getEquivalentBond;
 import RMI.onlineValidate;
 import RMI.queryMember;
 import RMI.deleteMember;
@@ -13,6 +15,6 @@ import RMI.queryRecord;
 
 public interface MemberService extends Login, addMember, deleteMember,
 		modifyMember, queryMember, queryRecord, bookCollect, cancelCollect,
-		getCollectedBook, onlineValidate {
+		getCollectedBook, getCoupons, getEquivalentBond, onlineValidate {
 
 }
