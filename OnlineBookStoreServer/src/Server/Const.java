@@ -29,9 +29,10 @@ public class Const {
 
 	public static String SQLPATH = null;
 	public static String BACKUPPATH = null;
-	public static String LOGPATH = null;
+	public static String LOG_ACCESS_PATH = null;
 	public static String dbuser = null;
 	public static String dbpass = null;
+	public static String LAST_BIRTH = null;
 
 	public static void loadConfig() {
 		InputStream is;
@@ -67,9 +68,10 @@ public class Const {
 
 		SQLPATH = properties.getProperty("SQLPATH");
 		BACKUPPATH = properties.getProperty("BACKUPPATH");
-		LOGPATH = properties.getProperty("LOGPATH");
+		LOG_ACCESS_PATH = properties.getProperty("LOG_ACCESS_PATH");
 		dbuser = properties.getProperty("dbuser");
 		dbpass = properties.getProperty("dbpass");
+		LAST_BIRTH = properties.getProperty("LAST_BIRTH");
 	}
 
 	public static void store(String key, String value) {

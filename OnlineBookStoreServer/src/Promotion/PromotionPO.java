@@ -6,17 +6,19 @@ import java.util.Calendar;
 public class PromotionPO implements Serializable {
 	private int promotionID;
 	private int leastIntegral;
+	private String name;
 	private Calendar startDate, endDate;
 	private double discountRate;
 	private double equivalentDenomination;
 	private double bondUseLimit;
 
-	public PromotionPO(int promotionID, int leastIntegral, Calendar startDate,
-			Calendar endDate, double discountRate,
+	public PromotionPO(int promotionID, int leastIntegral, String name,
+			Calendar startDate, Calendar endDate, double discountRate,
 			double equivalentDenomination, double bondUseLimit) {
 		super();
 		this.promotionID = promotionID;
 		this.leastIntegral = leastIntegral;
+		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.discountRate = discountRate;
@@ -26,6 +28,10 @@ public class PromotionPO implements Serializable {
 
 	public int getLeastIntegral() {
 		return leastIntegral;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public Calendar getStartDate() {

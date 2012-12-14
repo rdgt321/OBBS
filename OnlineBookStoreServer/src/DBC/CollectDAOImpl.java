@@ -14,7 +14,8 @@ public class CollectDAOImpl implements CollectDAO {
 
 	private ArrayList<BookPO> map(ResultSet resultSet) {
 		ArrayList<BookPO> polist = null;
-		String name = null, ISBN = null, author = null, press = null, description = null, directoryID = null;
+		String name = null, ISBN = null, author = null, press = null, description = null;
+		int directoryID = 0;
 		Calendar publishDate = null;
 		double price = 0, specialPrice = 0;
 		try {

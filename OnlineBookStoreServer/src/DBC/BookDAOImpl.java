@@ -29,7 +29,8 @@ public class BookDAOImpl implements BookDAO {
 
 	private ArrayList<BookPO> map(ResultSet resultSet) {
 		ArrayList<BookPO> polist = null;
-		String name = null, ISBN = null, author = null, press = null, description = null, directoryID = null;
+		String name = null, ISBN = null, author = null, press = null, description = null;
+		int directoryID = 0;
 		Calendar publishDate = null;
 		double price = 0, specialPrice = 0;
 		try {
@@ -44,7 +45,7 @@ public class BookDAOImpl implements BookDAO {
 					ISBN = resultSet.getString(2);
 					author = resultSet.getString(3);
 					description = resultSet.getString(4);
-					directoryID = resultSet.getString(5);
+					directoryID = resultSet.getInt(5);
 					press = resultSet.getString(6);
 					publishDate = Calendar.getInstance();
 					publishDate.setTimeInMillis(resultSet.getDate(7).getTime());
@@ -79,7 +80,7 @@ public class BookDAOImpl implements BookDAO {
 			ps.setString(3, bookPO.getAuthor());
 			ps.setString(4, bookPO.getPress());
 			ps.setString(5, bookPO.getDescription());
-			ps.setString(6, bookPO.getDirectoryID());
+			ps.setInt(6, bookPO.getDirectoryID());
 			ps.setDate(7, new java.sql.Date(bookPO.getPublishDate().getTime()
 					.getTime()));
 			ps.setDouble(8, bookPO.getPrice());
@@ -143,7 +144,7 @@ public class BookDAOImpl implements BookDAO {
 			ps.setString(2, bookPO.getAuthor());
 			ps.setString(3, bookPO.getPress());
 			ps.setString(4, bookPO.getDescription());
-			ps.setString(5, bookPO.getDirectoryID());
+			ps.setInt(5, bookPO.getDirectoryID());
 			ps.setDate(6, new java.sql.Date(bookPO.getPublishDate().getTime()
 					.getTime()));
 			ps.setDouble(7, bookPO.getPrice());

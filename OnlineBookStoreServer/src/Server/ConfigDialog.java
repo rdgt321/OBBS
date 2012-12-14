@@ -43,13 +43,20 @@ public class ConfigDialog extends JDialog implements ActionListener,
 		super();
 		this.serverView = serverView;
 		initComponent();
-		this.setTitle("服务器参数配置");
-		this.setLayout(null);
-		this.setSize(500, 450);
-		this.setLocationRelativeTo(serverView);
-		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		this.setAlwaysOnTop(true);
-		this.setVisible(true);
+		setTitle("服务器参数配置");
+		setUndecorated(true);
+		setLayout(null);
+		setSize(500, 450);
+		setLocationRelativeTo(serverView);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		// setAlwaysOnTop(true);
+		setVisible(true);
+	}
+
+	public void cover() {
+		load();
+		setLocationRelativeTo(serverView);
+		setVisible(true);
 	}
 
 	private void initComponent() {
@@ -154,12 +161,6 @@ public class ConfigDialog extends JDialog implements ActionListener,
 		load();
 		validate();
 		requestFocus();
-	}
-
-	public void cover() {
-		load();
-		setLocationRelativeTo(serverView);
-		setVisible(true);
 	}
 
 	@Override

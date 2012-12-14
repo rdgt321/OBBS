@@ -13,6 +13,7 @@ public class DAOFactory {
 	private static OrderItemDAO orderItemDAO;
 	private static PromotionDAO promotionDAO;
 	private static UserDAO userDAO;
+	private static MessageDAO messageDAO;
 
 	private DAOFactory() {
 		super();
@@ -148,6 +149,17 @@ public class DAOFactory {
 			}
 		}
 		return userDAO;
+	}
+	
+	public static synchronized MessageDAO getMessageDAO() {
+		if (messageDAO == null) {
+			synchronized (DAOFactory.class) {
+				if (messageDAO == null) {
+					messageDAO = new MessageDAOImpl();
+				}
+			}
+		}
+		return messageDAO;
 	}
 
 }

@@ -63,6 +63,7 @@ public class UserPool {
 			if (agent.getId() == userAgent.getId()
 					&& agent.getName().equals(userAgent.getName())
 					&& agent.getUserType() == userAgent.getUserType()) {
+				agent.ip = userAgent.ip;
 				agent.lastRequest = System.currentTimeMillis();
 				break;
 			}

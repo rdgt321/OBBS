@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.ConcurrentHashMap;
 
 import Member.MemberPO;
 import RMI.ResultMessage;
@@ -52,8 +53,9 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "insert into member(name,password,phone,birth) values(?,?,?,?)";
-		PreparedStatement ps;
+		PreparedStatement ps = null;
 		int row = 0;
+		int id = 0;
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, memberPO.getName());
@@ -65,14 +67,21 @@ public class MemberDAOImpl implements MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		try {
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		if (row != 0) {
-			return new ResultMessage(true, null, "add member success");
+			try {
+				ResultSet resultSet = null;
+				resultSet = ps.getGeneratedKeys();
+				resultSet.next();
+				id = resultSet.getInt(1);
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ArrayList<Integer> idarr = new ArrayList<Integer>();
+			idarr.add(id);
+			return new ResultMessage(true, idarr, "add member success");
 		}
+
 		return new ResultMessage(false, null, "add member failed");
 	}
 
@@ -87,13 +96,10 @@ public class MemberDAOImpl implements MemberDAO {
 		PreparedStatement ps;
 		int row = 0;
 		try {
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql,
+					PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, memberID);
 			row = ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -274,5 +280,55 @@ public class MemberDAOImpl implements MemberDAO {
 			return new ResultMessage(true, po, "login success");
 		}
 		return new ResultMessage(false, null, "login failed,password wrong");
+	}
+
+	@Override
+	public ResultMessage getMembers() {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "select * from member";
+		PreparedStatement ps;
+		ResultSet resultSet = null;
+		try {
+			ps = con.prepareStatement(sql);
+			resultSet = ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		ArrayList<MemberPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (polist != null) {
+			return new ResultMessage(true, polist, "query ok,return members");
+		}
+		return new ResultMessage(false, null, "query failed,no member in db");
+	}
+
+	@Override
+	public ResultMessage getBirthMembers() {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "select * from member where  DATE_FORMAT(birth,'-%m-%d')=DATE_FORMAT(CURRENT_DATE(),'-%m-%d')";
+		PreparedStatement ps;
+		ResultSet resultSet = null;
+		try {
+			ps = con.prepareStatement(sql);
+			resultSet = ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		ArrayList<MemberPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (polist != null) {
+			return new ResultMessage(true, polist,
+					"query ok,return birth members");
+		}
+		return new ResultMessage(false, null,
+				"query failed,no member bitrh today");
 	}
 }

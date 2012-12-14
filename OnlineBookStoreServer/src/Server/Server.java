@@ -3,6 +3,7 @@ package Server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
@@ -17,6 +18,7 @@ import Member.MemberService;
 import Member.MemberServiceImpl;
 import Promotion.PromotionService;
 import Promotion.PromotionServiceImpl;
+import RMI.UserAgent;
 import Sale.SaleService;
 import Sale.SaleServiceImpl;
 import User.UserService;
@@ -68,11 +70,22 @@ public class Server extends JFrame {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+//		checkPromotionSuit(userAgent);
 	}
 
 	public void startRoutines() {
 		routines = Routines.getInstance();
 		routines.run();
+	}
+
+	public void createView() {
+		setSize(806, 628);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		setTitle("在线图书销售系统服务器端");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		serverView = new ServerView();
+		setContentPane(serverView);
 	}
 
 	public void checkEnvironment() {
@@ -134,14 +147,8 @@ public class Server extends JFrame {
 		return out != null;
 	}
 
-	public void createView() {
-		setSize(806, 628);
-		setVisible(true);
-		setLocationRelativeTo(null);
-		setTitle("在线图书销售系统服务器端");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		serverView = new ServerView();
-		setContentPane(serverView);
+	public void checkPromotionSuit(UserAgent userAgent) {
+
 	}
 
 	public static void main(String[] args) {

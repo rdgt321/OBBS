@@ -4,21 +4,25 @@ import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Calendar;
 
 import DBC.CouponsDAO;
 import DBC.DAOFactory;
 import DBC.EquivalentBondDAO;
+import DBC.MemberDAO;
+import DBC.MessageDAO;
 import DBC.PromotionDAO;
 import RMI.ResultMessage;
 
 public class PromotionServiceImpl extends UnicastRemoteObject implements
 		PromotionService {
 
+	private MemberDAO memberDAO = null;
 	private PromotionDAO promotionDAO = null;
 	private CouponsDAO couponsDAO = null;
 	private EquivalentBondDAO equivalentBondDAO = null;
+	private MessageDAO messageDAO = null;
 
 	public PromotionServiceImpl() throws RemoteException {
 		super();
@@ -29,9 +33,11 @@ public class PromotionServiceImpl extends UnicastRemoteObject implements
 		} catch (AlreadyBoundException e) {
 			e.printStackTrace();
 		}
+		memberDAO = DAOFactory.getMemberDAO();
 		promotionDAO = DAOFactory.getPromotionDAO();
 		couponsDAO = DAOFactory.getCouponsDAO();
 		equivalentBondDAO = DAOFactory.getEquivalentBondDAO();
+		messageDAO = DAOFactory.getMessageDAO();
 	}
 
 	@Override
@@ -54,11 +60,15 @@ public class PromotionServiceImpl extends UnicastRemoteObject implements
 			if (discountRate != 0) {
 				couponsDAO.addCoupons(new CouponsPO(-1, memberID, discountRate,
 						promotion.getEndDate(), false));
+				messageDAO.addMessage(memberID, "您获得了" + promotion.getName()
+						+ "促销的折扣券");
 			}
 			if (equivalentDenomination != 0) {
 				equivalentBondDAO.addEquivalentBond(new EquivalentBondPO(-1,
 						memberID, promotion.getBondUseLimit(),
 						equivalentDenomination, promotion.getEndDate(), false));
+				messageDAO.addMessage(memberID, "您获得了" + promotion.getName()
+						+ "促销的折扣券");
 			}
 			return new ResultMessage(true, null, "trigger success");
 		}

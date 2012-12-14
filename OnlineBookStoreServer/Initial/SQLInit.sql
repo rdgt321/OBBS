@@ -41,7 +41,7 @@ CREATE TABLE `book` (
   `price` double DEFAULT NULL,
   `specialprice` double DEFAULT NULL,
   PRIMARY KEY (`isbn`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `cart_item` (
   `nowpirce` double DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
   PRIMARY KEY (`memberid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `collect` (
   `memberid` int(11) NOT NULL,
   `bookisbn` varchar(25) NOT NULL,
   PRIMARY KEY (`memberid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,10 +112,10 @@ CREATE TABLE `coupons` (
   `couponsid` int(11) NOT NULL AUTO_INCREMENT,
   `ownerid` int(11) NOT NULL,
   `discountrate` double DEFAULT NULL,
-  `edndate` date DEFAULT NULL,
+  `enddate` date DEFAULT NULL,
   `used` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`couponsid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +138,7 @@ CREATE TABLE `directory` (
   `directoryid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`directoryid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,11 +160,12 @@ DROP TABLE IF EXISTS `equivalentbond`;
 CREATE TABLE `equivalentbond` (
   `equivalentbondid` int(11) NOT NULL AUTO_INCREMENT,
   `ownerid` int(11) NOT NULL,
+  `uselimit` double DEFAULT NULL,
   `equivalentdenomination` double DEFAULT NULL,
   `enddate` date DEFAULT NULL,
   `used` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`equivalentbondid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +191,7 @@ CREATE TABLE `member` (
   `phone` varchar(16) DEFAULT NULL,
   `birth` date DEFAULT NULL,
   PRIMARY KEY (`memberid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,6 +201,31 @@ CREATE TABLE `member` (
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `message`
+--
+
+DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message` (
+  `messageid` int(11) NOT NULL AUTO_INCREMENT,
+  `memberid` int(11) DEFAULT NULL,
+  `msg` varchar(128) NOT NULL,
+  `sent` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`messageid`)
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `message`
+--
+
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -216,7 +242,7 @@ CREATE TABLE `order_item` (
   `nowprice` double DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
   PRIMARY KEY (`orderid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,7 +268,7 @@ CREATE TABLE `orders` (
   `date` date DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
   PRIMARY KEY (`orderid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,13 +290,14 @@ DROP TABLE IF EXISTS `promotion`;
 CREATE TABLE `promotion` (
   `promotionid` int(11) NOT NULL AUTO_INCREMENT,
   `leastintegral` int(11) DEFAULT NULL,
+  `name` varchar(30) DEFAULT NULL,
   `startdate` date DEFAULT NULL,
   `enddate` date DEFAULT NULL,
   `discountrate` double DEFAULT NULL,
   `equivalentdenomination` double DEFAULT NULL,
   `bonduselimit` double DEFAULT NULL,
   PRIMARY KEY (`promotionid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +306,30 @@ CREATE TABLE `promotion` (
 
 LOCK TABLES `promotion` WRITE;
 /*!40000 ALTER TABLE `promotion` DISABLE KEYS */;
+INSERT INTO `promotion` VALUES (1,0,'生日','2012-12-15','2012-12-15',0.88,8,10);
 /*!40000 ALTER TABLE `promotion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `promotionhistory`
+--
+
+DROP TABLE IF EXISTS `promotionhistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `promotionhistory` (
+  `promotionid` int(11) DEFAULT NULL,
+  `memberid` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `promotionhistory`
+--
+
+LOCK TABLES `promotionhistory` WRITE;
+/*!40000 ALTER TABLE `promotionhistory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `promotionhistory` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -295,7 +345,7 @@ CREATE TABLE `user` (
   `password` varchar(32) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -317,4 +367,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-12  2:07:03
+-- Dump completed on 2012-12-15  2:08:45

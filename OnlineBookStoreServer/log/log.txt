@@ -1,8 +1,0 @@
-userID:1 name:admin type:admin -connect at Tue Dec 11 03:04:10 CST 2012
-userID:1 name:admin type:admin -keep alive at Tue Dec 11 03:04:10 CST 2012
-userID:1 name:admin type:admin -connect at Tue Dec 11 03:04:11 CST 2012
-userID:1 name:admin type:admin -keep alive at Tue Dec 11 03:04:11 CST 2012
-userID:1 name:admin type:admin -connect at Tue Dec 11 03:04:42 CST 2012
-userID:1 name:admin type:admin -keep alive at Tue Dec 11 03:04:42 CST 2012
-userID:1 name:admin type:admin -connect at Wed Dec 12 02:08:03 CST 2012
-userID:1 name:admin type:admin -keep alive at Wed Dec 12 02:08:03 CST 2012

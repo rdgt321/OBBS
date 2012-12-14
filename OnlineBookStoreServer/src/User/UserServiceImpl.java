@@ -5,9 +5,12 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.RMISocketFactory;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import sun.security.x509.IPAddressName;
 
 import DBC.BookDAO;
 import DBC.DAOFactory;
@@ -53,7 +56,7 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
 	}
 
 	@Override
-	public ResultMessage login(String ID, String password)
+	public ResultMessage login(String ID, String password, String IP)
 			throws RemoteException {
 		if (UserPool.getAgents().size() >= Const.MAX_CLIENT) {
 			return new ResultMessage(false, null, "服务器繁忙，请稍后再试");
@@ -64,6 +67,7 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
 			UserAgent userAgent = new UserAgent(user.getID(), user.getName(),
 					user.getPassword(), user.getType());
 			userAgent.lastRequest = System.currentTimeMillis();
+			userAgent.ip = IP;
 			if (UserPool.isOnline(userAgent)) {
 				return new ResultMessage(false, null, "用户已经登录，请稍后再试");
 			}
@@ -141,6 +145,12 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
 	public ResultMessage onlineValidate(UserAgent userAgent)
 			throws RemoteException {
 		UserPool.onlineValidate(userAgent);
+		return null;
+	}
+
+	@Override
+	public ResultMessage logout(UserAgent userAgent) throws RemoteException {
+		UserPool.disconnect(userAgent);
 		return null;
 	}
 

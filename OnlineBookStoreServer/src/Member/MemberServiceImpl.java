@@ -1,5 +1,6 @@
 package Member;
 
+import java.awt.peer.SystemTrayPeer;
 import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
@@ -18,8 +19,13 @@ import DBC.CouponsDAO;
 import DBC.DAOFactory;
 import DBC.EquivalentBondDAO;
 import DBC.MemberDAO;
+import DBC.MessageDAO;
 import DBC.OrderDAO;
 import DBC.OrderItemDAO;
+import DBC.PromotionDAO;
+import Promotion.CouponsPO;
+import Promotion.EquivalentBondPO;
+import Promotion.PromotionPO;
 import RMI.ResultMessage;
 import RMI.UserAgent;
 import Sale.ItemPO;
@@ -37,6 +43,8 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 	private OrderItemDAO orderItemDAO = null;
 	private CouponsDAO couponsDAO = null;
 	private EquivalentBondDAO equivalentBondDAO = null;
+	private PromotionDAO promotionDAO = null;
+	private MessageDAO messageDAO = null;
 
 	public MemberServiceImpl() throws RemoteException {
 		super();
@@ -54,10 +62,12 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 		orderItemDAO = DAOFactory.getOrderItemDAO();
 		couponsDAO = DAOFactory.getCouponsDAO();
 		equivalentBondDAO = DAOFactory.getEquivalentBondDAO();
+		promotionDAO = DAOFactory.getPromotionDAO();
+		messageDAO = DAOFactory.getMessageDAO();
 	}
 
 	@Override
-	public ResultMessage login(String ID, String password)
+	public ResultMessage login(String ID, String password, String IP)
 			throws RemoteException {
 		if (UserPool.getAgents().size() >= Const.MAX_CLIENT) {
 			return new ResultMessage(false, null, "服务器繁忙，请稍后再试");
@@ -68,6 +78,7 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 			UserAgent userAgent = new UserAgent(member.getID(),
 					member.getName(), member.getPassword(), Const.MEMBER);
 			userAgent.lastRequest = System.currentTimeMillis();
+			userAgent.ip = IP;
 			if (UserPool.isOnline(userAgent)) {
 				return new ResultMessage(false, null, "用户已经登录，请稍后再试");
 			}
@@ -81,7 +92,12 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 
 	@Override
 	public ResultMessage addMember(MemberPO memberPO) throws RemoteException {
-		return memberDAO.addMember(memberPO);
+		ResultMessage resultMessage = memberDAO.addMember(memberPO);
+		if (resultMessage.isInvokeSuccess()) {
+			int id = (Integer) resultMessage.getResultSet().get(0);
+			messageDAO.addMessage(id, "感谢您的注册，欢迎使用本系统");
+		}
+		return resultMessage;
 	}
 
 	@Override
@@ -157,6 +173,17 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 			throws RemoteException {
 		UserPool.onlineValidate(userAgent);
 		return null;
+	}
+
+	@Override
+	public ResultMessage logout(UserAgent userAgent) throws RemoteException {
+		UserPool.disconnect(userAgent);
+		return null;
+	}
+
+	@Override
+	public ResultMessage getMessage(UserAgent userAgent) throws RemoteException {
+		return messageDAO.getMessage(userAgent.getId());
 	}
 
 }

@@ -1,6 +1,7 @@
 package RMI;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import Server.Const;
 
@@ -9,7 +10,7 @@ public class UserAgent implements Serializable {
 	private String name;
 	private String password;
 	private int userType;
-	private boolean online;
+	public String ip;
 	public long lastRequest;
 
 	public UserAgent(int id, String name, String password, int userType) {
@@ -36,14 +37,6 @@ public class UserAgent implements Serializable {
 		return userType;
 	}
 
-	public boolean isOnline() {
-		return online;
-	}
-
-	public void setOnline(boolean online) {
-		this.online = online;
-	}
-
 	public String toString() {
 		String id = "userID:" + this.id;
 		String type = null;
@@ -57,6 +50,6 @@ public class UserAgent implements Serializable {
 			id = "memberID:" + this.id;
 			type = "member";
 		}
-		return id + " name:" + name + " type:" + type;
+		return id + " name:" + name + " type:" + type + " ip:" + ip;
 	}
 }

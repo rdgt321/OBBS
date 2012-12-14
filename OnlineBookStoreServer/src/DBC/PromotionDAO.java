@@ -11,7 +11,6 @@ public interface PromotionDAO {
 	public ResultMessage queryPromotion(int promotionID);
 
 	public ResultMessage updatePromotion(PromotionPO promotionPO);
-	
-	public ResultMessage getPromotionList();
 
+	public ResultMessage getPromotionList();
 }

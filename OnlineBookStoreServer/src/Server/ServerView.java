@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -71,12 +72,12 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	}
 
 	private void initComponents() {
-		if (ConnectionFactory.getConnection() == null) {
-			Const.CON_FAIL = 1;
-			initViewForSQL();
+		if (Const.FIRST_RUN == 1) {
 			return;
 		}
-		if (Const.FIRST_RUN == 1) {
+		if (ConnectionFactory.getConnection() == null) {
+			Const.store("CON_FAIL", "1");
+			initViewForSQL();
 			return;
 		}
 		onlineNum = new JLabel("在线用户数量:");
@@ -248,6 +249,11 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 			sqlUser.requestFocus();
 			return;
 		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		if (Const.CON_FAIL == 1) {
 			Const.store("CON_FAIL", "0");
 			Const.store("dbuser", name);
@@ -311,7 +317,7 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 		String path = getClass().getResource("").getPath();
 		int index = path.lastIndexOf("bin");
 		path = path.substring(1, index);
-		path = path + Const.LOGPATH;
+		path = path + Const.LOG_ACCESS_PATH;
 		try {
 			Runtime.getRuntime().exec("notepad " + path);
 		} catch (IOException e) {
@@ -321,7 +327,7 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	}
 
 	class tableModel extends AbstractTableModel {
-		String[] columns = { "用户ID", "用户名", "密码(加密)", "用户类型", "用户最后响应" };
+		String[] columns = { "用户ID", "用户名", "密码(加密)", "用户类型", "IP地址", "用户最后响应" };
 
 		@Override
 		public int getRowCount() {
@@ -345,6 +351,9 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 			case 3:
 				return userAgents.get(rowIndex).getUserType();
 			case 4:
+				return userAgents.get(rowIndex).ip == null ? "" : userAgents
+						.get(rowIndex).ip;
+			case 5:
 				return new Date(userAgents.get(rowIndex).lastRequest);
 			default:
 				return null;
