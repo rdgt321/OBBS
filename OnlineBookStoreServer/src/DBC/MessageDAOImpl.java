@@ -38,7 +38,7 @@ public class MessageDAOImpl implements MessageDAO {
 	}
 
 	@Override
-	public ResultMessage addMessage(int memberID, String msg) {
+	public ResultMessage addMessage(int memberID, String title, String msg) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "insert into message(memberid,msg,sent) values(?,?,?)";
 		PreparedStatement ps;

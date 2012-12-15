@@ -1,9 +1,18 @@
 package Server;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,6 +23,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -47,6 +57,7 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	private JLabel passLabel = null;
 	private JLabel failLabel = null;
 	private JButton sqlConfirm = null;
+	private Image bgimg = null;
 
 	// 服务器工作界面
 	private JLabel onlineNum = null;
@@ -65,6 +76,7 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 
 	public ServerView() {
 		super();
+		bgimg = Toolkit.getDefaultToolkit().getImage("materials\\bg.png");
 		initViewForSQL();
 		initComponents();
 		UserPool.registry(this);
@@ -75,7 +87,7 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	}
 
 	private void initComponents() {
-		if (Const.FIRST_RUN == 1) {
+		if (Const.FIRST_RUN == 1 || Const.CON_FAIL == 1) {
 			return;
 		}
 		if (ConnectionFactory.getConnection() == null) {
@@ -96,35 +108,35 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 		num.setFont(new Font("黑体", Font.BOLD, 30));
 		num.setForeground(Color.RED);
 
-		init = new JButton("初始化");
+		init = new MButton("初始化");
 		init.setLayout(null);
 		init.setSize(120, 50);
 		init.setLocation(50, 140);
 		init.setFont(new Font("楷体", Font.PLAIN, 25));
 		init.addActionListener(this);
 
-		dumpConfirm = new JButton("备份");
+		dumpConfirm = new MButton("备份");
 		dumpConfirm.setLayout(null);
 		dumpConfirm.setSize(120, 50);
 		dumpConfirm.setLocation(50, 220);
 		dumpConfirm.setFont(new Font("楷体", Font.PLAIN, 30));
 		dumpConfirm.addActionListener(this);
 
-		loadConfirm = new JButton("还原");
+		loadConfirm = new MButton("还原");
 		loadConfirm.setLayout(null);
 		loadConfirm.setSize(120, 50);
 		loadConfirm.setLocation(50, 300);
 		loadConfirm.setFont(new Font("楷体", Font.PLAIN, 30));
 		loadConfirm.addActionListener(this);
 
-		config = new JButton("配置");
+		config = new MButton("配置");
 		config.setLayout(null);
 		config.setSize(120, 50);
 		config.setLocation(50, 380);
 		config.setFont(new Font("楷体", Font.PLAIN, 30));
 		config.addActionListener(this);
 
-		log = new JButton("日志");
+		log = new MButton("日志");
 		log.setLayout(null);
 		log.setSize(120, 50);
 		log.setLocation(50, 460);
@@ -160,7 +172,7 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 		userLabel = new JLabel("账户");
 		passLabel = new JLabel("密码");
 		failLabel = new JLabel("连接数据库失败，请重新输入");
-		sqlConfirm = new JButton("确认");
+		sqlConfirm = new MButton("确认");
 
 		sqlUser.setLayout(null);
 		sqlUser.setSize(250, 30);
@@ -174,11 +186,12 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 
 		sqlTip.setLayout(null);
 		sqlTip.setSize(480, 100);
-		sqlTip.setLocation(150, 120);
+		sqlTip.setLocation(155, 120);
 		sqlTip.setFont(new Font("黑体", Font.BOLD, 20));
 		sqlTip.setForeground(Color.RED);
 		sqlTip.setEditable(false);
 		sqlTip.setLineWrap(true);
+		sqlTip.setOpaque(false);
 
 		userLabel.setLayout(null);
 		userLabel.setSize(50, 50);
@@ -193,7 +206,7 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 		failLabel.setLayout(null);
 		failLabel.setSize(300, 50);
 		failLabel.setFont(new Font("黑体", Font.BOLD, 20));
-		failLabel.setLocation(250, 370);
+		failLabel.setLocation(260, 355);
 		failLabel.setForeground(Color.RED);
 		failLabel.setVisible(false);
 
@@ -221,6 +234,23 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 		remove(failLabel);
 		remove(sqlConfirm);
 		repaint();
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.drawImage(bgimg, 0, 0, 800, 600, this);
+		if (Const.FIRST_RUN == 1 || Const.CON_FAIL == 1) {
+			Composite composite = g2d.getComposite();
+			g2d.setComposite(AlphaComposite.getInstance(
+					AlphaComposite.SRC_OVER, 0.6f));
+			g2d.setColor(Color.BLUE);
+			g2d.fillRoundRect(215, 220, 380, 180, 20, 20);
+			g2d.setComposite(composite);
+		}
 	}
 
 	@Override
@@ -268,14 +298,14 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 		if (Const.FIRST_RUN == 1) {
 			boolean success = Routines.getInstance().initSQL();
 			if (success) {
-				Const.store("FIRSTRUN", "0");
 				Const.store("dbuser", name);
 				Const.store("dbpass", pass);
+				Const.store("FIRSTRUN", "0");
 				removeSQLView();
 				initComponents();
 			} else {
 				failLabel
-						.setText("未知原因 构建数据库结构失败，请检查MYSQL是否为独立版本 如问题没有解决请请联系客服人员");
+						.setText("未知原因 构建数据库结构失败，请检查MYSQL是否为独立版本或路径是否为英文名称 如问题没有解决请请联系客服人员");
 				failLabel.setVisible(true);
 			}
 		}
@@ -284,28 +314,28 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	private void dumpSQL() {
 		boolean success = Routines.getInstance().dumpSQL();
 		if (success) {
-			JOptionPane.showMessageDialog(this, "备份成功");
+			ImageDialog.showNOImage(this, "备份成功");
 			return;
 		}
-		JOptionPane.showMessageDialog(this, "备份失败，请联系技术人员");
+		ImageDialog.showNOImage(this, "备份失败，请联系技术人员");
 	}
 
 	private void loadSQL() {
 		boolean success = Routines.getInstance().loadSQL();
 		if (success) {
-			JOptionPane.showMessageDialog(this, "还原成功");
+			ImageDialog.showNOImage(this, "还原成功");
 			return;
 		}
-		JOptionPane.showMessageDialog(this, "还原失败，请联系技术人员");
+		ImageDialog.showNOImage(this, "还原失败，请联系技术人员");
 	}
 
 	private void initSQL() {
 		boolean success = Routines.getInstance().initSQL();
 		if (success) {
-			JOptionPane.showMessageDialog(this, "初始化成功");
+			ImageDialog.showYesImage(this, "初始化成功");
 			return;
 		}
-		JOptionPane.showMessageDialog(this, "初始化失败，请联系技术人员");
+		ImageDialog.showNOImage(this, "初始化失败，请联系技术人员");
 	}
 
 	private void config() {
@@ -325,7 +355,7 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 			Runtime.getRuntime().exec("notepad " + path);
 		} catch (IOException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(this, "未知错误 无法打开日志文件");
+			ImageDialog.showNOImage(this, "未知错误 无法打开日志文件");
 		}
 	}
 

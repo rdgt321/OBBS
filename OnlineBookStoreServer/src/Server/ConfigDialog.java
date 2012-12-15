@@ -1,5 +1,8 @@
 package Server;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -9,8 +12,12 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import sun.print.resources.serviceui;
+import sun.tools.jar.resources.jar;
 
 public class ConfigDialog extends JDialog implements ActionListener,
 		FocusListener {
@@ -22,7 +29,12 @@ public class ConfigDialog extends JDialog implements ActionListener,
 	// refer to serverView
 	private ServerView serverView = null;
 
+	// bg
+	private Image bgimg = null;
+	private Image iconimg = null;
+
 	// components
+	private JPanel contentPanel = null;
 	private JLabel max_client = null;
 	private JLabel time_auto_backup = null;
 	private JLabel dbuser = null;
@@ -47,10 +59,12 @@ public class ConfigDialog extends JDialog implements ActionListener,
 	public ConfigDialog(ServerView serverView) {
 		super();
 		this.serverView = serverView;
+		loadImgs();
 		initComponent();
 		setTitle("服务器参数配置");
+		setIconImage(iconimg);
 		setLayout(null);
-		setSize(500, 450);
+		setSize(506, 473);
 		setLocationRelativeTo(serverView);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setVisible(true);
@@ -62,7 +76,22 @@ public class ConfigDialog extends JDialog implements ActionListener,
 		setVisible(true);
 	}
 
+	private void loadImgs() {
+		bgimg = Toolkit.getDefaultToolkit().getImage("materials\\cfgbg.png");
+		iconimg = Toolkit.getDefaultToolkit()
+				.getImage("materials\\cfgicon.png");
+	}
+
 	private void initComponent() {
+		contentPanel = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(bgimg, 0, 0, 500, 450, this);
+			}
+		};
+		contentPanel.setLayout(null);
+		contentPanel.setSize(500, 450);
 		max_client = new JLabel("最大并发用户数(10~500)");
 		max_client.setSize(150, 50);
 		max_client.setLocation(120, 40);
@@ -128,39 +157,40 @@ public class ConfigDialog extends JDialog implements ActionListener,
 		dbpass_field.setLocation(270, 300);
 		dbpass_field.setVisible(true);
 
-		confirmbtn = new JButton("确定修改");
+		confirmbtn = new MButton("确定修改");
 		confirmbtn.setSize(80, 30);
 		confirmbtn.setLocation(200, 350);
 		confirmbtn.addActionListener(this);
 
-		defaultbtn = new JButton("默认配置");
+		defaultbtn = new MButton("默认配置");
 		defaultbtn.setSize(80, 30);
 		defaultbtn.setLocation(300, 350);
 		defaultbtn.addActionListener(this);
 
-		cancelbtn = new JButton("取消");
+		cancelbtn = new MButton("取消");
 		cancelbtn.setSize(80, 30);
 		cancelbtn.setLocation(400, 350);
 		cancelbtn.addActionListener(this);
 
-		add(max_client);
-		add(time_auto_backup);
-		add(time_out);
-		add(routine);
-		add(dbuser);
-		add(dbpass);
-		add(max_client_field);
-		add(time_auto_backup_field);
-		add(time_out_field);
-		add(routine_field);
-		add(dbuser_field);
-		add(dbpass_field);
-		add(second);
-		add(minute);
-		add(day);
-		add(confirmbtn);
-		add(defaultbtn);
-		add(cancelbtn);
+		contentPanel.add(max_client);
+		contentPanel.add(time_auto_backup);
+		contentPanel.add(time_out);
+		contentPanel.add(routine);
+		contentPanel.add(dbuser);
+		contentPanel.add(dbpass);
+		contentPanel.add(max_client_field);
+		contentPanel.add(time_auto_backup_field);
+		contentPanel.add(time_out_field);
+		contentPanel.add(routine_field);
+		contentPanel.add(dbuser_field);
+		contentPanel.add(dbpass_field);
+		contentPanel.add(second);
+		contentPanel.add(minute);
+		contentPanel.add(day);
+		contentPanel.add(confirmbtn);
+		contentPanel.add(defaultbtn);
+		contentPanel.add(cancelbtn);
+		setContentPane(contentPanel);
 		load();
 		validate();
 		requestFocus();
@@ -223,22 +253,22 @@ public class ConfigDialog extends JDialog implements ActionListener,
 		if (e.getSource() == max_client_field) {
 			if (validateNumber(max_client_field.getText(), 10, 500) == false) {
 				max_client_field.requestFocus();
-				JOptionPane.showMessageDialog(this, "输入不符合要求，请重新输入");
+				ImageDialog.showNOImage(contentPanel, "输入不符合要求，请重新输入");
 			}
 		} else if (e.getSource() == time_auto_backup_field) {
 			if (validateNumber(time_auto_backup_field.getText(), 1, 14) == false) {
 				time_auto_backup_field.requestFocus();
-				JOptionPane.showMessageDialog(this, "输入不符合要求，请重新输入");
+				ImageDialog.showNOImage(contentPanel, "输入不符合要求，请重新输入");
 			}
 		} else if (e.getSource() == time_out_field) {
 			if (validateNumber(time_out_field.getText(), 5, 15) == false) {
 				time_out_field.requestFocus();
-				JOptionPane.showMessageDialog(this, "输入不符合要求，请重新输入");
+				ImageDialog.showNOImage(contentPanel, "输入不符合要求，请重新输入");
 			}
 		} else if (e.getSource() == routine_field) {
 			if (validateNumber(routine_field.getText(), 1, 30) == false) {
 				routine_field.requestFocus();
-				JOptionPane.showMessageDialog(this, "输入不符合要求，请重新输入");
+				ImageDialog.showNOImage(contentPanel, "输入不符合要求，请重新输入");
 			}
 		}
 	}

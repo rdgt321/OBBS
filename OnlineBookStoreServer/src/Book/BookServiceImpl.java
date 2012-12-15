@@ -115,7 +115,7 @@ public class BookServiceImpl extends UnicastRemoteObject implements BookService 
 		ResultSet resultSet = null;
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(2, num);
+			ps.setInt(1, num);
 			resultSet = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -132,7 +132,7 @@ public class BookServiceImpl extends UnicastRemoteObject implements BookService 
 	public ResultMessage getTopBooksInDirectory(int diectoryID, int num)
 			throws RemoteException {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "select book.* from book left join order_item on book.isbn=order_item.bookisbn and book.directoryid=? group by book.isbn order by sum(order_item.count) desc limit 0,?";
+		String sql = "select book.* from book left join order_item on book.isbn=order_item.bookisbn where book.directoryid=? group by book.isbn order by sum(order_item.count) desc limit 0,?";
 		PreparedStatement ps;
 		ResultSet resultSet = null;
 		try {
@@ -155,7 +155,7 @@ public class BookServiceImpl extends UnicastRemoteObject implements BookService 
 	@Override
 	public ResultMessage getTopDirectories(int num) throws RemoteException {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "select directory.* from book,directory left join order_item on book.isbn=order_item.bookisbn and book.directoryid=directory.directoryid group by directory.directoryid order by sum(order_item.count) desc limit 0,?";
+		String sql = "select directory.* from directory left join book on directory.directoryid=book.directoryid left join order_item on book.isbn=order_item.bookisbn group by directory.directoryid order by sum(order_item.count) desc limit 0,?";
 		PreparedStatement ps;
 		ResultSet resultSet = null;
 		try {

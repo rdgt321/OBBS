@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>Const</comment>
-<entry key="FIRSTRUN">0</entry>
+<entry key="FIRSTRUN">1</entry>
 <entry key="ADMIN">0</entry>
 <entry key="TIMEOUT">5</entry>
 <entry key="SEARCH_BY_NAME">1</entry>
@@ -16,9 +16,9 @@
 <entry key="MEMBER">3</entry>
 <entry key="SALESMANAGER">2</entry>
 <entry key="SEARCH_BY_MULTI">0</entry>
-<entry key="dbuser">root</entry>
-<entry key="dbpass">lczw123</entry>
+<entry key="dbuser"></entry>
+<entry key="dbpass"></entry>
 <entry key="MAX_CLIENT">200</entry>
 <entry key="CON_FAIL">0</entry>
-<entry key="LAST_BIRTH">2012-11-15</entry>
+<entry key="LAST_BIRTH">2012-11-16</entry>
 </properties>

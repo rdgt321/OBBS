@@ -92,7 +92,7 @@ public class SaleServiceImpl extends UnicastRemoteObject implements SaleService 
 			success &= updateItemMessage.isInvokeSuccess();
 		}
 		if (success) {
-			return new ResultMessage(true, null, "update cart success");
+			return getBooksInCart(cartPO.getMemberID());
 		}
 		return new ResultMessage(false, null, "update cart failed");
 	}

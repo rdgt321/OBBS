@@ -15,16 +15,17 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public ResultMessage fill(ArrayList<BookPO> books) {
+		ArrayList<BookPO> polist = new ArrayList<BookPO>();
 		try {
 			for (BookPO book : books) {
-				book = (BookPO) queryBookByISBN(book.getISBN()).getResultSet()
-						.get(0);
+				polist.add((BookPO) queryBookByISBN(book.getISBN())
+						.getResultSet().get(0));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResultMessage(false, null, "fill book failed");
 		}
-		return new ResultMessage(true, books, "fill finished");
+		return new ResultMessage(true, polist, "fill finished");
 	}
 
 	@Override
@@ -243,16 +244,22 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public ResultMessage searchBookByMulti(String keywords) {
-		String[] keyword = keywords.split("[ ]+");
+		keywords = keywords.replaceAll("\u3000", "\u0020");
+		String[] keyword = keywords.split("[\u0020]+");
 		Connection con = ConnectionFactory.getConnection();
 		ResultSet resultSet = null;
 		String sql = "select * from book where description like ? or name like ? or author like ?";
-		PreparedStatement ps;
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement(sql);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		ArrayList<BookPO> result = new ArrayList<BookPO>();
 		boolean exist = false;
 		for (String key : keyword) {
+			System.out.println("key:"+key);
 			try {
-				ps = con.prepareStatement(sql);
 				ps.setString(1, "%" + key + "%");
 				ps.setString(2, "%" + key + "%");
 				ps.setString(3, "%" + key + "%");
@@ -261,6 +268,9 @@ public class BookDAOImpl implements BookDAO {
 				e.printStackTrace();
 			}
 			ArrayList<BookPO> polist = map(resultSet);
+			if (polist == null) {
+				continue;
+			}
 			for (BookPO book : polist) {
 				exist = false;
 				for (BookPO inbook : result) {
@@ -270,6 +280,7 @@ public class BookDAOImpl implements BookDAO {
 					}
 				}
 				if (!exist) {
+					System.out.println(book.getName());
 					result.add(book);
 				}
 			}

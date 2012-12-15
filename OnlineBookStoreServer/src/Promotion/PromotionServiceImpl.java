@@ -59,15 +59,15 @@ public class PromotionServiceImpl extends UnicastRemoteObject implements
 			if (discountRate != 0) {
 				couponsDAO.addCoupons(new CouponsPO(-1, memberID, discountRate,
 						promotion.getEndDate(), false));
-				messageDAO.addMessage(memberID, "您获得了" + promotion.getName()
-						+ "促销的折扣券");
+				messageDAO.addMessage(memberID, "折扣券赠送",
+						"您获得了" + promotion.getName() + "促销的折扣券");
 			}
 			if (equivalentDenomination != 0) {
 				equivalentBondDAO.addEquivalentBond(new EquivalentBondPO(-1,
 						memberID, promotion.getBondUseLimit(),
 						equivalentDenomination, promotion.getEndDate(), false));
-				messageDAO.addMessage(memberID, "您获得了" + promotion.getName()
-						+ "促销的折扣券");
+				messageDAO.addMessage(memberID, "等价券赠送",
+						"您获得了" + promotion.getName() + "促销的折扣券");
 			}
 			return new ResultMessage(true, null, "trigger success");
 		}

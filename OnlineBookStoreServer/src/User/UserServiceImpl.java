@@ -54,7 +54,7 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
 	}
 
 	@Override
-	public ResultMessage login(String ID, String password, String IP)
+	public ResultMessage login(String ID, String password, String IP, int type)
 			throws RemoteException {
 		if (UserPool.getAgents().size() >= Const.MAX_CLIENT) {
 			return new ResultMessage(false, null, "服务器繁忙，请稍后再试");
@@ -66,6 +66,9 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
 					user.getPassword(), user.getType());
 			userAgent.lastRequest = System.currentTimeMillis();
 			userAgent.ip = IP;
+			if (userAgent.getUserType() != type) {
+				return new ResultMessage(false, null, "无此类型用户名的用户存在");
+			}
 			if (UserPool.isOnline(userAgent)) {
 				return new ResultMessage(false, null, "用户已经登录，请稍后再试");
 			}

@@ -1,5 +1,6 @@
 package Server;
 
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -73,7 +74,6 @@ public class Server extends JFrame {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		// checkPromotionSuit(userAgent);
 	}
 
 	public void startRoutines() {
@@ -86,6 +86,8 @@ public class Server extends JFrame {
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setTitle("在线图书销售系统服务器端");
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage("materials\\icon.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		serverView = new ServerView();
 		setContentPane(serverView);

@@ -63,7 +63,7 @@ DROP TABLE IF EXISTS `cart_item`;
 CREATE TABLE `cart_item` (
   `memberid` int(11) NOT NULL,
   `bookisbn` varchar(25) NOT NULL,
-  `nowpirce` double DEFAULT NULL,
+  `nowprice` double DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
   PRIMARY KEY (`memberid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=gbk;

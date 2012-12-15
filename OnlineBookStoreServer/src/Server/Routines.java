@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -56,7 +59,7 @@ public class Routines implements Runnable, Observer {
 		while (true) {
 			if (Const.FIRST_RUN == 1 || Const.CON_FAIL == 1) {
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(5000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -158,7 +161,7 @@ public class Routines implements Runnable, Observer {
 					if (discountRate != 0) {
 						couponsDAO.addCoupons(new CouponsPO(-1, member.getID(),
 								discountRate, promotion.getEndDate(), false));
-						messageDAO.addMessage(member.getID(), "您获得了"
+						messageDAO.addMessage(member.getID(), "折价券赠送", "您获得了"
 								+ promotion.getName() + "促销的折扣券");
 					}
 					if (equivalentDenomination != 0) {
@@ -168,7 +171,7 @@ public class Routines implements Runnable, Observer {
 												.getBondUseLimit(),
 										equivalentDenomination, promotion
 												.getEndDate(), false));
-						messageDAO.addMessage(member.getID(), "您获得了"
+						messageDAO.addMessage(member.getID(), "折扣券赠送", "您获得了"
 								+ promotion.getName() + "促销的折扣券");
 					}
 					insertps.setInt(1, promotion.getPromotionID());
@@ -228,8 +231,8 @@ public class Routines implements Runnable, Observer {
 				memberID = member.getID();
 				couponsDAO.addCoupons(new CouponsPO(-1, memberID, discountRate,
 						birth.getEndDate(), false));
-				messageDAO.addMessage(memberID, "您获得了" + birth.getName()
-						+ "促销的折扣券");
+				messageDAO.addMessage(memberID, "生日快乐",
+						"您获得了" + birth.getName() + "促销的折扣券");
 			}
 		}
 		if (equivalentDenomination != 0) {
@@ -238,8 +241,8 @@ public class Routines implements Runnable, Observer {
 				equivalentBondDAO.addEquivalentBond(new EquivalentBondPO(-1,
 						memberID, birth.getBondUseLimit(),
 						equivalentDenomination, birth.getEndDate(), false));
-				messageDAO.addMessage(memberID, "您获得了" + birth.getName()
-						+ "促销的折扣券");
+				messageDAO.addMessage(memberID, "生日快乐",
+						"您获得了" + birth.getName() + "促销的折扣券");
 			}
 		}
 	}
@@ -253,7 +256,11 @@ public class Routines implements Runnable, Observer {
 		int index = path.lastIndexOf("bin");
 		path = path.substring(1, index);
 		path = path + Const.BACKUPPATH;
-		path = path.replaceAll("%20", "^ ");
+		try {
+			path = URLDecoder.decode(path, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
 		String command = "cmd /c " + getMYSQLPath() + "mysqldump -u "
 				+ Const.dbuser + " -p" + Const.dbpass + " --database obss > "
 				+ path;
@@ -301,7 +308,11 @@ public class Routines implements Runnable, Observer {
 		int index = path.lastIndexOf("bin");
 		path = path.substring(1, index);
 		path = path + Const.BACKUPPATH;
-		path = path.replaceAll("%20", " ");
+		try {
+			path = URLDecoder.decode(path, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
 		String command = "cmd /c " + getMYSQLPath() + "mysql -u "
 				+ Const.dbuser + " -p" + Const.dbpass + " < " + path;
 		try {
@@ -318,7 +329,11 @@ public class Routines implements Runnable, Observer {
 		int index = path.lastIndexOf("bin");
 		path = path.substring(1, index);
 		path = path + Const.SQLPATH;
-		path = path.replaceAll("%20", " ");
+		try {
+			path = URLDecoder.decode(path, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
 		String command = "cmd /c " + getMYSQLPath() + "mysql -u "
 				+ Const.dbuser + " -p" + Const.dbpass + " < " + path;
 		try {
