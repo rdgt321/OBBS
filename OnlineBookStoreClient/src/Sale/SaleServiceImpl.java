@@ -5,6 +5,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import ClientRunner.Const;
 import RMI.ResultMessage;
 
 public class SaleServiceImpl implements SaleService {
@@ -12,7 +13,8 @@ public class SaleServiceImpl implements SaleService {
 
 	public SaleServiceImpl() {
 		try {
-			service_stub = (SaleService) Naming.lookup("SaleService");
+			service_stub = (SaleService) Naming.lookup(Const.SERVER
+					+ "SaleService");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (RemoteException e) {

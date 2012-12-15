@@ -3,7 +3,6 @@ package Server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
@@ -25,6 +24,10 @@ import User.UserService;
 import User.UserServiceImpl;
 
 public class Server extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5311815554577548014L;
 	Routines routines = null;
 	BookService bookService = null;
 	MemberService memberService = null;
@@ -70,7 +73,7 @@ public class Server extends JFrame {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-//		checkPromotionSuit(userAgent);
+		// checkPromotionSuit(userAgent);
 	}
 
 	public void startRoutines() {

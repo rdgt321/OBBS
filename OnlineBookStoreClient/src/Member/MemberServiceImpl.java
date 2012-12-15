@@ -5,6 +5,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import ClientRunner.Const;
 import RMI.ResultMessage;
 import RMI.UserAgent;
 
@@ -13,20 +14,23 @@ public class MemberServiceImpl implements MemberService {
 
 	public MemberServiceImpl() {
 		try {
-			service_stub = (MemberService) Naming.lookup("MemberService");
+			service_stub = (MemberService) Naming.lookup(Const.SERVER
+					+ "MemberService");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (RemoteException e) {
+			System.out.println("������δ����");
 			e.printStackTrace();
 		} catch (NotBoundException e) {
+			System.out.println("û�����");
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public ResultMessage login(String ID, String password)
+	public ResultMessage login(String ID, String password, String IP)
 			throws RemoteException {
-		return service_stub.login(ID, password);
+		return service_stub.login(ID, password, IP);
 	}
 
 	@Override
@@ -85,6 +89,16 @@ public class MemberServiceImpl implements MemberService {
 	public ResultMessage onlineValidate(UserAgent userAgent)
 			throws RemoteException {
 		return service_stub.onlineValidate(userAgent);
+	}
+
+	@Override
+	public ResultMessage logout(UserAgent userAgent) throws RemoteException {
+		return service_stub.logout(userAgent);
+	}
+
+	@Override
+	public ResultMessage getMessage(UserAgent userAgent) throws RemoteException {
+		return service_stub.getMessage(userAgent);
 	}
 
 }

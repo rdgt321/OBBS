@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 public class PromotionPO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3743500415696307006L;
 	private int promotionID;
 	private int leastIntegral;
 	private String name;

@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 public class CouponsPO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 550472540109466945L;
 	private int counponsID;
 	private int ownerID;
 	private double discountRate;

@@ -1,19 +1,13 @@
 package Member;
 
-import java.awt.peer.SystemTrayPeer;
 import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Calendar;
-
 import Book.BookPO;
 import DBC.BookDAO;
-import DBC.CartItemDAO;
-import DBC.CartItemDAOImpl;
 import DBC.CollectDAO;
 import DBC.CouponsDAO;
 import DBC.DAOFactory;
@@ -22,20 +16,18 @@ import DBC.MemberDAO;
 import DBC.MessageDAO;
 import DBC.OrderDAO;
 import DBC.OrderItemDAO;
-import DBC.PromotionDAO;
-import Promotion.CouponsPO;
-import Promotion.EquivalentBondPO;
-import Promotion.PromotionPO;
 import RMI.ResultMessage;
 import RMI.UserAgent;
-import Sale.ItemPO;
 import Sale.OrderPO;
 import Server.Const;
 import Server.UserPool;
-import User.UserPO;
 
 public class MemberServiceImpl extends UnicastRemoteObject implements
 		MemberService {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4500456773374366307L;
 	private BookDAO bookDAO = null;
 	private CollectDAO collectDAO = null;
 	private MemberDAO memberDAO = null;
@@ -43,7 +35,6 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 	private OrderItemDAO orderItemDAO = null;
 	private CouponsDAO couponsDAO = null;
 	private EquivalentBondDAO equivalentBondDAO = null;
-	private PromotionDAO promotionDAO = null;
 	private MessageDAO messageDAO = null;
 
 	public MemberServiceImpl() throws RemoteException {
@@ -62,7 +53,6 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 		orderItemDAO = DAOFactory.getOrderItemDAO();
 		couponsDAO = DAOFactory.getCouponsDAO();
 		equivalentBondDAO = DAOFactory.getEquivalentBondDAO();
-		promotionDAO = DAOFactory.getPromotionDAO();
 		messageDAO = DAOFactory.getMessageDAO();
 	}
 
@@ -115,6 +105,7 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 		return memberDAO.queryMember(memberID);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ResultMessage purchaseQuery(int memberID) throws RemoteException {
 		ArrayList<OrderPO> orderlist = null;
@@ -146,7 +137,8 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 			throws RemoteException {
 		return collectDAO.cancelCollect(bookISBN, memberID);
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public ResultMessage getCollectedBook(int memebrID) throws RemoteException {
 		ResultMessage collectMessage = collectDAO.getCollectedBook(memebrID);

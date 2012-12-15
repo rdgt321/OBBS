@@ -5,6 +5,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import ClientRunner.Const;
 import RMI.ResultMessage;
 
 public class PromotionServiceImpl implements PromotionService {
@@ -12,7 +13,8 @@ public class PromotionServiceImpl implements PromotionService {
 
 	public PromotionServiceImpl() {
 		try {
-			service_stub = (PromotionService) Naming.lookup("PromotionService");
+			service_stub = (PromotionService) Naming.lookup(Const.SERVER
+					+ "PromotionService");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (RemoteException e) {

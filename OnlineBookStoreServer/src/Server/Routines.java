@@ -1,6 +1,5 @@
 package Server;
 
-import java.awt.Insets;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +22,6 @@ import DBC.CouponsDAO;
 import DBC.DAOFactory;
 import DBC.EquivalentBondDAO;
 import DBC.MessageDAO;
-import DBC.PromotionDAO;
 import Member.MemberPO;
 import Promotion.CouponsPO;
 import Promotion.EquivalentBondPO;
@@ -110,7 +108,8 @@ public class Routines implements Runnable, Observer {
 				now.get(Calendar.YEAR) + "-" + now.get(Calendar.MONTH) + "-"
 						+ now.get(Calendar.DAY_OF_MONTH));
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	private void checkPromotion() {
 		ResultMessage promotionMessage = DAOFactory.getPromotionDAO()
 				.getPromotionList();
@@ -197,7 +196,8 @@ public class Routines implements Runnable, Observer {
 			e.printStackTrace();
 		}
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	private void triggerBirth() {
 		ResultMessage memberMessage = DAOFactory.getMemberDAO()
 				.getBirthMembers();

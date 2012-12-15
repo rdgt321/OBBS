@@ -11,6 +11,8 @@ public interface UserDAO {
 	public ResultMessage deleteUser(int userID);
 
 	public ResultMessage updateUser(UserPO userPO);
+	
+	public ResultMessage getUsers();
 
 	public ResultMessage queryUser(String name);
 

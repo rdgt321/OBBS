@@ -3,11 +3,7 @@ package Sale;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.ibm.media.codec.video.VideoCodec;
-
-import Book.BookPO;
-import Member.MemberPO;
-
+@SuppressWarnings("serial")
 public class CartPO implements Serializable {
 	int memberID;
 	ArrayList<ItemPO> items;

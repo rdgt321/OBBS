@@ -4,15 +4,8 @@ import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.PseudoColumnUsage;
 import java.util.ArrayList;
-import java.util.Calendar;
-
-import com.sun.media.rtp.RTCPAPPPacket;
-
-import Book.BookPO;
 import DBC.CartItemDAO;
 import DBC.DAOFactory;
 import DBC.OrderDAO;
@@ -20,6 +13,10 @@ import DBC.OrderItemDAO;
 import RMI.ResultMessage;
 
 public class SaleServiceImpl extends UnicastRemoteObject implements SaleService {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3029531380138838327L;
 	private OrderDAO orderDAO = null;
 	private OrderItemDAO orderItemDAO = null;
 	private CartItemDAO cartItemDAO = null;
@@ -72,6 +69,7 @@ public class SaleServiceImpl extends UnicastRemoteObject implements SaleService 
 		return cartItemDAO.deleteCartItem(memberID, bookISBN);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ResultMessage getBooksInCart(int memberID) throws RemoteException {
 		ResultMessage cartitemMessage = cartItemDAO.getBooksInCart(memberID);

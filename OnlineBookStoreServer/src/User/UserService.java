@@ -6,7 +6,9 @@ import RMI.addUser;
 import RMI.deleteUser;
 import RMI.getAllBooks;
 import RMI.getAllDirectories;
+import RMI.getMembers;
 import RMI.getPromotionList;
+import RMI.getUsers;
 import RMI.logout;
 import RMI.modifyOrder;
 import RMI.modifyUser;
@@ -16,6 +18,7 @@ import RMI.queryUser;
 
 public interface UserService extends Login, addUser, deleteUser, modifyUser,
 		queryUser, addMember, queryOrder, modifyOrder, getAllBooks,
-		getAllDirectories, getPromotionList, onlineValidate, logout {
+		getAllDirectories, getPromotionList, getMembers, getUsers,
+		onlineValidate, logout {
 
 }

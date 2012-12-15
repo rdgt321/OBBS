@@ -13,9 +13,7 @@ import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.AbstractAction;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,6 +30,11 @@ import DBC.ConnectionFactory;
 import RMI.UserAgent;
 
 public class ServerView extends JPanel implements ActionListener, Observer {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	// 用户列表
 	private ArrayList<UserAgent> userAgents = new ArrayList<UserAgent>();
@@ -327,6 +330,10 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	}
 
 	class tableModel extends AbstractTableModel {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		String[] columns = { "用户ID", "用户名", "密码(加密)", "用户类型", "IP地址", "用户最后响应" };
 
 		@Override

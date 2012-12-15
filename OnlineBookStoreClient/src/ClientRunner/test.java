@@ -1,5 +1,7 @@
 package ClientRunner;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 
 import Book.BookService;
@@ -26,12 +28,14 @@ public class test {
 		ResultMessage resultMessage = null;
 		UserAgent userAgent = null;
 		try {
-			resultMessage = userService.login("admin", "123456");
+			resultMessage = userService.login("admin", "123456",InetAddress.getLocalHost().getHostAddress());
 			System.out.println(resultMessage.isInvokeSuccess());
 			System.out.println(resultMessage.getPostScript());
 			userAgent = (UserAgent) resultMessage.getResultSet().get(0);
 			userService.onlineValidate(userAgent);
 		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}

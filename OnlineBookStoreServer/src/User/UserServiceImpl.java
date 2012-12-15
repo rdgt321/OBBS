@@ -4,14 +4,8 @@ import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.server.RMISocketFactory;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Calendar;
-
-import sun.security.x509.IPAddressName;
-
 import DBC.BookDAO;
 import DBC.DAOFactory;
 import DBC.DirectoryDAO;
@@ -29,6 +23,10 @@ import Server.Const;
 import Server.UserPool;
 
 public class UserServiceImpl extends UnicastRemoteObject implements UserService {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5323601938545642523L;
 	private UserDAO userDAO = null;
 	private OrderDAO orderDAO = null;
 	private BookDAO bookDAO = null;
@@ -152,6 +150,16 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
 	public ResultMessage logout(UserAgent userAgent) throws RemoteException {
 		UserPool.disconnect(userAgent);
 		return null;
+	}
+
+	@Override
+	public ResultMessage getMembers() throws RemoteException {
+		return memberDAO.getMembers();
+	}
+
+	@Override
+	public ResultMessage getUsers() throws RemoteException {
+		return userDAO.getUsers();
 	}
 
 }

@@ -6,6 +6,6 @@ import Book.DirectoryPO;
 
 
 public interface getSelectedDirectory extends Remote {
-	public ResultMessage getSelectedDirectory(String directoryID)
+	public ResultMessage getSelectedDirectory(int directoryID)
 			throws java.rmi.RemoteException;
 }

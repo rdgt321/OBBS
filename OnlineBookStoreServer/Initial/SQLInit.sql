@@ -213,6 +213,7 @@ DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `messageid` int(11) NOT NULL AUTO_INCREMENT,
   `memberid` int(11) DEFAULT NULL,
+  `title` varchar(16) NOT NULL,
   `msg` varchar(128) NOT NULL,
   `sent` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`messageid`)
@@ -241,7 +242,6 @@ CREATE TABLE `order_item` (
   `bookisbn` varchar(25) DEFAULT NULL,
   `nowprice` double DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
-  PRIMARY KEY (`orderid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

@@ -14,6 +14,11 @@ import javax.swing.JTextField;
 
 public class ConfigDialog extends JDialog implements ActionListener,
 		FocusListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3504603928042951350L;
+
 	// refer to serverView
 	private ServerView serverView = null;
 

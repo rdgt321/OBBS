@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import Book.BookPO;
-import Member.MemberPO;
-
+@SuppressWarnings("serial")
 public class OrderPO implements Serializable {
 	int orderID;
 	int memberID;

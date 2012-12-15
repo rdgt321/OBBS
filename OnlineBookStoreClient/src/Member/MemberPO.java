@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 public class MemberPO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3214684176200494116L;
 	private int memberID;
 	private String name;
 	private String password;

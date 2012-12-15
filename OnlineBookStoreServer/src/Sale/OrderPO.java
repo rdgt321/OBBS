@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import Book.BookPO;
-import Member.MemberPO;
-
 public class OrderPO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3301251128897213126L;
 	int orderID;
 	int memberID;
 	ArrayList<ItemPO> books;

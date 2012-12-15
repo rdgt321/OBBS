@@ -4,18 +4,22 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 public class BookPO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1142957228720804246L;
 	private String name;
 	private String ISBN;
 	private String author;
 	private String press;
 	private String description;
-	private String directoryID;
+	private int directoryID;
 	private Calendar publishDate;
 	private double price;
 	private double specialPrice;
 
 	public BookPO(String name, String ISBN, String author, String press,
-			String description, String directoryID, Calendar publishDate,
+			String description, int directoryID, Calendar publishDate,
 			double price, double specialPrice) {
 		super();
 		this.name = name;
@@ -49,7 +53,7 @@ public class BookPO implements Serializable {
 		return description;
 	}
 
-	public String getDirectoryID() {
+	public int getDirectoryID() {
 		return directoryID;
 	}
 

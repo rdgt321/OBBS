@@ -1,15 +1,11 @@
 package DBC;
 
-import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.sun.swing.internal.plaf.metal.resources.metal;
-
-import Member.MemberPO;
 import RMI.ResultMessage;
 import Server.Const;
 import User.AdminPO;
@@ -225,5 +221,29 @@ public class UserDAOImpl implements UserDAO {
 			return new ResultMessage(true, po, "login success");
 		}
 		return new ResultMessage(false, null, "login failed,password wrong");
+	}
+
+	@Override
+	public ResultMessage getUsers() {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "select * from user";
+		PreparedStatement ps;
+		ResultSet resultSet = null;
+		try {
+			ps = con.prepareStatement(sql);
+			resultSet = ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		ArrayList<UserPO> po = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (po != null) {
+			return new ResultMessage(true, po, "return users success");
+		}
+		return new ResultMessage(false, null, "no users in db");
 	}
 }

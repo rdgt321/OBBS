@@ -1,17 +1,18 @@
 package Book;
 
 import java.net.MalformedURLException;
+
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import DBC.BookDAO;
-import DBC.CollectDAO;
+import DBC.ConnectionFactory;
 import DBC.DAOFactory;
 import DBC.DirectoryDAO;
 import RMI.ResultMessage;
@@ -19,6 +20,10 @@ import Server.Const;
 
 public class BookServiceImpl extends UnicastRemoteObject implements BookService {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6312085607190371127L;
 	private BookDAO bookDAO = null;
 	private DirectoryDAO directoryDAO = null;
 
@@ -73,9 +78,9 @@ public class BookServiceImpl extends UnicastRemoteObject implements BookService 
 	}
 
 	@Override
-	public ResultMessage getSelectedDirectory(String directoryID)
+	public ResultMessage getSelectedDirectory(int directoryID)
 			throws RemoteException {
-		return bookDAO.queryBookByDirectory(Integer.parseInt(directoryID));
+		return bookDAO.queryBookByDirectory(directoryID);
 	}
 
 	@Override
@@ -100,6 +105,72 @@ public class BookServiceImpl extends UnicastRemoteObject implements BookService 
 	@Override
 	public ResultMessage getAllDirectories() throws RemoteException {
 		return directoryDAO.getAllDirectories();
+	}
+
+	@Override
+	public ResultMessage getTopBooksInTotal(int num) throws RemoteException {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "select book.* from book left join order_item on book.isbn=order_item.bookisbn group by book.isbn order by sum(order_item.count) desc limit 0,?";
+		PreparedStatement ps;
+		ResultSet resultSet = null;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(2, num);
+			resultSet = ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		ArrayList<BookPO> books = bookDAO.map(resultSet);
+		if (books != null) {
+			return new ResultMessage(true, books,
+					"query ok,return top books in total");
+		}
+		return new ResultMessage(false, null, "query top books in total fail");
+	}
+
+	@Override
+	public ResultMessage getTopBooksInDirectory(int diectoryID, int num)
+			throws RemoteException {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "select book.* from book left join order_item on book.isbn=order_item.bookisbn and book.directoryid=? group by book.isbn order by sum(order_item.count) desc limit 0,?";
+		PreparedStatement ps;
+		ResultSet resultSet = null;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, diectoryID);
+			ps.setInt(2, num);
+			resultSet = ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		ArrayList<BookPO> books = bookDAO.map(resultSet);
+		if (books != null) {
+			return new ResultMessage(true, books,
+					"query ok,return top books in specified directory");
+		}
+		return new ResultMessage(false, null,
+				"query top books in specified directory fail");
+	}
+
+	@Override
+	public ResultMessage getTopDirectories(int num) throws RemoteException {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "select directory.* from book,directory left join order_item on book.isbn=order_item.bookisbn and book.directoryid=directory.directoryid group by directory.directoryid order by sum(order_item.count) desc limit 0,?";
+		PreparedStatement ps;
+		ResultSet resultSet = null;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, num);
+			resultSet = ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		ArrayList<BookPO> books = bookDAO.map(resultSet);
+		if (books != null) {
+			return new ResultMessage(true, books,
+					"query ok,return top directory");
+		}
+		return new ResultMessage(false, null, "query top directory fail");
 	}
 
 }

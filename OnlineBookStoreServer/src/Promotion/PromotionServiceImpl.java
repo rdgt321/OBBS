@@ -5,12 +5,9 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Calendar;
-
 import DBC.CouponsDAO;
 import DBC.DAOFactory;
 import DBC.EquivalentBondDAO;
-import DBC.MemberDAO;
 import DBC.MessageDAO;
 import DBC.PromotionDAO;
 import RMI.ResultMessage;
@@ -18,7 +15,10 @@ import RMI.ResultMessage;
 public class PromotionServiceImpl extends UnicastRemoteObject implements
 		PromotionService {
 
-	private MemberDAO memberDAO = null;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9198592419143809531L;
 	private PromotionDAO promotionDAO = null;
 	private CouponsDAO couponsDAO = null;
 	private EquivalentBondDAO equivalentBondDAO = null;
@@ -33,7 +33,6 @@ public class PromotionServiceImpl extends UnicastRemoteObject implements
 		} catch (AlreadyBoundException e) {
 			e.printStackTrace();
 		}
-		memberDAO = DAOFactory.getMemberDAO();
 		promotionDAO = DAOFactory.getPromotionDAO();
 		couponsDAO = DAOFactory.getCouponsDAO();
 		equivalentBondDAO = DAOFactory.getEquivalentBondDAO();

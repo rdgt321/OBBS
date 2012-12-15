@@ -6,22 +6,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import Member.MessagePO;
 import RMI.ResultMessage;
 
 public class MessageDAOImpl implements MessageDAO {
 
-	private ArrayList<String> map(ResultSet resultSet) {
-		ArrayList<String> msg = null;
+	private ArrayList<MessagePO> map(ResultSet resultSet) {
+		ArrayList<MessagePO> msg = null;
 		try {
 			resultSet.last();
 			int len = 0;
 			if ((len = resultSet.getRow()) != 0) {
-				msg = new ArrayList<String>();
+				msg = new ArrayList<MessagePO>();
 				resultSet.beforeFirst();
 				for (int i = 0; i < len; i++) {
 					resultSet.next();
-					updateMessage(resultSet.getInt(1), true);
-					msg.add(resultSet.getString(2));
+					int messageID = resultSet.getInt(1);
+					int memberID = resultSet.getInt(2);
+					String title = resultSet.getString(3);
+					String context = resultSet.getString(4);
+					updateMessage(messageID, true);
+					msg.add(new MessagePO(messageID, memberID, title, context,
+							true));
 				}
 				return msg;
 			}
@@ -77,18 +83,17 @@ public class MessageDAOImpl implements MessageDAO {
 	@Override
 	public ResultMessage getMessage(int memberID) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "select * from message where memberid=? and sent=?";
+		String sql = "select * from message where memberid=?";
 		PreparedStatement ps;
 		ResultSet resultSet = null;
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memberID);
-			ps.setBoolean(2, false);
 			resultSet = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		ArrayList<String> msg = map(resultSet);
+		ArrayList<MessagePO> msg = map(resultSet);
 		try {
 			con.close();
 		} catch (SQLException e) {

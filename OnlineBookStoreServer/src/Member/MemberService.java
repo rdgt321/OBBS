@@ -7,6 +7,7 @@ import RMI.cancelCollect;
 import RMI.getCollectedBook;
 import RMI.getCoupons;
 import RMI.getEquivalentBond;
+import RMI.getMembers;
 import RMI.getMessage;
 import RMI.logout;
 import RMI.onlineValidate;

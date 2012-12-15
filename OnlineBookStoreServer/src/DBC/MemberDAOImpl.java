@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.ConcurrentHashMap;
 
 import Member.MemberPO;
 import RMI.ResultMessage;
@@ -128,7 +127,7 @@ public class MemberDAOImpl implements MemberDAO {
 			ps.setString(3, memberPO.getPhone());
 			ps.setDate(4, new java.sql.Date(memberPO.getBirth()
 					.getTimeInMillis()));
-			ps.setInt(1, memberPO.getID());
+			ps.setInt(5, memberPO.getID());
 			row = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

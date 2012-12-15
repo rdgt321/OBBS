@@ -3,12 +3,11 @@ package Sale;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.ibm.media.codec.video.VideoCodec;
-
-import Book.BookPO;
-import Member.MemberPO;
-
 public class CartPO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1488123745376259693L;
 	int memberID;
 	ArrayList<ItemPO> items;
 	double totalprice = 0;
