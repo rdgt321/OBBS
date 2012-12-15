@@ -54,6 +54,14 @@ public class Routines implements Runnable, Observer {
 	@Override
 	public void run() {
 		while (true) {
+			if (Const.FIRST_RUN == 1 || Const.CON_FAIL == 1) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				continue;
+			}
 			long loopStart = System.currentTimeMillis();
 			checkOnline();
 			checkBackUp();
@@ -108,7 +116,7 @@ public class Routines implements Runnable, Observer {
 				now.get(Calendar.YEAR) + "-" + now.get(Calendar.MONTH) + "-"
 						+ now.get(Calendar.DAY_OF_MONTH));
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void checkPromotion() {
 		ResultMessage promotionMessage = DAOFactory.getPromotionDAO()
@@ -196,7 +204,7 @@ public class Routines implements Runnable, Observer {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void triggerBirth() {
 		ResultMessage memberMessage = DAOFactory.getMemberDAO()

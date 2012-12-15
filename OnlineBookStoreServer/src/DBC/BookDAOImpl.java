@@ -243,26 +243,43 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public ResultMessage searchBookByMulti(String keywords) {
+		String[] keyword = keywords.split("[ ]+");
 		Connection con = ConnectionFactory.getConnection();
 		ResultSet resultSet = null;
 		String sql = "select * from book where description like ? or name like ? or author like ?";
 		PreparedStatement ps;
-		try {
-			ps = con.prepareStatement(sql);
-			ps.setString(1, "%" + keywords + "%");
-			ps.setString(2, "%" + keywords + "%");
-			ps.setString(3, "%" + keywords + "%");
-			resultSet = ps.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		ArrayList<BookPO> result = new ArrayList<BookPO>();
+		boolean exist = false;
+		for (String key : keyword) {
+			try {
+				ps = con.prepareStatement(sql);
+				ps.setString(1, "%" + key + "%");
+				ps.setString(2, "%" + key + "%");
+				ps.setString(3, "%" + key + "%");
+				resultSet = ps.executeQuery();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ArrayList<BookPO> polist = map(resultSet);
+			for (BookPO book : polist) {
+				exist = false;
+				for (BookPO inbook : result) {
+					if (book.getISBN().equals(inbook.getISBN())) {
+						exist = true;
+						break;
+					}
+				}
+				if (!exist) {
+					result.add(book);
+				}
+			}
 		}
-		ArrayList<BookPO> result = map(resultSet);
 		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if (result != null) {
+		if (result.size() != 0) {
 			return new ResultMessage(true, result, "查询成功 结果返回");
 		}
 		return new ResultMessage(false, result, "无符合的书存在");

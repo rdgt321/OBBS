@@ -49,12 +49,10 @@ public class ConfigDialog extends JDialog implements ActionListener,
 		this.serverView = serverView;
 		initComponent();
 		setTitle("服务器参数配置");
-		setUndecorated(true);
 		setLayout(null);
 		setSize(500, 450);
 		setLocationRelativeTo(serverView);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		// setAlwaysOnTop(true);
 		setVisible(true);
 	}
 
