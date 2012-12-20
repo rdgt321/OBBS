@@ -7,22 +7,23 @@ public class MemberPO implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3214684176200494116L;
+	private static final long serialVersionUID = -8868931573080191062L;
 	private int memberID;
 	private String name;
 	private String password;
 	private String phone;
 	private Calendar birth;
-	private long integral;
+	private int integral;
 
 	public MemberPO(int memberID, String name, String password, String phone,
-			Calendar birth) {
+			Calendar birth, int integral) {
 		super();
 		this.memberID = memberID;
 		this.name = name;
 		this.password = password;
 		this.phone = phone;
 		this.birth = birth;
+		this.integral = integral;
 	}
 
 	public int getID() {
@@ -45,7 +46,7 @@ public class MemberPO implements Serializable {
 		return birth;
 	}
 
-	public long getIntegral() {
+	public int getIntegral() {
 		return integral;
 	}
 }

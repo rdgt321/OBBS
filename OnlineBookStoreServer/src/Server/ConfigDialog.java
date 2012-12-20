@@ -8,16 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
-import sun.print.resources.serviceui;
-import sun.tools.jar.resources.jar;
 
 public class ConfigDialog extends JDialog implements ActionListener,
 		FocusListener {
@@ -45,16 +38,16 @@ public class ConfigDialog extends JDialog implements ActionListener,
 	private JLabel minute = null;
 	private JLabel day = null;
 
-	private JTextField max_client_field = null;
-	private JTextField time_auto_backup_field = null;
-	private JTextField dbuser_field = null;
-	private JTextField dbpass_field = null;
-	private JTextField time_out_field = null;
-	private JTextField routine_field = null;
+	private MTextField max_client_field = null;
+	private MTextField time_auto_backup_field = null;
+	private MTextField dbuser_field = null;
+	private MPasswordField dbpass_field = null;
+	private MTextField time_out_field = null;
+	private MTextField routine_field = null;
 	// buttons
-	private JButton confirmbtn = null;
-	private JButton cancelbtn = null;
-	private JButton defaultbtn = null;
+	private MButton confirmbtn = null;
+	private MButton cancelbtn = null;
+	private MButton defaultbtn = null;
 
 	public ConfigDialog(ServerView serverView) {
 		super();
@@ -128,31 +121,31 @@ public class ConfigDialog extends JDialog implements ActionListener,
 		day.setSize(50, 50);
 		day.setLocation(380, 90);
 
-		max_client_field = new JTextField();
+		max_client_field = new MTextField();
 		max_client_field.setSize(100, 30);
 		max_client_field.setLocation(270, 50);
 		max_client_field.addFocusListener(this);
 
-		time_auto_backup_field = new JTextField();
+		time_auto_backup_field = new MTextField();
 		time_auto_backup_field.setSize(100, 30);
 		time_auto_backup_field.setLocation(270, 100);
 		time_auto_backup_field.addFocusListener(this);
 
-		time_out_field = new JTextField();
+		time_out_field = new MTextField();
 		time_out_field.setSize(100, 30);
 		time_out_field.setLocation(270, 150);
 		time_out_field.addFocusListener(this);
 
-		routine_field = new JTextField();
+		routine_field = new MTextField();
 		routine_field.setSize(100, 30);
 		routine_field.setLocation(270, 200);
 		routine_field.addFocusListener(this);
 
-		dbuser_field = new JTextField();
+		dbuser_field = new MTextField();
 		dbuser_field.setSize(100, 30);
 		dbuser_field.setLocation(270, 250);
 
-		dbpass_field = new JPasswordField();
+		dbpass_field = new MPasswordField();
 		dbpass_field.setSize(100, 30);
 		dbpass_field.setLocation(270, 300);
 		dbpass_field.setVisible(true);

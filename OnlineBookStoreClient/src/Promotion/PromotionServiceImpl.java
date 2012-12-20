@@ -11,17 +11,10 @@ import RMI.ResultMessage;
 public class PromotionServiceImpl implements PromotionService {
 	private PromotionService service_stub = null;
 
-	public PromotionServiceImpl() {
-		try {
-			service_stub = (PromotionService) Naming.lookup(Const.SERVER
-					+ "PromotionService");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			e.printStackTrace();
-		}
+	public PromotionServiceImpl() throws MalformedURLException,
+			RemoteException, NotBoundException {
+		service_stub = (PromotionService) Naming.lookup(Const.SERVER
+				+ "PromotionService");
 	}
 
 	@Override

@@ -19,6 +19,7 @@ public class MemberDAOImpl implements MemberDAO {
 		String password = null;
 		String phone = null;
 		Calendar birth = null;
+		int integral = 0;
 		try {
 			resultSet.last();
 			int len = 0;
@@ -33,8 +34,9 @@ public class MemberDAOImpl implements MemberDAO {
 					phone = resultSet.getString(4);
 					birth = Calendar.getInstance();
 					birth.setTimeInMillis(resultSet.getDate(5).getTime());
+					integral = resultSet.getInt(6);
 					polist.add(new MemberPO(memberid, name, password, phone,
-							birth));
+							birth, integral));
 				}
 				return polist;
 			}
@@ -45,13 +47,13 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public ResultMessage addMember(MemberPO memberPO) {
+	public synchronized ResultMessage addMember(MemberPO memberPO) {
 		ResultMessage isExist = queryMemberByName(memberPO.getName());
 		if (isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "name exist,please try again");
 		}
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "insert into member(name,password,phone,birth) values(?,?,?,?)";
+		String sql = "insert into member(name,password,phone,birth,integral) values(?,?,?,?,0)";
 		PreparedStatement ps = null;
 		int row = 0;
 		int id = 0;
@@ -85,7 +87,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public ResultMessage deleteMember(int memberID) {
+	public synchronized ResultMessage deleteMember(int memberID) {
 		ResultMessage isExist = queryMember(memberID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "no such memberID");
@@ -110,7 +112,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public ResultMessage modifyMember(MemberPO memberPO) {
+	public synchronized ResultMessage modifyMember(MemberPO memberPO) {
 		ResultMessage isExist = queryMember(memberPO.getID());
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null,
@@ -144,7 +146,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public ResultMessage queryMember(int memberID) {
+	public synchronized ResultMessage queryMember(int memberID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from member where memberid=?";
 		PreparedStatement ps;
@@ -169,7 +171,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public ResultMessage queryMemberByName(String memberName) {
+	public synchronized ResultMessage queryMemberByName(String memberName) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from member where name=?";
 		PreparedStatement ps;
@@ -195,64 +197,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public ResultMessage getMembers(int pagenum, int num_per_page) {
-		Connection con = ConnectionFactory.getConnection();
-		String sql = "select * from member limit ?,?";
-		PreparedStatement ps;
-		ResultSet resultSet = null;
-		try {
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, pagenum * num_per_page);
-			ps.setInt(2, num_per_page);
-			resultSet = ps.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		ArrayList<MemberPO> polist = map(resultSet);
-		try {
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		if (polist != null) {
-			return new ResultMessage(true, polist, "query ok,return member");
-		}
-		return new ResultMessage(false, null,
-				"query failed,no such member in this page");
-	}
-
-	@Override
-	public ResultMessage getTotalNum() {
-		Connection con = ConnectionFactory.getConnection();
-		String sql = "select count(*) from member";
-		ResultSet resultSet = null;
-		ArrayList<Integer> totalnum = null;
-		try {
-			PreparedStatement ps = con.prepareStatement(sql);
-			resultSet = ps.executeQuery();
-			resultSet.next();
-			totalnum = new ArrayList<Integer>();
-			totalnum.add(resultSet.getInt(1));
-		} catch (SQLException e) {
-			e.printStackTrace();
-			try {
-				con.close();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			return new ResultMessage(false, null,
-					"query fail,can not get total num");
-		}
-		try {
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return new ResultMessage(true, totalnum, "query ok total num return");
-	}
-
-	@Override
-	public ResultMessage loginValidate(String ID, String password) {
+	public synchronized ResultMessage loginValidate(String ID, String password) {
 		ResultMessage isExist = queryMemberByName(ID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "no such user");
@@ -282,7 +227,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public ResultMessage getMembers() {
+	public synchronized ResultMessage getMembers() {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from member";
 		PreparedStatement ps;
@@ -306,7 +251,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public ResultMessage getBirthMembers() {
+	public synchronized ResultMessage getBirthMembers() {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from member where  DATE_FORMAT(birth,'-%m-%d')=DATE_FORMAT(CURRENT_DATE(),'-%m-%d')";
 		PreparedStatement ps;
@@ -329,5 +274,31 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		return new ResultMessage(false, null,
 				"query failed,no member bitrh today");
+	}
+
+	@Override
+	public synchronized ResultMessage updateIntegral(int memberID, int integral) {
+		ResultMessage exist = queryMember(memberID);
+		if (!exist.isInvokeSuccess()) {
+			return exist;
+		}
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "update member set integral=integral+? where memberid=?";
+		PreparedStatement ps;
+		int row = 0;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, integral);
+			ps.setInt(2, memberID);
+			row = ps.executeUpdate();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (row != 0) {
+			return new ResultMessage(true, null, "更新用户积分成功");
+		}
+		return new ResultMessage(false, null, "更新用户积分失败");
+
 	}
 }

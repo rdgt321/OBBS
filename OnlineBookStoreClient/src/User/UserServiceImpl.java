@@ -15,23 +15,16 @@ public class UserServiceImpl implements UserService {
 
 	private UserService service_stub = null;
 
-	public UserServiceImpl() {
-		try {
-			service_stub = (UserService) Naming.lookup(Const.SERVER
-					+ "UserService");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			e.printStackTrace();
-		}
+	public UserServiceImpl() throws MalformedURLException, RemoteException,
+			NotBoundException {
+		service_stub = (UserService) Naming
+				.lookup(Const.SERVER + "UserService");
 	}
 
 	@Override
-	public ResultMessage login(String ID, String password, String IP)
+	public ResultMessage login(String ID, String password, String IP, int type)
 			throws RemoteException {
-		return service_stub.login(ID, password, IP);
+		return service_stub.login(ID, password, IP, type);
 	}
 
 	@Override

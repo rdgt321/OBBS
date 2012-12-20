@@ -10,27 +10,27 @@ public class BookUIController {
 	private MainpagePanel mainpagePanel;
 	private BookClassifyPanel bookClassifyPanel;
 	private BookDisplayPanel bookDisplayPanel;
-	private JScrollPane scrollPane;
 
 	public BookUIController(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
-		scrollPane = new JScrollPane();
-		scrollPane.setSize(780, 520);
-		scrollPane.setLayout(null);
-		scrollPane.setLocation(0, 70);
 	}
 
 	public void setReturnView() {
 		if (mainpagePanel == null) {
 			mainpagePanel = new MainpagePanel(this);
 			mainpagePanel.init();
+			mainFrame.clear();
+			mainFrame.add(mainpagePanel);
+			mainpagePanel.requestFocus();
+			mainpagePanel.validate();
+			return;
 		}
 		mainFrame.clear();
+		mainpagePanel.refresh();
 		mainFrame.add(mainpagePanel);
 		mainpagePanel.requestFocus();
-		mainpagePanel.repaint();
 		mainpagePanel.validate();
-
+		mainpagePanel.repaint();
 	}
 
 	public void createMainView() {
@@ -42,31 +42,28 @@ public class BookUIController {
 		mainpagePanel.repaint();
 		mainpagePanel.validate();
 	}
-	
-	public void createBookClassifyView(){
-		if(bookClassifyPanel == null){
-			bookClassifyPanel = new BookClassifyPanel(this);
-			bookClassifyPanel.init();
-		}
+
+	public void createBookClassifyView(DirectoryPO directoryPO) {
+		bookClassifyPanel = new BookClassifyPanel(this, directoryPO);
+		bookClassifyPanel.init();
 		mainFrame.clear();
-		scrollPane.add(bookClassifyPanel);
-		mainFrame.add(scrollPane);
-		scrollPane.requestFocus();
-		scrollPane.repaint();
-		scrollPane.validate();
+		mainFrame.add(bookClassifyPanel);
+		bookClassifyPanel.repaint();
+		bookClassifyPanel.validate();
 	}
-	
-	public void createBookDetailView(){
-		BookPanel bookPanel = new BookPanel(this, null);
+
+	public void createBookDetailView(BookPO bookPO) {
+		BookPanel bookPanel = new BookPanel(this, bookPO);
 		bookPanel.createBookInfoView();
-		if(bookDisplayPanel == null){
-			bookDisplayPanel = new BookDisplayPanel(this, Agent.bookService, bookPanel);
-			bookDisplayPanel.init();
-		}
+		bookDisplayPanel = new BookDisplayPanel(this, bookPanel);
+		bookDisplayPanel.init();
 		mainFrame.clear();
 		bookDisplayPanel.setLocation(0, 70);
 		mainFrame.add(bookDisplayPanel);
 		bookDisplayPanel.requestFocus();
 	}
 
+	public MainFrame getMainFrame() {
+		return mainFrame;
+	}
 }

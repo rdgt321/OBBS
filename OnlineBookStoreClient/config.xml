@@ -10,4 +10,10 @@
 	<entry key="MEMBER">3</entry>
 	<entry key="SALESMANAGER">2</entry>
 	<entry key="SEARCH_BY_MULTI">0</entry>
+	<entry key="INTEGRAL_RATE">100</entry>
+	<entry key="WAITING_FOR_PAYMENT">0</entry>
+	<entry key="DILIVERING">1</entry>
+	<entry key="DILIVERING_CASH">2</entry>
+	<entry key="ORDER_CANCEL">3</entry>
+	<entry key="TRADE_SUCCESS">4</entry>
 </properties>

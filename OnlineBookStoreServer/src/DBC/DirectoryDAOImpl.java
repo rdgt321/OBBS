@@ -35,7 +35,7 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 	}
 
 	@Override
-	public ResultMessage addDirectory(DirectoryPO directoryPO) {
+	public synchronized ResultMessage addDirectory(DirectoryPO directoryPO) {
 		ResultMessage isExist = queryDirectoryByName(directoryPO.getName());
 		if (isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "directory name exist");
@@ -63,7 +63,7 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 	}
 
 	@Override
-	public ResultMessage deleteDirectory(int directoryID) {
+	public synchronized ResultMessage deleteDirectory(int directoryID) {
 		ResultMessage isExist = queryDirectoryByID(directoryID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "directory id does not exist");
@@ -91,9 +91,9 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 	}
 
 	@Override
-	public ResultMessage modifyDirectory(DirectoryPO directoryPO) {
+	public synchronized ResultMessage modifyDirectory(DirectoryPO directoryPO) {
 		ResultMessage isExist = queryDirectoryByID(directoryPO.getID());
-		if (isExist.isInvokeSuccess()) {
+		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null,
 					"directory id does not  exist");
 		}
@@ -121,7 +121,7 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 	}
 
 	@Override
-	public ResultMessage queryDirectoryByID(int directoryID) {
+	public synchronized ResultMessage queryDirectoryByID(int directoryID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from directory where directoryid=?";
 		PreparedStatement ps;
@@ -146,7 +146,7 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 	}
 
 	@Override
-	public ResultMessage queryDirectoryByName(String directroyName) {
+	public synchronized ResultMessage queryDirectoryByName(String directroyName) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from directory where name=?";
 		PreparedStatement ps;
@@ -171,7 +171,7 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 	}
 
 	@Override
-	public ResultMessage getAllDirectories(){
+	public synchronized ResultMessage getAllDirectories() {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from directory";
 		PreparedStatement ps;

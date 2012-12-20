@@ -26,6 +26,14 @@ public class Const {
 	public static int FIRST_RUN = 1;
 	public static int MAX_CLIENT = 0;
 	public static int CON_FAIL = 0;
+	public static int INTEGRAL_RATE = 100;
+	public static int MAX_COLLECT = 20;
+
+	public static int WAITING_FOR_PAYMENT = 0;
+	public static int DILIVERING = 1;
+	public static int DILIVERING_CASH = 2;
+	public static int ORDER_CANCEL = 3;
+	public static int TRADE_SUCCESS = 4;
 
 	public static String SQLPATH = null;
 	public static String BACKUPPATH = null;
@@ -65,6 +73,18 @@ public class Const {
 		BACKUP = Integer.parseInt(properties.getProperty("BACKUP"));
 		MAX_CLIENT = Integer.parseInt(properties.getProperty("MAX_CLIENT"));
 		CON_FAIL = Integer.parseInt(properties.getProperty("CON_FAIL"));
+		INTEGRAL_RATE = Integer.parseInt(properties
+				.getProperty("INTEGRAL_RATE"));
+		MAX_COLLECT = Integer.parseInt(properties.getProperty("MAX_COLLECT"));
+
+		WAITING_FOR_PAYMENT = Integer.parseInt(properties
+				.getProperty("WAITING_FOR_PAYMENT"));
+		DILIVERING = Integer.parseInt(properties.getProperty("DILIVERING"));
+		DILIVERING_CASH = Integer.parseInt(properties
+				.getProperty("DILIVERING_CASH"));
+		ORDER_CANCEL = Integer.parseInt(properties.getProperty("ORDER_CANCEL"));
+		TRADE_SUCCESS = Integer.parseInt(properties
+				.getProperty("TRADE_SUCCESS"));
 
 		SQLPATH = properties.getProperty("SQLPATH");
 		BACKUPPATH = properties.getProperty("BACKUPPATH");
@@ -76,9 +96,6 @@ public class Const {
 
 	public static void store(String key, String value) {
 		OutputStream os;
-		if (properties.getProperty(key) == null) {
-			return;
-		}
 		try {
 			os = new FileOutputStream("config.xml");
 			properties.setProperty(key, value);

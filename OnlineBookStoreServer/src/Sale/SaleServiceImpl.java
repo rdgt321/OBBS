@@ -44,16 +44,18 @@ public class SaleServiceImpl extends UnicastRemoteObject implements SaleService 
 		if (!success) {
 			return new ResultMessage(false, null, "add order failed");
 		}
+		int orderID = (Integer) orderMessage.getResultSet().get(0);
 		ResultMessage orderItemMessage;
 		for (ItemPO item : items) {
-			orderItemMessage = orderItemDAO.addOrderItem(orderPO.getOrderID(),
-					item);
+			orderItemMessage = orderItemDAO.addOrderItem(orderID, item);
 			success &= orderItemMessage.isInvokeSuccess();
 		}
 		if (!success) {
 			return new ResultMessage(false, null, "add orderitem failed");
 		}
-		return new ResultMessage(true, null, "add order success");
+		cartItemDAO.clearCart(orderPO.getMemberID());
+		return new ResultMessage(true, orderMessage.getResultSet(),
+				"add order success");
 
 	}
 

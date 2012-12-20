@@ -6,6 +6,8 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import Book.BookPO;
 import DBC.BookDAO;
 import DBC.CollectDAO;
@@ -16,8 +18,11 @@ import DBC.MemberDAO;
 import DBC.MessageDAO;
 import DBC.OrderDAO;
 import DBC.OrderItemDAO;
+import Promotion.CouponsPO;
+import Promotion.EquivalentBondPO;
 import RMI.ResultMessage;
 import RMI.UserAgent;
+import Sale.ItemPO;
 import Sale.OrderPO;
 import Server.Const;
 import Server.UserPool;
@@ -70,8 +75,7 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 			userAgent.lastRequest = System.currentTimeMillis();
 			userAgent.ip = IP;
 			if (userAgent.getUserType() != type) {
-				return new ResultMessage(false, null,
-						"无此类型用户名的用户存在");
+				return new ResultMessage(false, null, "无此类型用户名的用户存在");
 			}
 			if (UserPool.isOnline(userAgent)) {
 				return new ResultMessage(false, null, "用户已经登录，请稍后再试");
@@ -115,12 +119,17 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 		ArrayList<OrderPO> orderlist = null;
 		try {
 			ResultMessage orders = orderDAO.getOrder(memberID);
+			if (!orders.isInvokeSuccess()) {
+				return new ResultMessage(false, null, "query fail,try again");
+			}
 			orderlist = orders.getResultSet();
 			ResultMessage items = null;
 			for (int i = 0; i < orderlist.size(); i++) {
 				OrderPO order = (OrderPO) orderlist.get(i);
 				items = orderItemDAO.getOrderItems(order.getOrderID());
-				order.setBooks(items.getResultSet());
+				if (items.isInvokeSuccess()) {
+					order.setBooks(items.getResultSet());
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -182,4 +191,71 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 		return messageDAO.getMessage(userAgent.getId());
 	}
 
+	@Override
+	public ResultMessage readMessage(int messageID) throws RemoteException {
+		return messageDAO.updateMessage(messageID, true);
+	}
+
+	@Override
+	public ResultMessage userCoupons(int couponsID) throws RemoteException {
+		ResultMessage couponsMessage = couponsDAO.queryCoupons(couponsID);
+		if (couponsMessage.isInvokeSuccess()) {
+			CouponsPO coupons = (CouponsPO) couponsMessage.getResultSet()
+					.get(0);
+			int id = coupons.getCounponsID();
+			double rate = coupons.getDiscountRate();
+			Calendar date = coupons.getEndDate();
+			int ownerid = coupons.getOwnerID();
+			ResultMessage updateMessage = couponsDAO
+					.updateCoupons(new CouponsPO(id, ownerid, rate, date, true));
+			return updateMessage;
+		}
+		return couponsMessage;
+	}
+
+	@Override
+	public ResultMessage useEquivalentBond(int equivalentbondID)
+			throws RemoteException {
+		ResultMessage equivalentMessage = equivalentBondDAO
+				.queryEquivalentBond(equivalentbondID);
+		if (equivalentMessage.isInvokeSuccess()) {
+			EquivalentBondPO equivalentBond = (EquivalentBondPO) equivalentMessage
+					.getResultSet().get(0);
+			int id = equivalentBond.getEquivalentBondID();
+			double rate = equivalentBond.getEquivalentDenomination();
+			Calendar date = equivalentBond.getEndDate();
+			int ownerid = equivalentBond.getOwnerID();
+			double uselimit = equivalentBond.getUseLimit();
+			ResultMessage updateMessage = equivalentBondDAO
+					.updateEquivalentBond(new EquivalentBondPO(id, ownerid,
+							uselimit, rate, date, true));
+			return updateMessage;
+		}
+		return equivalentMessage;
+	}
+
+	@Override
+	public ResultMessage useIntegral(int memberID, int integral)
+			throws RemoteException {
+		return memberDAO.updateIntegral(memberID, integral);
+	}
+
+	@Override
+	public ResultMessage paymentFinishi(int orderID, int state)
+			throws RemoteException {
+		ResultMessage ordeMessage = orderDAO.orderQuery(orderID);
+		if (ordeMessage.isInvokeSuccess()) {
+			OrderPO order = (OrderPO) ordeMessage.getResultSet().get(0);
+			int memberID = order.getMemberID();
+			double totalprice = order.getTotalprice();
+			ResultMessage updateMessage = orderDAO.updateOrderState(orderID,
+					state);
+			if (updateMessage.isInvokeSuccess()) {
+				memberDAO.updateIntegral(memberID, (int) totalprice
+						/ Const.INTEGRAL_RATE);
+			}
+			return updateMessage;
+		}
+		return ordeMessage;
+	}
 }

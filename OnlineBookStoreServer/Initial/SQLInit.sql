@@ -64,8 +64,7 @@ CREATE TABLE `cart_item` (
   `memberid` int(11) NOT NULL,
   `bookisbn` varchar(25) NOT NULL,
   `nowprice` double DEFAULT NULL,
-  `count` int(11) DEFAULT NULL,
-  PRIMARY KEY (`memberid`)
+  `count` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -87,8 +86,7 @@ DROP TABLE IF EXISTS `collect`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `collect` (
   `memberid` int(11) NOT NULL,
-  `bookisbn` varchar(25) NOT NULL,
-  PRIMARY KEY (`memberid`)
+  `bookisbn` varchar(25) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -190,6 +188,7 @@ CREATE TABLE `member` (
   `password` varchar(32) DEFAULT NULL,
   `phone` varchar(16) DEFAULT NULL,
   `birth` date DEFAULT NULL,
+  `integral` int(11) DEFAULT NULL,
   PRIMARY KEY (`memberid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;

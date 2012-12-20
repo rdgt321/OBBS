@@ -44,38 +44,51 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public ResultMessage addOrder(OrderPO orderPO) {
+	public synchronized ResultMessage addOrder(OrderPO orderPO) {
 		ResultMessage isExist = orderQuery(orderPO.getOrderID());
 		if (isExist.isInvokeSuccess()) {
 			return new ResultMessage(true, null, "orderid exist");
 		}
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "insert into orders(memberid,date,state) values(?,?,?)";
-		PreparedStatement ps;
+		String sql = "insert into orders(memberid,totalprice,date,state) values(?,?,?,?)";
+		PreparedStatement ps = null;
 		int row = 0;
+		ResultSet resultSet = null;
 		try {
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql,
+					PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, orderPO.getMemberID());
-			ps.setDate(2,
+			ps.setDouble(2, orderPO.getTotalprice());
+			ps.setDate(3,
 					new java.sql.Date(orderPO.getDate().getTimeInMillis()));
-			ps.setInt(3, orderPO.getState());
+			ps.setInt(4, orderPO.getState());
 			row = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		if (row != 0) {
+			try {
+				resultSet = ps.getGeneratedKeys();
+				resultSet.next();
+				int id = resultSet.getInt(1);
+				ArrayList<Integer> idarr = new ArrayList<Integer>();
+				idarr.add(id);
+				con.close();
+				return new ResultMessage(true, idarr, "add order success");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if (row != 0) {
-			return new ResultMessage(true, null, "add order success");
-		}
 		return new ResultMessage(false, null, "add order failed");
 	}
 
 	@Override
-	public ResultMessage updateOrder(OrderPO orderPO) {
+	public synchronized ResultMessage updateOrder(OrderPO orderPO) {
 		ResultMessage isExist = orderQuery(orderPO.getOrderID());
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "no such orderid");
@@ -107,7 +120,7 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public ResultMessage orderQuery(int orderID) {
+	public synchronized ResultMessage orderQuery(int orderID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from orders where orderid=?";
 		PreparedStatement ps;
@@ -132,7 +145,7 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public ResultMessage deleteOrder(int orderID) {
+	public synchronized ResultMessage deleteOrder(int orderID) {
 		ResultMessage isExist = orderQuery(orderID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "no such orderID");
@@ -160,7 +173,7 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public ResultMessage getOrder(int memberID) {
+	public synchronized ResultMessage getOrder(int memberID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from orders where memberid=?";
 		PreparedStatement ps;
@@ -182,6 +195,35 @@ public class OrderDAOImpl implements OrderDAO {
 			return new ResultMessage(true, polist, "query ok,orders return");
 		}
 		return new ResultMessage(false, null, "no orders in history");
+	}
+
+	@Override
+	public synchronized ResultMessage updateOrderState(int orderID, int state) {
+		ResultMessage isExist = orderQuery(orderID);
+		if (!isExist.isInvokeSuccess()) {
+			return new ResultMessage(false, null, "no such orderid");
+		}
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "update orders set state=? where orderid=?";
+		PreparedStatement ps;
+		int row = 0;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, state);
+			ps.setInt(2, orderID);
+			row = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (row != 0) {
+			return new ResultMessage(true, null, "update order state success");
+		}
+		return new ResultMessage(false, null, "update order fail");
 	}
 
 }

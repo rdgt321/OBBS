@@ -12,25 +12,16 @@ import RMI.UserAgent;
 public class MemberServiceImpl implements MemberService {
 	private MemberService service_stub = null;
 
-	public MemberServiceImpl() {
-		try {
-			service_stub = (MemberService) Naming.lookup(Const.SERVER
-					+ "MemberService");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			System.out.println("������δ����");
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			System.out.println("û�����");
-			e.printStackTrace();
-		}
+	public MemberServiceImpl() throws MalformedURLException, RemoteException,
+			NotBoundException {
+		service_stub = (MemberService) Naming.lookup(Const.SERVER
+				+ "MemberService");
 	}
 
 	@Override
-	public ResultMessage login(String ID, String password, String IP)
+	public ResultMessage login(String ID, String password, String IP, int type)
 			throws RemoteException {
-		return service_stub.login(ID, password, IP);
+		return service_stub.login(ID, password, IP, type);
 	}
 
 	@Override
@@ -101,4 +92,31 @@ public class MemberServiceImpl implements MemberService {
 		return service_stub.getMessage(userAgent);
 	}
 
+	@Override
+	public ResultMessage readMessage(int messageID) throws RemoteException {
+		return service_stub.readMessage(messageID);
+	}
+
+	@Override
+	public ResultMessage userCoupons(int couponsID) throws RemoteException {
+		return service_stub.userCoupons(couponsID);
+	}
+
+	@Override
+	public ResultMessage useEquivalentBond(int equivalentbondID)
+			throws RemoteException {
+		return service_stub.useEquivalentBond(equivalentbondID);
+	}
+
+	@Override
+	public ResultMessage useIntegral(int memberID, int integral)
+			throws RemoteException {
+		return service_stub.useIntegral(memberID, integral);
+	}
+
+	@Override
+	public ResultMessage paymentFinishi(int orderID, int state)
+			throws RemoteException {
+		return service_stub.paymentFinishi(orderID, state);
+	}
 }

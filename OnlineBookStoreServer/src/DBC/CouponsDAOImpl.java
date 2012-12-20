@@ -45,7 +45,7 @@ public class CouponsDAOImpl implements CouponsDAO {
 	}
 
 	@Override
-	public ResultMessage addCoupons(CouponsPO couponsPO) {
+	public synchronized ResultMessage addCoupons(CouponsPO couponsPO) {
 		ResultMessage isExist = queryCoupons(couponsPO.getCounponsID());
 		if (isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "couponsid exists,add fail");
@@ -77,7 +77,7 @@ public class CouponsDAOImpl implements CouponsDAO {
 	}
 
 	@Override
-	public ResultMessage deleteCoupons(int couponsID) {
+	public synchronized ResultMessage deleteCoupons(int couponsID) {
 		ResultMessage isExist = queryCoupons(couponsID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "no such coupons");
@@ -105,10 +105,11 @@ public class CouponsDAOImpl implements CouponsDAO {
 	}
 
 	@Override
-	public ResultMessage updateCoupons(CouponsPO couponsPO) {
+	public synchronized ResultMessage updateCoupons(CouponsPO couponsPO) {
 		ResultMessage isExist = queryCoupons(couponsPO.getCounponsID());
-		if (isExist.isInvokeSuccess()) {
-			return new ResultMessage(false, null, "couponsid exists,add fail");
+		if (!isExist.isInvokeSuccess()) {
+			return new ResultMessage(false, null,
+					"couponsid does not exists,update fail");
 		}
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "update coupons set ownerid=?,discoutrate=?,enddate=?,used=? where couponsid=?";
@@ -138,7 +139,7 @@ public class CouponsDAOImpl implements CouponsDAO {
 	}
 
 	@Override
-	public ResultMessage queryCoupons(int couponsID) {
+	public synchronized ResultMessage queryCoupons(int couponsID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from  coupons where couponsid = ?";
 		PreparedStatement ps;
@@ -163,14 +164,15 @@ public class CouponsDAOImpl implements CouponsDAO {
 	}
 
 	@Override
-	public ResultMessage getCoupons(int memberID) {
+	public synchronized ResultMessage getCoupons(int memberID) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "select * from coupons where ownerid=?";
+		String sql = "select * from coupons where ownerid=? and used=?";
 		PreparedStatement ps;
 		ResultSet resultSet = null;
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memberID);
+			ps.setBoolean(2, false);
 			resultSet = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();

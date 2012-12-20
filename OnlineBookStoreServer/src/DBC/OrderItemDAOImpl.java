@@ -42,7 +42,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	}
 
 	@Override
-	public ResultMessage addOrderItem(int orderID, ItemPO itemPO) {
+	public synchronized ResultMessage addOrderItem(int orderID, ItemPO itemPO) {
 		ResultMessage isExist = queryOrderItem(orderID, itemPO);
 		if (isExist.isInvokeSuccess()) {
 			return updateOrderItem(orderID, itemPO);
@@ -69,7 +69,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	}
 
 	@Override
-	public ResultMessage updateOrderItem(int orderID, ItemPO itemPO) {
+	public synchronized ResultMessage updateOrderItem(int orderID, ItemPO itemPO) {
 		ResultMessage isExist = queryOrderItem(orderID, itemPO);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null,
@@ -97,7 +97,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	}
 
 	@Override
-	public ResultMessage deleteOrderItem(int orderID, ItemPO itemPO) {
+	public synchronized ResultMessage deleteOrderItem(int orderID, ItemPO itemPO) {
 		ResultMessage isExist = queryOrderItem(orderID, itemPO);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null,
@@ -123,7 +123,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	}
 
 	@Override
-	public ResultMessage queryOrderItem(int orderID, ItemPO itemPO) {
+	public synchronized ResultMessage queryOrderItem(int orderID, ItemPO itemPO) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from order_item where orderid=? and bookisbn=?";
 		PreparedStatement ps;
@@ -149,7 +149,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	}
 
 	@Override
-	public ResultMessage getOrderItems(int orderID) {
+	public synchronized ResultMessage getOrderItems(int orderID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from order_item where orderid=?";
 		PreparedStatement ps;

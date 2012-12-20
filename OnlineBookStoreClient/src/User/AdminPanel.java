@@ -1,34 +1,49 @@
 package User;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.JButton;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import ClientRunner.Agent;
+import ClientRunner.Const;
+import ClientRunner.ImageDialog;
+import ClientRunner.MButton;
+import ClientRunner.MPanel;
+import ClientRunner.MPasswordField;
+import ClientRunner.MTextField;
 import Member.MemberPO;
+import Member.SafeCheck;
 import RMI.ResultMessage;
 
 @SuppressWarnings("serial")
-public class AdminPanel extends JPanel implements ActionListener, MouseListener {
+public class AdminPanel extends MPanel implements ActionListener, MouseListener {
 	private UserUIController userUIController;
 	static final int MANAGE_CUS = 0;
 	static final int MANAGE_SALESMANAGER = 1;
 	static final int MANAGE_MANAGER = 2;
 	private int manageType = 0;
+	int selectedRow = -1;
+
+	ArrayList<MemberPO> resultCustomers = new ArrayList<MemberPO>();
+	ArrayList<UserPO> resultManagers = new ArrayList<UserPO>();
+	ArrayList<UserPO> resultSalesManagers = new ArrayList<UserPO>();
 
 	private JLabel obsLabel, welcomLabel, exitLabel, title;
 	// main page
@@ -37,27 +52,32 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 	JScrollPane resultPanel;
 
 	private JLabel customerLabel, salesmanLabel, manLabel;
-	private JButton addButton, modifyButton, delButton, listButton;
-	private JLabel nameLabel, passwordLabel, phoneLabel, birthLabel;
+	private MButton addButton, modifyButton, delButton, listButton;
+	private JLabel nameLabel, nameLabel2, passwordLabel, passwordEnsureLable,
+			phoneLabel, birthLabel, nameWarning, passwordWarning, phoneWarning,
+			dateWarning;
 
-	private JTextField nameField, phoneField, birth_yearField,
+	private MTextField nameField, phoneField, birth_yearField,
 			birth_monthField, birth_dateField;
-	private JPasswordField passwordField;
+	private MPasswordField passwordField, passwordEnsureField;
 
 	// customer management
-	private JPanel cusaddPanel, cusmodifyPanel, cusdelPanel;
-	private JButton addensureButton1, modifyensureButton1, delensureButton1,
-			cusreturnButton;
+	private MPanel cusaddPanel, cusmodifyPanel;
+	private MButton addensureButton1, modifyensureButton1;
 
 	// sales manager
-	private JPanel salesaddPanel, salesmodifyPanel, salesdelPanel;
-	private JButton addensureButton2, modifyensureButton2, delensureButton2,
-			salesreturnButton;
+	private MPanel salesaddPanel, salesmodifyPanel;
+	private MButton addensureButton2, modifyensureButton2;
 
 	// general manager
-	private JPanel manaddPanel, manmodifyPanel, mandelPanel;
-	private JButton addensureButton3, modifyensureButton3, delensureButton3,
-			manreturnButton;
+	private MPanel manaddPanel, manmodifyPanel;
+	private MButton addensureButton3, modifyensureButton3;
+
+	// table
+	String[] customercolname = new String[] { "编号", "用户名", "密码", "联系电话", "生日" };
+	String[] managercolname = new String[] { "编号", "用户名", "密码", "类别" };
+
+	private String modifyName;
 
 	public AdminPanel(UserUIController userUIController) {
 		this.userUIController = userUIController;
@@ -67,6 +87,7 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 		setSize(800, 600);
 		setLayout(null);
 		setVisible(true);
+		getData();
 
 		obsLabel = new JLabel("网上图书销售系统");
 		obsLabel.setLocation(240, 0);
@@ -88,6 +109,7 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 		customerLabel.setLocation(20, 80);
 		customerLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 22));
 		customerLabel.setSize(120, 50);
+		customerLabel.setForeground(Color.red);
 
 		salesmanLabel = new JLabel("管理销售经理");
 		salesmanLabel.setLocation(150, 80);
@@ -103,28 +125,28 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 		salesmanLabel.addMouseListener(this);
 		manLabel.addMouseListener(this);
 
-		addButton = new JButton("添加用户");
+		addButton = new MButton("添加用户");
 		addButton.setFocusable(false);
 		addButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		addButton.setSize(120, 40);
 		addButton.setLocation(40, 150);
 		addButton.addActionListener(this);
 
-		modifyButton = new JButton("修改用户");
+		modifyButton = new MButton("修改用户");
 		modifyButton.setFocusable(false);
 		modifyButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		modifyButton.setSize(120, 40);
 		modifyButton.setLocation(40, 200);
 		modifyButton.addActionListener(this);
 
-		delButton = new JButton("删除用户");
+		delButton = new MButton("删除用户");
 		delButton.setFocusable(false);
 		delButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		delButton.setSize(120, 40);
 		delButton.setLocation(40, 250);
 		delButton.addActionListener(this);
 
-		listButton = new JButton("用户列表");
+		listButton = new MButton("用户列表");
 		listButton.setFocusable(false);
 		listButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		listButton.setSize(120, 40);
@@ -142,7 +164,32 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 		this.add(salesmanLabel);
 		this.add(manLabel);
 
-		resultPanel = new JScrollPane();
+		tableModel = new tableModel();
+		resultTable = new JTable(tableModel);
+		resultTable.setBorder(BorderFactory.createEtchedBorder());
+		resultTable.setRowHeight(30); // 设置每行的高度为20
+		resultTable.setRowHeight(0, 20); // 设置第1行的高度为15
+		resultTable.setRowMargin(5); // 设置相邻两行单元格的距离
+		resultTable.setRowSelectionAllowed(true);
+		resultTable.setSelectionBackground(Color.LIGHT_GRAY); // 设置所选择行的背景色
+		resultTable.setSelectionForeground(Color.red); // 设置所选择行的前景色
+		resultTable.setGridColor(Color.black); // 设置网格线的颜色
+		resultTable.setShowGrid(false); // 是否显示网格线
+		resultTable.setShowHorizontalLines(false); // 是否显示水平的网格线
+		resultTable.setShowVerticalLines(true); // 是否显示垂直的网格线
+		resultTable.doLayout();
+		resultTable.setBackground(Color.WHITE);
+		resultTable.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				dealResultTable();
+			}
+
+			private void dealResultTable() {
+				selectedRow = resultTable.getSelectedRow();
+			}
+		});
+
+		resultPanel = new JScrollPane(resultTable);
 		resultPanel.setLocation(180, 150);
 		resultPanel.setSize(600, 400);
 		resultPanel.setVisible(true);
@@ -155,7 +202,7 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 	}
 
 	private void initcusAddView() {
-		cusaddPanel = new JPanel();
+		cusaddPanel = new MPanel();
 		cusaddPanel.setSize(500, 450);
 		cusaddPanel.setLocation(100, 100);
 		cusaddPanel.setLayout(null);
@@ -168,90 +215,121 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 
 		nameLabel = new JLabel("用户名:");
 		nameLabel.setSize(100, 40);
-		nameLabel.setLocation(150, 80);
+		nameLabel.setLocation(120, 80);
 		nameLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
 		passwordLabel = new JLabel("密码:");
 		passwordLabel.setSize(100, 40);
-		passwordLabel.setLocation(150, 130);
+		passwordLabel.setLocation(120, 130);
 		passwordLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		passwordEnsureLable = new JLabel("确认密码:");
+		passwordEnsureLable.setSize(120, 40);
+		passwordEnsureLable.setLocation(120, 180);
+		passwordEnsureLable.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
 		phoneLabel = new JLabel("联系电话:");
 		phoneLabel.setSize(100, 40);
-		phoneLabel.setLocation(150, 180);
+		phoneLabel.setLocation(120, 230);
 		phoneLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
 		birthLabel = new JLabel("生日:");
 		birthLabel.setSize(80, 40);
-		birthLabel.setLocation(150, 230);
+		birthLabel.setLocation(120, 280);
 		birthLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		nameField = new JTextField();
+		nameField = new MTextField();
 		nameField.setSize(150, 30);
 		nameField.setLocation(240, 85);
 		nameField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		passwordField = new JPasswordField();
+		passwordField = new MPasswordField();
 		passwordField.setSize(150, 30);
 		passwordField.setLocation(240, 135);
 		passwordField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		passwordEnsureField = new MPasswordField();
+		passwordEnsureField.setSize(150, 30);
+		passwordEnsureField.setLocation(240, 185);
+		passwordEnsureField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		phoneField = new JTextField();
+		phoneField = new MTextField();
 		phoneField.setSize(150, 30);
-		phoneField.setLocation(240, 185);
+		phoneField.setLocation(240, 235);
 		phoneField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		birth_yearField = new JTextField();
+		birth_yearField = new MTextField();
 		birth_yearField.setSize(60, 30);
-		birth_yearField.setLocation(240, 235);
+		birth_yearField.setLocation(240, 285);
 		birth_yearField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
 		JLabel yearLabel = new JLabel("年");
 		yearLabel.setSize(20, 30);
 		yearLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		yearLabel.setLocation(301, 235);
+		yearLabel.setLocation(301, 285);
 
-		birth_monthField = new JTextField();
+		birth_monthField = new MTextField();
 		birth_monthField.setSize(40, 30);
-		birth_monthField.setLocation(322, 235);
+		birth_monthField.setLocation(322, 285);
 		birth_monthField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
 		JLabel monthLabel = new JLabel("月");
 		monthLabel.setSize(20, 30);
 		monthLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		monthLabel.setLocation(363, 235);
+		monthLabel.setLocation(363, 285);
 
-		birth_dateField = new JTextField();
+		birth_dateField = new MTextField();
 		birth_dateField.setSize(40, 30);
 		birth_dateField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		birth_dateField.setLocation(384, 235);
+		birth_dateField.setLocation(384, 285);
 
 		JLabel dateLabel = new JLabel("日");
 		dateLabel.setSize(20, 30);
 		dateLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		dateLabel.setLocation(425, 235);
+		dateLabel.setLocation(425, 285);
 
-		addensureButton1 = new JButton("添加");
+		addensureButton1 = new MButton("添加");
 		addensureButton1.setSize(100, 40);
-		addensureButton1.setLocation(200, 280);
+		addensureButton1.setLocation(200, 330);
 		addensureButton1.setFocusable(false);
 		addensureButton1.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		addensureButton1.addActionListener(this);
 
-		cusreturnButton = new JButton("返回");
-		cusreturnButton.setSize(100, 40);
-		cusreturnButton.setLocation(320, 280);
-		cusreturnButton.setFocusable(false);
-		cusreturnButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		cusreturnButton.addActionListener(this);
+		nameWarning = new JLabel("用户名不合法!");
+		nameWarning.setSize(140, 50);
+		nameWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		nameWarning.setForeground(Color.red);
+		nameWarning.setLocation(420, 75);
+		nameWarning.setVisible(false);
+
+		passwordWarning = new JLabel("密码不合法!");
+		passwordWarning.setSize(140, 50);
+		passwordWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		passwordWarning.setForeground(Color.red);
+		passwordWarning.setLocation(420, 125);
+		passwordWarning.setVisible(false);
+
+		phoneWarning = new JLabel("电话号码不合法!");
+		phoneWarning.setSize(148, 50);
+		phoneWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		phoneWarning.setForeground(Color.red);
+		phoneWarning.setLocation(420, 225);
+		phoneWarning.setVisible(false);
+
+		dateWarning = new JLabel("日期不合法!");
+		dateWarning.setSize(148, 50);
+		dateWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		dateWarning.setForeground(Color.red);
+		dateWarning.setLocation(450, 275);
+		dateWarning.setVisible(false);
 
 		cusaddPanel.add(title);
 		cusaddPanel.add(nameLabel);
 		cusaddPanel.add(passwordLabel);
+		cusaddPanel.add(passwordEnsureLable);
 		cusaddPanel.add(phoneLabel);
 		cusaddPanel.add(birthLabel);
 		cusaddPanel.add(nameField);
 		cusaddPanel.add(passwordField);
+		cusaddPanel.add(passwordEnsureField);
 		cusaddPanel.add(phoneField);
 		cusaddPanel.add(birth_yearField);
 		cusaddPanel.add(yearLabel);
@@ -260,12 +338,14 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 		cusaddPanel.add(birth_dateField);
 		cusaddPanel.add(dateLabel);
 		cusaddPanel.add(addensureButton1);
-		cusaddPanel.add(cusreturnButton);
+		cusaddPanel.add(nameWarning);
+		cusaddPanel.add(passwordWarning);
+		cusaddPanel.add(phoneWarning);
+		cusaddPanel.add(dateWarning);
 	}
 
 	private void initcusModifyView() {
-
-		cusmodifyPanel = new JPanel();
+		cusmodifyPanel = new MPanel();
 		cusmodifyPanel.setSize(500, 450);
 		cusmodifyPanel.setLocation(100, 100);
 		cusmodifyPanel.setLayout(null);
@@ -278,94 +358,133 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 
 		nameLabel = new JLabel("用户名:");
 		nameLabel.setSize(100, 40);
-		nameLabel.setLocation(150, 80);
+		nameLabel.setLocation(120, 80);
 		nameLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		passwordLabel = new JLabel("密码:");
+		passwordLabel = new JLabel("新密码:");
 		passwordLabel.setSize(100, 40);
-		passwordLabel.setLocation(150, 130);
+		passwordLabel.setLocation(120, 130);
 		passwordLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		passwordEnsureLable = new JLabel("确认新密码:");
+		passwordEnsureLable.setSize(140, 40);
+		passwordEnsureLable.setLocation(120, 180);
+		passwordEnsureLable.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		nameField = new JTextField(30);
-		nameField.setSize(150, 30);
-		nameField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		nameField.setLocation(240, 85);
+		phoneLabel = new JLabel("联系电话:");
+		phoneLabel.setSize(100, 40);
+		phoneLabel.setLocation(120, 230);
+		phoneLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		passwordField = new JPasswordField(30);
+		birthLabel = new JLabel("生日:");
+		birthLabel.setSize(80, 40);
+		birthLabel.setLocation(120, 280);
+		birthLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+
+		nameLabel2 = new JLabel();
+		nameLabel2.setText(resultCustomers.get(selectedRow).getName());
+		nameLabel2.setSize(100, 40);
+		nameLabel2.setLocation(240, 80);
+		nameLabel2.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+
+		passwordField = new MPasswordField();
 		passwordField.setSize(150, 30);
-		passwordField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		passwordField.setLocation(240, 135);
+		passwordField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		passwordEnsureField = new MPasswordField();
+		passwordEnsureField.setSize(150, 30);
+		passwordEnsureField.setLocation(240, 185);
+		passwordEnsureField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		modifyensureButton1 = new JButton("修改");
-		modifyensureButton1.setSize(100, 40);
+		phoneField = new MTextField();
+		phoneField.setText(resultCustomers.get(selectedRow).getPhone());
+		phoneField.setSize(150, 30);
+		phoneField.setLocation(240, 235);
+		phoneField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+
+		birth_yearField = new MTextField();
+		birth_yearField.setSize(60, 30);
+		birth_yearField.setLocation(240, 285);
+		birth_yearField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+
+		JLabel yearLabel = new JLabel("年");
+		yearLabel.setSize(20, 30);
+		yearLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		yearLabel.setLocation(301, 285);
+
+		birth_monthField = new MTextField();
+		birth_monthField.setSize(40, 30);
+		birth_monthField.setLocation(322, 285);
+		birth_monthField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+
+		JLabel monthLabel = new JLabel("月");
+		monthLabel.setSize(20, 30);
+		monthLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		monthLabel.setLocation(363, 285);
+
+		birth_dateField = new MTextField();
+		birth_dateField.setSize(40, 30);
+		birth_dateField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		birth_dateField.setLocation(384, 285);
+
+		JLabel dateLabel = new JLabel("日");
+		dateLabel.setSize(20, 30);
+		dateLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		dateLabel.setLocation(425, 285);
+
+		modifyensureButton1 = new MButton("确认修改");
+		modifyensureButton1.setSize(120, 40);
+		modifyensureButton1.setLocation(200, 330);
 		modifyensureButton1.setFocusable(false);
-		modifyensureButton1.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		modifyensureButton1.setLocation(200, 180);
+		modifyensureButton1.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		modifyensureButton1.addActionListener(this);
 
-		cusreturnButton = new JButton("返回");
-		cusreturnButton.setSize(100, 40);
-		cusreturnButton.setFocusable(false);
-		cusreturnButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		cusreturnButton.setLocation(320, 180);
-		cusreturnButton.addActionListener(this);
+		passwordWarning = new JLabel("密码不合法!");
+		passwordWarning.setSize(140, 50);
+		passwordWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		passwordWarning.setForeground(Color.red);
+		passwordWarning.setLocation(420, 125);
+		passwordWarning.setVisible(false);
+
+		phoneWarning = new JLabel("电话号码不合法!");
+		phoneWarning.setSize(148, 50);
+		phoneWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		phoneWarning.setForeground(Color.red);
+		phoneWarning.setLocation(420, 225);
+		phoneWarning.setVisible(false);
+
+		dateWarning = new JLabel("日期不合法!");
+		dateWarning.setSize(148, 50);
+		dateWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		dateWarning.setForeground(Color.red);
+		dateWarning.setLocation(450, 275);
+		dateWarning.setVisible(false);
 
 		cusmodifyPanel.add(title);
 		cusmodifyPanel.add(nameLabel);
 		cusmodifyPanel.add(passwordLabel);
-		cusmodifyPanel.add(nameField);
+		cusmodifyPanel.add(passwordEnsureLable);
+		cusmodifyPanel.add(phoneLabel);
+		cusmodifyPanel.add(birthLabel);
+		cusmodifyPanel.add(nameLabel2);
 		cusmodifyPanel.add(passwordField);
+		cusmodifyPanel.add(passwordEnsureField);
+		cusmodifyPanel.add(phoneField);
+		cusmodifyPanel.add(birth_yearField);
+		cusmodifyPanel.add(yearLabel);
+		cusmodifyPanel.add(birth_monthField);
+		cusmodifyPanel.add(monthLabel);
+		cusmodifyPanel.add(birth_dateField);
+		cusmodifyPanel.add(dateLabel);
 		cusmodifyPanel.add(modifyensureButton1);
-		cusmodifyPanel.add(cusreturnButton);
-	}
+		cusmodifyPanel.add(passwordWarning);
+		cusmodifyPanel.add(phoneWarning);
+		cusmodifyPanel.add(dateWarning);
 
-	private void initcusDelView() {
-
-		cusdelPanel = new JPanel();
-		cusdelPanel.setSize(500, 450);
-		cusdelPanel.setLocation(100, 100);
-		cusdelPanel.setLayout(null);
-		cusdelPanel.setVisible(true);
-
-		title = new JLabel("删除顾客");
-		title.setSize(100, 40);
-		title.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
-		title.setLocation(230, 20);
-
-		nameLabel = new JLabel("用户名:");
-		nameLabel.setSize(100, 40);
-		nameLabel.setLocation(150, 80);
-		nameLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-
-		nameField = new JTextField(30);
-		nameField.setSize(150, 30);
-		nameField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		nameField.setLocation(240, 85);
-
-		delensureButton1 = new JButton("删除");
-		delensureButton1.setSize(100, 40);
-		delensureButton1.setFocusable(false);
-		delensureButton1.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		delensureButton1.setLocation(200, 180);
-		delensureButton1.addActionListener(this);
-
-		cusreturnButton = new JButton("返回");
-		cusreturnButton.setSize(100, 40);
-		cusreturnButton.setFocusable(false);
-		cusreturnButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		cusreturnButton.setLocation(320, 180);
-		cusreturnButton.addActionListener(this);
-
-		cusdelPanel.add(title);
-		cusdelPanel.add(nameLabel);
-		cusdelPanel.add(nameField);
-		cusdelPanel.add(delensureButton1);
-		cusdelPanel.add(cusreturnButton);
 	}
 
 	private void initsalesAddView() {
 
-		salesaddPanel = new JPanel();
+		salesaddPanel = new MPanel();
 		salesaddPanel.setSize(500, 450);
 		salesaddPanel.setLocation(100, 100);
 		salesaddPanel.setLayout(null);
@@ -378,49 +497,67 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 
 		nameLabel = new JLabel("用户名:");
 		nameLabel.setSize(100, 40);
-		nameLabel.setLocation(150, 80);
+		nameLabel.setLocation(120, 80);
 		nameLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
 		passwordLabel = new JLabel("密码:");
 		passwordLabel.setSize(100, 40);
-		passwordLabel.setLocation(150, 130);
+		passwordLabel.setLocation(120, 130);
 		passwordLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		passwordEnsureLable = new JLabel("确认密码:");
+		passwordEnsureLable.setSize(140, 40);
+		passwordEnsureLable.setLocation(120, 180);
+		passwordEnsureLable.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		nameField = new JTextField(30);
+		nameField = new MTextField(30);
 		nameField.setSize(150, 30);
 		nameField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		nameField.setLocation(240, 85);
 
-		passwordField = new JPasswordField(30);
+		passwordField = new MPasswordField(30);
 		passwordField.setSize(150, 30);
 		passwordField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		passwordField.setLocation(240, 135);
+		passwordEnsureField = new MPasswordField();
+		passwordEnsureField.setSize(150, 30);
+		passwordEnsureField.setLocation(240, 185);
+		passwordEnsureField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		addensureButton2 = new JButton("添加");
+		addensureButton2 = new MButton("添加");
 		addensureButton2.setSize(100, 40);
 		addensureButton2.setFocusable(false);
 		addensureButton2.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		addensureButton2.setLocation(200, 180);
+		addensureButton2.setLocation(200, 230);
 		addensureButton2.addActionListener(this);
 
-		salesreturnButton = new JButton("返回");
-		salesreturnButton.setSize(100, 40);
-		salesreturnButton.setFocusable(false);
-		salesreturnButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		salesreturnButton.setLocation(320, 180);
-		salesreturnButton.addActionListener(this);
+		nameWarning = new JLabel("用户名不合法!");
+		nameWarning.setSize(140, 50);
+		nameWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		nameWarning.setForeground(Color.red);
+		nameWarning.setLocation(420, 75);
+		nameWarning.setVisible(false);
+
+		passwordWarning = new JLabel("密码不合法!");
+		passwordWarning.setSize(140, 50);
+		passwordWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		passwordWarning.setForeground(Color.red);
+		passwordWarning.setLocation(420, 125);
+		passwordWarning.setVisible(false);
 
 		salesaddPanel.add(title);
 		salesaddPanel.add(nameLabel);
 		salesaddPanel.add(passwordLabel);
+		salesaddPanel.add(passwordEnsureLable);
 		salesaddPanel.add(nameField);
 		salesaddPanel.add(passwordField);
+		salesaddPanel.add(passwordEnsureField);
 		salesaddPanel.add(addensureButton2);
-		salesaddPanel.add(salesreturnButton);
+		salesaddPanel.add(nameWarning);
+		salesaddPanel.add(passwordWarning);
 	}
 
 	private void initsalesModifyView() {
-		salesmodifyPanel = new JPanel();
+		salesmodifyPanel = new MPanel();
 		salesmodifyPanel.setSize(500, 450);
 		salesmodifyPanel.setLocation(100, 100);
 		salesmodifyPanel.setLayout(null);
@@ -433,93 +570,60 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 
 		nameLabel = new JLabel("用户名:");
 		nameLabel.setSize(100, 40);
-		nameLabel.setLocation(150, 80);
+		nameLabel.setLocation(120, 80);
 		nameLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		passwordLabel = new JLabel("密码:");
+		passwordLabel = new JLabel("新密码:");
 		passwordLabel.setSize(100, 40);
-		passwordLabel.setLocation(150, 130);
+		passwordLabel.setLocation(120, 130);
 		passwordLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		passwordEnsureLable = new JLabel("确认新密码:");
+		passwordEnsureLable.setSize(140, 40);
+		passwordEnsureLable.setLocation(120, 180);
+		passwordEnsureLable.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		nameField = new JTextField(30);
-		nameField.setSize(150, 30);
-		nameField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		nameField.setLocation(240, 85);
+		nameLabel2 = new JLabel();
+		nameLabel2.setText(resultSalesManagers.get(selectedRow).getName());
+		nameLabel2.setSize(100, 40);
+		nameLabel2.setLocation(240, 80);
+		nameLabel2.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		passwordField = new JPasswordField(30);
+		passwordField = new MPasswordField(30);
 		passwordField.setSize(150, 30);
 		passwordField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		passwordField.setLocation(240, 135);
+		passwordEnsureField = new MPasswordField();
+		passwordEnsureField.setSize(150, 30);
+		passwordEnsureField.setLocation(240, 185);
+		passwordEnsureField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		modifyensureButton2 = new JButton("修改");
+		modifyensureButton2 = new MButton("修改");
 		modifyensureButton2.setSize(100, 40);
 		modifyensureButton2.setFocusable(false);
 		modifyensureButton2.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		modifyensureButton2.setLocation(200, 180);
+		modifyensureButton2.setLocation(200, 230);
 		modifyensureButton2.addActionListener(this);
 
-		salesreturnButton = new JButton("返回");
-		salesreturnButton.setSize(100, 40);
-		salesreturnButton.setFocusable(false);
-		salesreturnButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		salesreturnButton.setLocation(320, 180);
-		salesreturnButton.addActionListener(this);
+		passwordWarning = new JLabel("密码不合法!");
+		passwordWarning.setSize(140, 50);
+		passwordWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		passwordWarning.setForeground(Color.red);
+		passwordWarning.setLocation(420, 125);
+		passwordWarning.setVisible(false);
 
 		salesmodifyPanel.add(title);
 		salesmodifyPanel.add(nameLabel);
 		salesmodifyPanel.add(passwordLabel);
-		salesmodifyPanel.add(nameField);
+		salesmodifyPanel.add(passwordEnsureLable);
+		salesmodifyPanel.add(nameLabel2);
 		salesmodifyPanel.add(passwordField);
+		salesmodifyPanel.add(passwordEnsureField);
 		salesmodifyPanel.add(modifyensureButton2);
-		salesmodifyPanel.add(salesreturnButton);
-	}
-
-	private void initsalesDelView() {
-
-		salesdelPanel = new JPanel();
-		salesdelPanel.setSize(500, 450);
-		salesdelPanel.setLocation(100, 100);
-		salesdelPanel.setLayout(null);
-		salesdelPanel.setVisible(true);
-
-		title = new JLabel("删除销售经理");
-		title.setSize(150, 40);
-		title.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
-		title.setLocation(205, 20);
-
-		nameLabel = new JLabel("用户名:");
-		nameLabel.setSize(100, 40);
-		nameLabel.setLocation(150, 80);
-		nameLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-
-		nameField = new JTextField(30);
-		nameField.setSize(150, 30);
-		nameField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		nameField.setLocation(240, 85);
-
-		delensureButton2 = new JButton("删除");
-		delensureButton2.setSize(100, 40);
-		delensureButton2.setFocusable(false);
-		delensureButton2.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		delensureButton2.setLocation(200, 180);
-		delensureButton2.addActionListener(this);
-
-		salesreturnButton = new JButton("返回");
-		salesreturnButton.setSize(100, 40);
-		salesreturnButton.setFocusable(false);
-		salesreturnButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		salesreturnButton.setLocation(320, 180);
-		salesreturnButton.addActionListener(this);
-
-		salesdelPanel.add(title);
-		salesdelPanel.add(nameLabel);
-		salesdelPanel.add(nameField);
-		salesdelPanel.add(delensureButton2);
-		salesdelPanel.add(salesreturnButton);
+		salesmodifyPanel.add(passwordWarning);
 	}
 
 	private void initmanAddView() {
-		manaddPanel = new JPanel();
+		manaddPanel = new MPanel();
 		manaddPanel.setSize(500, 450);
 		manaddPanel.setLocation(100, 100);
 		manaddPanel.setLayout(null);
@@ -532,50 +636,68 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 
 		nameLabel = new JLabel("用户名:");
 		nameLabel.setSize(100, 40);
-		nameLabel.setLocation(150, 80);
+		nameLabel.setLocation(120, 80);
 		nameLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
 		passwordLabel = new JLabel("密码:");
 		passwordLabel.setSize(100, 40);
-		passwordLabel.setLocation(150, 130);
+		passwordLabel.setLocation(120, 130);
 		passwordLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		passwordEnsureLable = new JLabel("确认密码:");
+		passwordEnsureLable.setSize(140, 40);
+		passwordEnsureLable.setLocation(120, 180);
+		passwordEnsureLable.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		nameField = new JTextField(30);
+		nameField = new MTextField(30);
 		nameField.setSize(150, 30);
 		nameField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		nameField.setLocation(240, 85);
 
-		passwordField = new JPasswordField(30);
+		passwordField = new MPasswordField(30);
 		passwordField.setSize(150, 30);
 		passwordField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		passwordField.setLocation(240, 135);
+		passwordEnsureField = new MPasswordField();
+		passwordEnsureField.setSize(150, 30);
+		passwordEnsureField.setLocation(240, 185);
+		passwordEnsureField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		addensureButton3 = new JButton("添加");
+		addensureButton3 = new MButton("添加");
 		addensureButton3.setSize(100, 40);
 		addensureButton3.setFocusable(false);
 		addensureButton3.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		addensureButton3.setLocation(200, 180);
+		addensureButton3.setLocation(200, 230);
 		addensureButton3.addActionListener(this);
 
-		manreturnButton = new JButton("返回");
-		manreturnButton.setSize(100, 40);
-		manreturnButton.setFocusable(false);
-		manreturnButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		manreturnButton.setLocation(320, 180);
-		manreturnButton.addActionListener(this);
+		nameWarning = new JLabel("用户名不合法!");
+		nameWarning.setSize(140, 50);
+		nameWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		nameWarning.setForeground(Color.red);
+		nameWarning.setLocation(420, 75);
+		nameWarning.setVisible(false);
+
+		passwordWarning = new JLabel("密码不合法!");
+		passwordWarning.setSize(140, 50);
+		passwordWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		passwordWarning.setForeground(Color.red);
+		passwordWarning.setLocation(420, 125);
+		passwordWarning.setVisible(false);
 
 		manaddPanel.add(title);
 		manaddPanel.add(nameLabel);
 		manaddPanel.add(passwordLabel);
+		manaddPanel.add(passwordEnsureLable);
 		manaddPanel.add(nameField);
 		manaddPanel.add(passwordField);
+		manaddPanel.add(passwordEnsureField);
 		manaddPanel.add(addensureButton3);
-		manaddPanel.add(manreturnButton);
+		manaddPanel.add(nameWarning);
+		manaddPanel.add(passwordWarning);
 	}
 
 	private void initmanModifyView() {
 
-		manmodifyPanel = new JPanel();
+		manmodifyPanel = new MPanel();
 		manmodifyPanel.setSize(500, 450);
 		manmodifyPanel.setLocation(100, 100);
 		manmodifyPanel.setLayout(null);
@@ -588,89 +710,57 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 
 		nameLabel = new JLabel("用户名:");
 		nameLabel.setSize(100, 40);
-		nameLabel.setLocation(150, 80);
+		nameLabel.setLocation(120, 80);
 		nameLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		passwordLabel = new JLabel("密码:");
+		passwordLabel = new JLabel("新密码:");
 		passwordLabel.setSize(100, 40);
-		passwordLabel.setLocation(150, 130);
+		passwordLabel.setLocation(120, 130);
 		passwordLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		passwordEnsureLable = new JLabel("确认新密码:");
+		passwordEnsureLable.setSize(140, 40);
+		passwordEnsureLable.setLocation(120, 180);
+		passwordEnsureLable.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		nameField = new JTextField(30);
-		nameField.setSize(150, 30);
-		nameField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		nameField.setLocation(240, 85);
+		nameLabel2 = new JLabel();
+		nameLabel2.setText(resultManagers.get(selectedRow).getName());
+		nameLabel2.setSize(100, 40);
+		nameLabel2.setLocation(240, 80);
+		nameLabel2.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		passwordField = new JPasswordField(30);
+		passwordField = new MPasswordField(30);
 		passwordField.setSize(150, 30);
 		passwordField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		passwordField.setLocation(240, 135);
+		passwordEnsureField = new MPasswordField();
+		passwordEnsureField.setSize(150, 30);
+		passwordEnsureField.setLocation(240, 185);
+		passwordEnsureField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-		modifyensureButton3 = new JButton("修改");
+		modifyensureButton3 = new MButton("修改");
 		modifyensureButton3.setSize(100, 40);
 		modifyensureButton3.setFocusable(false);
 		modifyensureButton3.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		modifyensureButton3.setLocation(200, 180);
+		modifyensureButton3.setLocation(200, 230);
 		modifyensureButton3.addActionListener(this);
 
-		manreturnButton = new JButton("返回");
-		manreturnButton.setSize(100, 40);
-		manreturnButton.setFocusable(false);
-		manreturnButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		manreturnButton.setLocation(320, 180);
-		manreturnButton.addActionListener(this);
+		passwordWarning = new JLabel("密码不合法!");
+		passwordWarning.setSize(140, 50);
+		passwordWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		passwordWarning.setForeground(Color.red);
+		passwordWarning.setLocation(420, 125);
+		passwordWarning.setVisible(false);
 
 		manmodifyPanel.add(title);
 		manmodifyPanel.add(nameLabel);
 		manmodifyPanel.add(passwordLabel);
-		manmodifyPanel.add(nameField);
+		manmodifyPanel.add(passwordEnsureLable);
+		manmodifyPanel.add(nameLabel2);
 		manmodifyPanel.add(passwordField);
+		manmodifyPanel.add(passwordEnsureField);
 		manmodifyPanel.add(modifyensureButton3);
-		manmodifyPanel.add(manreturnButton);
+		manmodifyPanel.add(passwordWarning);
 
-	}
-
-	private void initmanDelView() {
-		mandelPanel = new JPanel();
-		mandelPanel.setSize(500, 450);
-		mandelPanel.setLocation(100, 100);
-		mandelPanel.setLayout(null);
-		mandelPanel.setVisible(true);
-
-		title = new JLabel("删除总经理");
-		title.setSize(150, 40);
-		title.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
-		title.setLocation(210, 20);
-
-		nameLabel = new JLabel("用户名:");
-		nameLabel.setSize(100, 40);
-		nameLabel.setLocation(150, 80);
-		nameLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-
-		nameField = new JTextField(30);
-		nameField.setSize(150, 30);
-		nameField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		nameField.setLocation(240, 85);
-
-		delensureButton3 = new JButton("删除");
-		delensureButton3.setSize(100, 40);
-		delensureButton3.setFocusable(false);
-		delensureButton3.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		delensureButton3.setLocation(200, 180);
-		delensureButton3.addActionListener(this);
-
-		manreturnButton = new JButton("返回");
-		manreturnButton.setSize(100, 40);
-		manreturnButton.setFocusable(false);
-		manreturnButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		manreturnButton.setLocation(320, 180);
-		manreturnButton.addActionListener(this);
-
-		mandelPanel.add(title);
-		mandelPanel.add(nameLabel);
-		mandelPanel.add(nameField);
-		mandelPanel.add(delensureButton3);
-		mandelPanel.add(manreturnButton);
 	}
 
 	@Override
@@ -716,99 +806,366 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 				break;
 			}
 		} else if (e.getSource() == delButton) {
-			switch (manageType) {
-			case MANAGE_CUS:
-				initcusDelView();
-				resultPanel.setViewportView(cusdelPanel);
-				cusdelPanel.requestFocus();
-				break;
-			case MANAGE_SALESMANAGER:
-				initsalesDelView();
-				resultPanel.setViewportView(salesdelPanel);
-				salesdelPanel.requestFocus();
-				break;
-			case MANAGE_MANAGER:
-				initmanDelView();
-				resultPanel.setViewportView(mandelPanel);
-				mandelPanel.requestFocus();
-				break;
-			default:
-				break;
+			if (selectedRow != -1) {
+				if (JOptionPane.showConfirmDialog(this, "确认删除？") == JOptionPane.YES_OPTION) {
+					try {
+						switch (manageType) {
+						case MANAGE_CUS:
+							ResultMessage exist = Agent.memberService
+									.deleteMember(resultCustomers.get(
+											selectedRow).getID());
+							if (exist.isInvokeSuccess()) {
+								ImageDialog.showYesImage(this, "删除成功");
+							} else {
+								ImageDialog.showNOImage(this, "删除失败");
+							}
+							break;
+						case MANAGE_MANAGER:
+							ResultMessage exist2 = Agent.userService
+									.deleteUser(resultManagers.get(selectedRow)
+											.getID());
+							if (exist2.isInvokeSuccess()) {
+								ImageDialog.showYesImage(this, "删除成功");
+							} else {
+								ImageDialog.showNOImage(this, "删除失败");
+							}
+							break;
+						case MANAGE_SALESMANAGER:
+							ResultMessage exist3 = Agent.userService
+									.deleteUser(resultSalesManagers.get(
+											selectedRow).getID());
+							if (exist3.isInvokeSuccess()) {
+								ImageDialog.showYesImage(this, "删除成功");
+							} else {
+								ImageDialog.showNOImage(this, "删除失败");
+							}
+							break;
+						default:
+							break;
+						}
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "请先选择要删除的项目");
 			}
+			getData();
+			tableModel.fireTableDataChanged();
 		} else if (e.getSource() == listButton) {
 			switch (manageType) {
 			case MANAGE_CUS:
-
+				getData();
+				tableModel.fireTableDataChanged();
+				resultPanel.setViewportView(resultTable);
 				break;
 			case MANAGE_SALESMANAGER:
-
+				getData();
+				tableModel.fireTableDataChanged();
+				resultPanel.setViewportView(resultTable);
 				break;
 			case MANAGE_MANAGER:
-
+				getData();
+				tableModel.fireTableDataChanged();
+				resultPanel.setViewportView(resultTable);
 				break;
 			default:
 				break;
 			}
 		} else if (e.getSource() == addensureButton1) {
-				String reg_name = nameField.getText();
-				char[] reg_password = passwordField.getPassword();
-				String reg_phone = phoneField.getText();
-				Calendar birth = new GregorianCalendar(
-						Integer.parseInt(birth_yearField.getText().trim()),
-						Integer.parseInt(birth_monthField.getText().trim()),
-						Integer.parseInt(birth_dateField.getText().trim()));
-				try {
-					ResultMessage resultMessage = Agent.userService
-							.addMember(new MemberPO(-1, reg_name, new String(
-									reg_password), reg_phone, birth));
-					if (resultMessage.isInvokeSuccess()) {
-						System.out.println("success");
-					} else {
-						System.out.println(resultMessage.getPostScript());
-					}
-				} catch (RemoteException e1) {
-					e1.printStackTrace();
-				}
-		}else if(e.getSource() == addensureButton2){
+			nameWarning.setVisible(false);
+			passwordWarning.setVisible(false);
+			phoneWarning.setVisible(false);
+			dateWarning.setVisible(false);
+
 			String reg_name = nameField.getText();
 			char[] reg_password = passwordField.getPassword();
-			try{
-				ResultMessage resultMessage = Agent.userService.addUser(new SalesManagerPO(-1, reg_name, new String(reg_password)));
-				if(resultMessage.isInvokeSuccess()){
-					System.out.println("success");
+			char[] reg_ensurepassword = passwordEnsureField.getPassword();
+			String regpassword = new String(reg_password);
+			String regensurepassword = new String(reg_ensurepassword);
+			String reg_phone = phoneField.getText();
+			String year = birth_yearField.getText().trim();
+			String month = birth_monthField.getText().trim();
+			String date = birth_dateField.getText().trim();
+			Calendar birth = null;
+			boolean valid = true;
+			try {
+				birth = new GregorianCalendar(Integer.parseInt(year),
+						Integer.parseInt(month) - 1, Integer.parseInt(date));
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				dateWarning.setVisible(true);
+				valid = false;
+			}
+
+			if (!SafeCheck.isLegalName(reg_name)) {
+				nameWarning.setVisible(true);
+				valid = false;
+			}
+			if (!SafeCheck.isLegalPassword(reg_password)
+					|| !SafeCheck.isLegalPassword(reg_ensurepassword)
+					|| !SafeCheck
+							.passwordEnsure(regpassword, regensurepassword)) {
+				passwordWarning.setVisible(true);
+				valid = false;
+			}
+			if (!SafeCheck.isLegalPhoneNumber(reg_phone)) {
+				phoneWarning.setVisible(true);
+				valid = false;
+			}
+			if (!SafeCheck.isLegalBirth(birth)) {
+				dateWarning.setVisible(true);
+				valid = false;
+			}
+			if (year.equals("") || month.equals("") || date.equals("")) {
+				dateWarning.setVisible(true);
+				valid = false;
+			}
+
+			validate();
+			if (!valid) {
+				return;
+			}
+			try {
+				ResultMessage resultMessage = Agent.userService
+						.addMember(new MemberPO(-1, reg_name, new String(
+								reg_password), reg_phone, birth, 0));
+				if (resultMessage.isInvokeSuccess()) {
+					ImageDialog.showYesImage(cusaddPanel, "添加成功");
+
+				} else {
+					ImageDialog.showNOImage(this, "添加失败");
 				}
-				else{
-					System.out.println(resultMessage.getPostScript());
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+		} else if (e.getSource() == addensureButton2) {
+			passwordWarning.setVisible(false);
+
+			String reg_name = nameField.getText();
+			char[] reg_password = passwordField.getPassword();
+			char[] reg_ensurepassword = passwordEnsureField.getPassword();
+			String regpassword = new String(reg_password);
+			String regensurepassword = new String(reg_ensurepassword);
+
+			if (!SafeCheck.isLegalPassword(reg_password)
+					|| !SafeCheck
+							.passwordEnsure(regpassword, regensurepassword)) {
+				passwordWarning.setVisible(true);
+				return;
+			}
+			validate();
+			try {
+				ResultMessage resultMessage = Agent.userService
+						.addUser(new SalesManagerPO(-1, reg_name, new String(
+								reg_password)));
+				if (resultMessage.isInvokeSuccess()) {
+					ImageDialog.showYesImage(this, "添加成功");
+				} else {
+					ImageDialog.showNOImage(this, "添加失败");
 				}
-			}catch(RemoteException re){
+			} catch (RemoteException re) {
 				re.printStackTrace();
 			}
-		}else if(e.getSource() == addensureButton3){
+		} else if (e.getSource() == addensureButton3) {
+			passwordWarning.setVisible(false);
+
 			String reg_name = nameField.getText();
 			char[] reg_password = passwordField.getPassword();
-			try{
-				ResultMessage resultMessage = Agent.userService.addUser(new GeneralManagerPO(-1, reg_name, new String(reg_password)));
-				if(resultMessage.isInvokeSuccess()){
-					System.out.println("success");
+			char[] reg_ensurepassword = passwordEnsureField.getPassword();
+			String regpassword = new String(reg_password);
+			String regensurepassword = new String(reg_ensurepassword);
+
+			if (!SafeCheck.isLegalPassword(reg_password)
+					|| !SafeCheck
+							.passwordEnsure(regpassword, regensurepassword)) {
+				passwordWarning.setVisible(true);
+				return;
+			}
+			validate();
+			try {
+				ResultMessage resultMessage = Agent.userService
+						.addUser(new GeneralManagerPO(-1, reg_name, new String(
+								reg_password)));
+				if (resultMessage.isInvokeSuccess()) {
+					ImageDialog.showYesImage(this, "添加成功");
+				} else {
+					ImageDialog.showNOImage(this, "添加失败");
 				}
-				else{
-					System.out.println(resultMessage.getPostScript());
-				}
-			}catch(RemoteException re){
+			} catch (RemoteException re) {
 				re.printStackTrace();
 			}
 		} else if (e.getSource() == modifyensureButton1) {
+			passwordWarning.setVisible(false);
+			phoneWarning.setVisible(false);
+			dateWarning.setVisible(false);
 
-		} else if (e.getSource() == delensureButton1) {
+			char[] modifypassword = passwordField.getPassword();
+			char[] modifyEnsurepassword = passwordEnsureField.getPassword();
+			String password = new String(modifypassword);
+			String ensurepassword = new String(modifyEnsurepassword);
+			String modifyphone = phoneField.getText();
+			String year = birth_yearField.getText().trim();
+			String month = birth_monthField.getText().trim();
+			String date = birth_dateField.getText().trim();
+			Calendar birth = null;
+			boolean valid = true;
+			try {
+				birth = new GregorianCalendar(Integer.parseInt(year),
+						Integer.parseInt(month) - 1, Integer.parseInt(date));
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				dateWarning.setVisible(true);
+				valid = false;
+			}
+			if (!SafeCheck.isLegalPassword(modifypassword)
+					|| !SafeCheck.isLegalPassword(modifyEnsurepassword)
+					|| !SafeCheck.passwordEnsure(password, ensurepassword)) {
+				passwordWarning.setVisible(true);
+				valid = false;
+			}
+			if (!SafeCheck.isLegalPhoneNumber(modifyphone)) {
+				phoneWarning.setVisible(true);
+				valid = false;
+			}
+			if (!SafeCheck.isLegalBirth(birth)) {
+				dateWarning.setVisible(true);
+				valid = false;
+			}
+
+			if (year == null || month == null || date == null) {
+				dateWarning.setVisible(true);
+				valid = false;
+			}
+
+			validate();
+			if (!valid) {
+				return;
+			}
+			try {
+				ResultMessage resultMessage = Agent.memberService
+						.modifyMember(new MemberPO(resultCustomers.get(
+								selectedRow).getID(), resultCustomers.get(
+								selectedRow).getName(), password, modifyphone,
+								birth, resultCustomers.get(selectedRow)
+										.getIntegral()));
+				if (resultMessage.isInvokeSuccess()) {
+					ImageDialog.showYesImage(this, "修改成功");
+				} else {
+					ImageDialog.showNOImage(this, "修改失败");
+				}
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
 
 		} else if (e.getSource() == modifyensureButton2) {
+			passwordWarning.setVisible(false);
 
-		} else if (e.getSource() == delensureButton2) {
+			char[] modifypassword = passwordField.getPassword();
+			char[] modifyEnsurepassword = passwordEnsureField.getPassword();
+			String password = new String(modifypassword);
+			String ensurepassword = new String(modifyEnsurepassword);
+
+			if (!SafeCheck.isLegalPassword(modifypassword)
+					|| !SafeCheck.isLegalPassword(modifyEnsurepassword)
+					|| !SafeCheck.passwordEnsure(password, ensurepassword)) {
+				passwordWarning.setVisible(true);
+				return;
+			}
+
+			validate();
+			ResultMessage resultMessage;
+			try {
+				resultMessage = Agent.userService
+						.modifyUser(new SalesManagerPO(resultSalesManagers.get(
+								selectedRow).getID(), resultSalesManagers.get(
+								selectedRow).getName(), password));
+				if (resultMessage.isInvokeSuccess()) {
+					ImageDialog.showYesImage(this, "修改成功");
+				} else {
+					ImageDialog.showNOImage(this, "修改失败");
+				}
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
 
 		} else if (e.getSource() == modifyensureButton3) {
+			passwordWarning.setVisible(false);
 
-		} else if (e.getSource() == delensureButton3) {
+			char[] modifypassword = passwordField.getPassword();
+			char[] modifyEnsurepassword = passwordEnsureField.getPassword();
+			String password = new String(modifypassword);
+			String ensurepassword = new String(modifyEnsurepassword);
 
+			if (!SafeCheck.isLegalPassword(modifypassword)
+					|| !SafeCheck.isLegalPassword(modifyEnsurepassword)
+					|| !SafeCheck.passwordEnsure(password, ensurepassword)) {
+				passwordWarning.setVisible(true);
+				return;
+			}
+			validate();
+			ResultMessage resultMessage;
+			try {
+				resultMessage = Agent.userService
+						.modifyUser(new GeneralManagerPO(resultManagers.get(
+								selectedRow).getID(), resultManagers.get(
+								selectedRow).getName(), password));
+				if (resultMessage.isInvokeSuccess()) {
+					ImageDialog.showYesImage(this, "修改成功");
+				} else {
+					ImageDialog.showNOImage(this, "修改失败");
+				}
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	public void getData() {
+		if (manageType == MANAGE_CUS) {
+			resultCustomers.clear();
+			try {
+				ResultMessage exist = Agent.userService.getMembers();
+				if (exist.isInvokeSuccess()) {
+					resultCustomers = exist.getResultSet();
+				} else {
+					ImageDialog.showNOImage(this, "暂无用户");
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		} else {
+			ArrayList<UserPO> users = null;
+			ResultMessage exist = null;
+			try {
+				exist = Agent.userService.getUsers();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+			if (exist.isInvokeSuccess()) {
+				users = exist.getResultSet();
+			}
+			if (manageType == MANAGE_SALESMANAGER) {
+				resultSalesManagers.clear();
+				for (UserPO user : users) {
+					if (user.getType() == Const.SALESMANAGER) {
+						resultSalesManagers.add(user);
+					}
+				}
+				if (resultSalesManagers.size() == 0) {
+					ImageDialog.showNOImage(this, "暂无用户");
+				}
+			} else if (manageType == MANAGE_MANAGER) {
+				resultManagers.clear();
+				for (UserPO user : users) {
+					if (user.getType() == Const.GENERALMANAGER) {
+						resultManagers.add(user);
+					}
+				}
+				if (resultManagers.size() == 0) {
+					ImageDialog.showNOImage(this, "暂无用户");
+				}
+			}
 		}
 	}
 
@@ -816,17 +1173,79 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == customerLabel
 				&& e.getButton() == MouseEvent.BUTTON1) {
+			if (manageType != MANAGE_CUS) {
+				switch (manageType) {
+				case MANAGE_MANAGER:
+					manLabel.setForeground(Color.black);
+					break;
+				case MANAGE_SALESMANAGER:
+					salesmanLabel.setForeground(Color.black);
+					break;
+				default:
+					break;
+				}
+			}
 			manageType = MANAGE_CUS;
+			getData();
+			tableModel = new tableModel();
+			resultTable.setModel(tableModel);
+			resultPanel.setViewportView(resultTable);
+			customerLabel.setForeground(Color.red);
+
 		} else if (e.getSource() == salesmanLabel
 				&& e.getButton() == MouseEvent.BUTTON1) {
+
+			if (manageType != MANAGE_SALESMANAGER) {
+				switch (manageType) {
+				case MANAGE_MANAGER:
+					manLabel.setForeground(Color.black);
+					break;
+				case MANAGE_CUS:
+					customerLabel.setForeground(Color.black);
+					break;
+				default:
+					break;
+				}
+			}
 			manageType = MANAGE_SALESMANAGER;
+			getData();
+			tableModel = new tableModel();
+			resultTable.setModel(tableModel);
+			resultPanel.setViewportView(resultTable);
+			salesmanLabel.setForeground(Color.red);
+
 		} else if (e.getSource() == manLabel
 				&& e.getButton() == MouseEvent.BUTTON1) {
+			if (manageType != MANAGE_MANAGER) {
+				switch (manageType) {
+				case MANAGE_SALESMANAGER:
+					salesmanLabel.setForeground(Color.black);
+					break;
+				case MANAGE_CUS:
+					customerLabel.setForeground(Color.black);
+					break;
+				default:
+					break;
+				}
+			}
 			manageType = MANAGE_MANAGER;
+			getData();
+			tableModel = new tableModel();
+			resultTable.setModel(tableModel);
+			resultPanel.setViewportView(resultTable);
+			manLabel.setForeground(Color.red);
+
 		} else if (e.getSource() == exitLabel
 				&& e.getButton() == MouseEvent.BUTTON1) {
+			try {
+				Agent.userService.logout(Agent.userAgent);
+				Agent.userAgent = null;
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
 			userUIController.setMainPageView();
 		}
+
 	}
 
 	@Override
@@ -850,21 +1269,106 @@ public class AdminPanel extends JPanel implements ActionListener, MouseListener 
 	}
 
 	class tableModel extends AbstractTableModel {
-
 		@Override
 		public int getRowCount() {
+			switch (manageType) {
+			case MANAGE_CUS:
+				return resultCustomers.size();
+			case MANAGE_MANAGER:
+				return resultManagers.size();
+			case MANAGE_SALESMANAGER:
+				return resultSalesManagers.size();
+			default:
+				break;
+			}
 			return 0;
 		}
 
 		@Override
 		public int getColumnCount() {
+			switch (manageType) {
+			case MANAGE_CUS:
+				return customercolname.length;
+			case MANAGE_MANAGER:
+				return managercolname.length;
+			case MANAGE_SALESMANAGER:
+				return managercolname.length;
+			default:
+				break;
+			}
 			return 0;
 		}
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					"yyyy-MM-dd");
+			switch (manageType) {
+			case MANAGE_CUS:
+				switch (columnIndex) {
+				case 0:
+					return resultCustomers.get(rowIndex).getID();
+				case 1:
+					return resultCustomers.get(rowIndex).getName();
+				case 2:
+					return resultCustomers.get(rowIndex).getPassword();
+				case 3:
+					return resultCustomers.get(rowIndex).getPhone();
+				case 4:
+					return simpleDateFormat.format(resultCustomers
+							.get(rowIndex).getBirth().getTime());
+				default:
+					break;
+				}
+				break;
+			case MANAGE_MANAGER:
+				switch (columnIndex) {
+				case 0:
+					return resultManagers.get(rowIndex).getID();
+				case 1:
+					return resultManagers.get(rowIndex).getName();
+				case 2:
+					return resultManagers.get(rowIndex).getPassword();
+				case 3:
+					return resultManagers.get(rowIndex).getType();
+				default:
+					break;
+				}
+				break;
+			case MANAGE_SALESMANAGER:
+				switch (columnIndex) {
+				case 0:
+					return resultSalesManagers.get(rowIndex).getID();
+				case 1:
+					return resultSalesManagers.get(rowIndex).getName();
+				case 2:
+					return resultSalesManagers.get(rowIndex).getPassword();
+				case 3:
+					return resultSalesManagers.get(rowIndex).getType();
+				default:
+					break;
+				}
+				break;
+			default:
+				break;
+			}
 			return null;
 		}
 
+		@Override
+		public String getColumnName(int column) {
+			switch (manageType) {
+			case MANAGE_CUS:
+				return customercolname[column];
+			case MANAGE_MANAGER:
+				return managercolname[column];
+			case MANAGE_SALESMANAGER:
+				return managercolname[column];
+			default:
+				break;
+			}
+			return "";
+		}
 	}
+
 }

@@ -52,7 +52,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public ResultMessage addUser(UserPO userPO) {
+	public synchronized ResultMessage addUser(UserPO userPO) {
 		ResultMessage isExist = queryUser(userPO.getName());
 		if (isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "user name exist,add fail");
@@ -82,7 +82,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public ResultMessage deleteUser(int userID) {
+	public synchronized ResultMessage deleteUser(int userID) {
 		ResultMessage isExist = queryUserByID(userID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null,
@@ -111,7 +111,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public ResultMessage updateUser(UserPO userPO) {
+	public synchronized ResultMessage updateUser(UserPO userPO) {
 		ResultMessage isExist = queryUserByID(userPO.getID());
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null,
@@ -143,7 +143,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public ResultMessage queryUser(String name) {
+	public synchronized ResultMessage queryUser(String name) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from user where name=?";
 		PreparedStatement ps;
@@ -169,7 +169,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public ResultMessage queryUserByID(int userID) {
+	public synchronized ResultMessage queryUserByID(int userID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from user where userid=?";
 		PreparedStatement ps;
@@ -194,7 +194,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public ResultMessage loginValidate(String ID, String password) {
+	public synchronized ResultMessage loginValidate(String ID, String password) {
 		ResultMessage isExist = queryUser(ID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "no such user");
@@ -224,7 +224,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public ResultMessage getUsers() {
+	public synchronized ResultMessage getUsers() {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from user";
 		PreparedStatement ps;

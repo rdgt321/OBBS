@@ -11,16 +11,10 @@ import RMI.ResultMessage;
 public class BookServiceImpl implements BookService {
 	private BookService service_stub = null;
 
-	public BookServiceImpl() {
-		try {
-			service_stub = (BookService) Naming.lookup(Const.SERVER+"BookService");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			e.printStackTrace();
-		}
+	public BookServiceImpl() throws MalformedURLException, RemoteException,
+			NotBoundException {
+		service_stub = (BookService) Naming
+				.lookup(Const.SERVER + "BookService");
 	}
 
 	@Override

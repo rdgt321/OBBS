@@ -18,6 +18,14 @@ public class Const {
 	public static int SEARCH_BY_MULTI = 0;
 	public static int SEARCH_BY_NAME = 1;
 	public static int SEARCH_BY_AUTHOR = 2;
+	
+	public static int WAITING_FOR_PAYMENT = 0;
+	public static int DILIVERING = 1;
+	public static int DILIVERING_CASH = 2;
+	public static int ORDER_CANCEL = 3;
+	public static int TRADE_SUCCESS = 4;
+
+	public static int INTEGRAL_RATE = 100;
 
 	public static String SERVER = "rmi://localhost:1099/";
 
@@ -45,6 +53,18 @@ public class Const {
 				.getProperty("SEARCH_BY_NAME"));
 		SEARCH_BY_AUTHOR = Integer.parseInt(properties
 				.getProperty("SEARCH_BY_AUTHOR"));
+		
+		WAITING_FOR_PAYMENT = Integer.parseInt(properties
+				.getProperty("WAITING_FOR_PAYMENT"));
+		DILIVERING = Integer.parseInt(properties.getProperty("DILIVERING"));
+		DILIVERING_CASH = Integer.parseInt(properties
+				.getProperty("DILIVERING_CASH"));
+		ORDER_CANCEL = Integer.parseInt(properties.getProperty("ORDER_CANCEL"));
+		TRADE_SUCCESS = Integer.parseInt(properties
+				.getProperty("TRADE_SUCCESS"));
+
+		INTEGRAL_RATE = Integer.parseInt(properties
+				.getProperty("INTEGRAL_RATE"));
 
 		SERVER = properties.getProperty("SERVER");
 	}

@@ -47,7 +47,8 @@ public class EquivalentBondDAOImpl implements EquivalentBondDAO {
 	}
 
 	@Override
-	public ResultMessage addEquivalentBond(EquivalentBondPO equivalentBondPO) {
+	public synchronized ResultMessage addEquivalentBond(
+			EquivalentBondPO equivalentBondPO) {
 		ResultMessage isExist = queryEquivalentBond(equivalentBondPO
 				.getEquivalentBondID());
 		if (isExist.isInvokeSuccess()) {
@@ -81,7 +82,7 @@ public class EquivalentBondDAOImpl implements EquivalentBondDAO {
 	}
 
 	@Override
-	public ResultMessage queryEquivalentBond(int equivalentBondID) {
+	public synchronized ResultMessage queryEquivalentBond(int equivalentBondID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from equivalentbond where equivalentbondid=?";
 		PreparedStatement ps;
@@ -106,7 +107,7 @@ public class EquivalentBondDAOImpl implements EquivalentBondDAO {
 	}
 
 	@Override
-	public ResultMessage deleteEquivalentBond(int equivalentBondID) {
+	public synchronized ResultMessage deleteEquivalentBond(int equivalentBondID) {
 		ResultMessage isExist = queryEquivalentBond(equivalentBondID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "equbondid does not exist");
@@ -135,7 +136,8 @@ public class EquivalentBondDAOImpl implements EquivalentBondDAO {
 	}
 
 	@Override
-	public ResultMessage updateEquivalentBond(EquivalentBondPO equivalentBondPO) {
+	public synchronized ResultMessage updateEquivalentBond(
+			EquivalentBondPO equivalentBondPO) {
 		ResultMessage isExist = queryEquivalentBond(equivalentBondPO
 				.getEquivalentBondID());
 		if (!isExist.isInvokeSuccess()) {
@@ -170,14 +172,15 @@ public class EquivalentBondDAOImpl implements EquivalentBondDAO {
 	}
 
 	@Override
-	public ResultMessage getEquivalentBond(int memberID) {
+	public synchronized ResultMessage getEquivalentBond(int memberID) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "select * from equivalentbond where ownerid=?";
+		String sql = "select * from equivalentbond where ownerid=? and used=?";
 		PreparedStatement ps;
 		ResultSet resultSet = null;
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memberID);
+			ps.setBoolean(2, false);
 			resultSet = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();

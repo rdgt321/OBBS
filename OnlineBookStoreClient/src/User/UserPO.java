@@ -3,10 +3,6 @@ package User;
 import java.io.Serializable;
 
 public abstract class UserPO implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3367716863127718225L;
 	int ID;
 	String name;
 	String password;

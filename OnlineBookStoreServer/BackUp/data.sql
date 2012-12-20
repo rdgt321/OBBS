@@ -41,7 +41,7 @@ CREATE TABLE `book` (
   `price` double DEFAULT NULL,
   `specialprice` double DEFAULT NULL,
   PRIMARY KEY (`isbn`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,6 +50,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
+INSERT INTO `book` VALUES ('程序设计教程','9999-784-555','郑涛','NJU','计算机相关',1,'2005-06-06',28.2,23),('T A O C P','465-7541-7577','Gnuth','unknown','码农必读',2,'2003-06-06',40.3,38.3),('test','1232-355-322','test','test','test',2,'1985-05-05',123,122);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,10 +64,9 @@ DROP TABLE IF EXISTS `cart_item`;
 CREATE TABLE `cart_item` (
   `memberid` int(11) NOT NULL,
   `bookisbn` varchar(25) NOT NULL,
-  `nowpirce` double DEFAULT NULL,
-  `count` int(11) DEFAULT NULL,
-  PRIMARY KEY (`memberid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+  `nowprice` double DEFAULT NULL,
+  `count` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,6 +75,7 @@ CREATE TABLE `cart_item` (
 
 LOCK TABLES `cart_item` WRITE;
 /*!40000 ALTER TABLE `cart_item` DISABLE KEYS */;
+INSERT INTO `cart_item` VALUES (3,'1232-355-322',123,1);
 /*!40000 ALTER TABLE `cart_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,9 +88,8 @@ DROP TABLE IF EXISTS `collect`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `collect` (
   `memberid` int(11) NOT NULL,
-  `bookisbn` varchar(25) NOT NULL,
-  PRIMARY KEY (`memberid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+  `bookisbn` varchar(25) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,6 +98,7 @@ CREATE TABLE `collect` (
 
 LOCK TABLES `collect` WRITE;
 /*!40000 ALTER TABLE `collect` DISABLE KEYS */;
+INSERT INTO `collect` VALUES (2,'1232-355-322');
 /*!40000 ALTER TABLE `collect` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,10 +113,10 @@ CREATE TABLE `coupons` (
   `couponsid` int(11) NOT NULL AUTO_INCREMENT,
   `ownerid` int(11) NOT NULL,
   `discountrate` double DEFAULT NULL,
-  `edndate` date DEFAULT NULL,
+  `enddate` date DEFAULT NULL,
   `used` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`couponsid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +139,7 @@ CREATE TABLE `directory` (
   `directoryid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`directoryid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,6 +148,7 @@ CREATE TABLE `directory` (
 
 LOCK TABLES `directory` WRITE;
 /*!40000 ALTER TABLE `directory` DISABLE KEYS */;
+INSERT INTO `directory` VALUES (1,'文学'),(2,'计算机');
 /*!40000 ALTER TABLE `directory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,11 +162,12 @@ DROP TABLE IF EXISTS `equivalentbond`;
 CREATE TABLE `equivalentbond` (
   `equivalentbondid` int(11) NOT NULL AUTO_INCREMENT,
   `ownerid` int(11) NOT NULL,
+  `uselimit` double DEFAULT NULL,
   `equivalentdenomination` double DEFAULT NULL,
   `enddate` date DEFAULT NULL,
   `used` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`equivalentbondid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +193,7 @@ CREATE TABLE `member` (
   `phone` varchar(16) DEFAULT NULL,
   `birth` date DEFAULT NULL,
   PRIMARY KEY (`memberid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,7 +202,35 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
+INSERT INTO `member` VALUES (2,'cus','e10adc3949ba59abbe56e057f20f883e','15962699478','1993-09-06'),(3,'cust','e10adc3949ba59abbe56e057f20f883e','15962699478','1993-09-06');
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `message`
+--
+
+DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message` (
+  `messageid` int(11) NOT NULL AUTO_INCREMENT,
+  `memberid` int(11) DEFAULT NULL,
+  `title` varchar(16) NOT NULL,
+  `msg` varchar(128) NOT NULL,
+  `sent` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`messageid`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=gbk;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `message`
+--
+
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO `message` VALUES (1,2,'第一封信息','感谢您的注册，欢迎使用本系统',0),(2,3,'第一封信息','感谢您的注册，欢迎使用本系统',1);
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -214,9 +245,8 @@ CREATE TABLE `order_item` (
   `memberid` int(11) DEFAULT NULL,
   `bookisbn` varchar(25) DEFAULT NULL,
   `nowprice` double DEFAULT NULL,
-  `count` int(11) DEFAULT NULL,
-  PRIMARY KEY (`orderid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+  `count` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,6 +255,7 @@ CREATE TABLE `order_item` (
 
 LOCK TABLES `order_item` WRITE;
 /*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
+INSERT INTO `order_item` VALUES (1,3,'1232-355-322',123,2),(2,2,'1232-355-322',123,2);
 /*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +273,7 @@ CREATE TABLE `orders` (
   `date` date DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
   PRIMARY KEY (`orderid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,6 +282,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,3,246,'2012-12-17',0),(2,2,246,'2012-12-17',0);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,13 +296,14 @@ DROP TABLE IF EXISTS `promotion`;
 CREATE TABLE `promotion` (
   `promotionid` int(11) NOT NULL AUTO_INCREMENT,
   `leastintegral` int(11) DEFAULT NULL,
+  `name` varchar(30) DEFAULT NULL,
   `startdate` date DEFAULT NULL,
   `enddate` date DEFAULT NULL,
   `discountrate` double DEFAULT NULL,
   `equivalentdenomination` double DEFAULT NULL,
   `bonduselimit` double DEFAULT NULL,
   PRIMARY KEY (`promotionid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +312,30 @@ CREATE TABLE `promotion` (
 
 LOCK TABLES `promotion` WRITE;
 /*!40000 ALTER TABLE `promotion` DISABLE KEYS */;
+INSERT INTO `promotion` VALUES (1,0,'生日','2012-12-15','2012-12-15',0.88,8,10);
 /*!40000 ALTER TABLE `promotion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `promotionhistory`
+--
+
+DROP TABLE IF EXISTS `promotionhistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `promotionhistory` (
+  `promotionid` int(11) DEFAULT NULL,
+  `memberid` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `promotionhistory`
+--
+
+LOCK TABLES `promotionhistory` WRITE;
+/*!40000 ALTER TABLE `promotionhistory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `promotionhistory` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -295,7 +351,7 @@ CREATE TABLE `user` (
   `password` varchar(32) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,7 +360,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','e10adc3949ba59abbe56e057f20f883e',0);
+INSERT INTO `user` VALUES (1,'admin','e10adc3949ba59abbe56e057f20f883e',0),(2,'sale','e10adc3949ba59abbe56e057f20f883e',2);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -317,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-12 13:55:17
+-- Dump completed on 2012-12-17 19:47:29
