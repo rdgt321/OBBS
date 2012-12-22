@@ -24,7 +24,11 @@ import javax.swing.JPanel;
 
 import ClientRunner.Agent;
 import ClientRunner.ImageDialog;
+<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
+=======
+import ClientRunner.Loader;
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
 import ClientRunner.MPasswordField;
@@ -80,11 +84,19 @@ public class InforCenterPanel extends MPanel implements MouseListener,
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+<<<<<<< HEAD
 		if (IMGSTATIC.otherBG != null) {
 			Composite composite = g2d.getComposite();
 			g2d.setComposite(AlphaComposite.getInstance(
 					AlphaComposite.SRC_OVER, 0.8f));
 			g2d.drawImage(IMGSTATIC.otherBG, 0, 0, 800, 530, this);
+=======
+		if (Loader.otherBG != null) {
+			Composite composite = g2d.getComposite();
+			g2d.setComposite(AlphaComposite.getInstance(
+					AlphaComposite.SRC_OVER, 0.8f));
+			g2d.drawImage(Loader.otherBG, 0, 0, 800, 530, this);
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			g2d.setComposite(composite);
 		}
 		g2d.dispose();
@@ -420,8 +432,13 @@ public class InforCenterPanel extends MPanel implements MouseListener,
 			JPanel nothing = new JPanel() {
 				public void paintComponent(Graphics g) {
 					super.paintComponent(g);
+<<<<<<< HEAD
 					if (IMGSTATIC.boring != null) {
 						g.drawImage(IMGSTATIC.boring, 0, 0, getWidth(),
+=======
+					if (Loader.boring != null) {
+						g.drawImage(Loader.boring, 0, 0, getWidth(),
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 								getHeight(), this);
 					}
 				}

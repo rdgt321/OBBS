@@ -3,8 +3,11 @@ package Member;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+<<<<<<< HEAD
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+=======
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -16,7 +19,10 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import Book.BookInOrderPanel;
+<<<<<<< HEAD
 import ClientRunner.Agent;
+=======
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.Const;
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
@@ -24,8 +30,12 @@ import Sale.ItemPO;
 import Sale.OrderPO;
 
 @SuppressWarnings("serial")
+<<<<<<< HEAD
 public class PurchaseRecordPanel extends MPanel implements MouseListener,
 		ActionListener {
+=======
+public class PurchaseRecordPanel extends MPanel implements MouseListener {
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 	private MemberUIController memberUIController;
 	private ArrayList<OrderPO> list;
@@ -37,7 +47,11 @@ public class PurchaseRecordPanel extends MPanel implements MouseListener,
 	private BookInOrderPanel bookInOrderPanel;
 	private JScrollPane orderPane, listPane;
 	private JPanel listContent;
+<<<<<<< HEAD
 	private int lastSelected = -1;
+=======
+	private JLabel lastSelected;
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	private JLabel header, price, state;
 	private MButton pay;
 
@@ -58,12 +72,16 @@ public class PurchaseRecordPanel extends MPanel implements MouseListener,
 		side_barPanel.setOpaque(false);
 		side_barPanel.setLocation(0, 0);
 
+<<<<<<< HEAD
 		myLabel = new JLabel();
 		if (Agent.userAgent.getUserType() == Const.MEMBER) {
 			myLabel.setText("我的订单");
 		} else {
 			myLabel.setText("ta的订单");
 		}
+=======
+		myLabel = new JLabel("我的订单");
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		myLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		myLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		myLabel.setSize(160, 20);
@@ -77,6 +95,7 @@ public class PurchaseRecordPanel extends MPanel implements MouseListener,
 		header.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 
 		price = new JLabel();
+<<<<<<< HEAD
 		price.setSize(160, 40);
 		price.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 
@@ -90,6 +109,15 @@ public class PurchaseRecordPanel extends MPanel implements MouseListener,
 		pay.addActionListener(this);
 		pay.setButtonColor(Color.RED.brighter());
 
+=======
+		price.setSize(200, 40);
+		price.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+
+		state = new JLabel();
+		state.setSize(220, 40);
+		state.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		orderLabels = new JLabel[size];
 		for (int i = 0; i < size; i++) {
 			orderLabels[i] = new JLabel("订单号:" + list.get(i).getOrderID());
@@ -126,8 +154,13 @@ public class PurchaseRecordPanel extends MPanel implements MouseListener,
 	public void mouseClicked(MouseEvent e) {
 		for (int i = 0; i < size; i++) {
 			if (e.getSource() == orderLabels[i]) {
+<<<<<<< HEAD
 				if (lastSelected != -1) {
 					orderLabels[lastSelected].setForeground(Color.BLACK);
+=======
+				if (lastSelected != null) {
+					lastSelected.setForeground(Color.BLACK);
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 				}
 				orderLabels[i].setForeground(Color.RED.brighter());
 				item_list = list.get(i).getBooks();
@@ -142,6 +175,7 @@ public class PurchaseRecordPanel extends MPanel implements MouseListener,
 
 				price.setText("总价格:"
 						+ String.format("%.2f", list.get(i).getTotalprice()));
+<<<<<<< HEAD
 				price.setLocation(260, 60 + 60 * item_list.size());
 				price.setForeground(Color.RED.brighter());
 				int sdt = list.get(i).getState();
@@ -159,6 +193,21 @@ public class PurchaseRecordPanel extends MPanel implements MouseListener,
 					state.setText("订单状态:交易取消");
 				} else if (sdt == Const.TRADE_SUCCESS) {
 					state.setText("订单状态:交易成功");
+=======
+				price.setLocation(220, 60 + 60 * item_list.size());
+				price.setForeground(Color.RED.brighter());
+				int sdt = list.get(i).getState();
+				if (sdt == Const.WAITING_FOR_PAYMENT) {
+
+				} else if (sdt == Const.DILIVERING) {
+
+				} else if (sdt == Const.DILIVERING_CASH) {
+
+				} else if (sdt == Const.ORDER_CANCEL) {
+
+				} else if (sdt == Const.TRADE_SUCCESS) {
+
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 				}
 				state.setLocation(0, 60 + 60 * item_list.size());
 				for (int j = 0; j < item_list.size(); j++) {
@@ -169,17 +218,25 @@ public class PurchaseRecordPanel extends MPanel implements MouseListener,
 					bookInOrderPanel.setLocation(0, 60 + 60 * j);
 					listContent.add(bookInOrderPanel);
 				}
+<<<<<<< HEAD
 				listContent.add(price);
 				listContent.add(state);
 				listPane.setViewportView(listContent);
 				repaint();
 				validate();
 				lastSelected = i;
+=======
+				listPane.setViewportView(listContent);
+				repaint();
+				validate();
+				lastSelected = orderLabels[i];
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 				break;
 			}
 		}
 	}
 
+<<<<<<< HEAD
 	public int getSelectedOrder() {
 		if (lastSelected != -1) {
 			return list.get(lastSelected).getOrderID();
@@ -187,6 +244,8 @@ public class PurchaseRecordPanel extends MPanel implements MouseListener,
 		return -1;
 	}
 
+=======
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	@Override
 	public void mousePressed(MouseEvent e) {
 
@@ -206,6 +265,7 @@ public class PurchaseRecordPanel extends MPanel implements MouseListener,
 	public void mouseExited(MouseEvent e) {
 
 	}
+<<<<<<< HEAD
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -214,4 +274,6 @@ public class PurchaseRecordPanel extends MPanel implements MouseListener,
 					.setPaymentView(list.get(lastSelected).getOrderID());
 		}
 	}
+=======
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 }

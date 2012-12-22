@@ -22,7 +22,11 @@ import ClientRunner.Agent;
 import ClientRunner.Const;
 import ClientRunner.Encrypt;
 import ClientRunner.ImageDialog;
+<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
+=======
+import ClientRunner.Loader;
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
 import ClientRunner.MPasswordField;
@@ -51,11 +55,19 @@ public class PaymentPanel extends MPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+<<<<<<< HEAD
 		if (IMGSTATIC.homepageBG != null) {
 			Composite composite = g2d.getComposite();
 			g2d.setComposite(AlphaComposite.getInstance(
 					AlphaComposite.SRC_OVER, 0.8f));
 			g2d.drawImage(IMGSTATIC.homepageBG, 0, 0, 800, 530, this);
+=======
+		if (Loader.homepageBG != null) {
+			Composite composite = g2d.getComposite();
+			g2d.setComposite(AlphaComposite.getInstance(
+					AlphaComposite.SRC_OVER, 0.8f));
+			g2d.drawImage(Loader.homepageBG, 0, 0, 800, 530, this);
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			g2d.setComposite(composite);
 		}
 		g2d.dispose();

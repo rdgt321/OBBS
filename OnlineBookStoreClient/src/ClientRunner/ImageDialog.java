@@ -24,7 +24,10 @@ public class ImageDialog extends JDialog {
 
 	private ImageDialog() {
 		setFocusable(false);
+<<<<<<< HEAD
 		setEnabled(false);
+=======
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	};
 
 	static {

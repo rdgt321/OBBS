@@ -34,7 +34,11 @@ public class MainFrame extends JFrame {
 		setResizable(false);
 		setLayout(null);
 		Const.loadConfig();
+<<<<<<< HEAD
 		IMGSTATIC.startLoading();
+=======
+		Loader.startLoading();
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		try {
 			UIManager
 					.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

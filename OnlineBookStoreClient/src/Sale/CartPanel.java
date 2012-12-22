@@ -36,7 +36,11 @@ import Book.BookInCartPanel;
 import ClientRunner.Agent;
 import ClientRunner.Const;
 import ClientRunner.ImageDialog;
+<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
+=======
+import ClientRunner.Loader;
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
 import ClientRunner.MTextField;
@@ -101,14 +105,23 @@ public class CartPanel extends MPanel implements ActionListener {
 					Graphics2D g2d = (Graphics2D) g.create();
 					g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
+<<<<<<< HEAD
 					if (IMGSTATIC.homepageBG != null) {
+=======
+					if (Loader.homepageBG != null) {
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 						int height = scrollPane.getVerticalScrollBar()
 								.getValue();
 						Composite composite = g2d.getComposite();
 						g2d.setComposite(AlphaComposite.getInstance(
 								AlphaComposite.SRC_OVER, 0.8f));
+<<<<<<< HEAD
 						g2d.drawImage(IMGSTATIC.homepageBG, 0, height, 800,
 								530, this);
+=======
+						g2d.drawImage(Loader.homepageBG, 0, height, 800, 530,
+								this);
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 						g2d.setComposite(composite);
 					}
 					g2d.dispose();
@@ -130,6 +143,10 @@ public class CartPanel extends MPanel implements ActionListener {
 				bookInCartPanels[j].setLocation(10, 10 + 70 * j);
 				contentPane.add(bookInCartPanels[j]);
 			}
+<<<<<<< HEAD
+=======
+
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			submitButton = new MButton("提交订单");
 			submitButton.setSize(120, 40);
 			submitButton.setFocusable(false);
@@ -198,6 +215,7 @@ public class CartPanel extends MPanel implements ActionListener {
 					Graphics2D g2d = (Graphics2D) g.create();
 					g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
+<<<<<<< HEAD
 					if (IMGSTATIC.homepageBG != null
 							&& IMGSTATIC.boring != null) {
 						Composite composite = g2d.getComposite();
@@ -206,6 +224,14 @@ public class CartPanel extends MPanel implements ActionListener {
 						g2d.drawImage(IMGSTATIC.homepageBG, 0, 0, 800, 530,
 								this);
 						g2d.drawImage(IMGSTATIC.boring, 335, 210, 80, 80, this);
+=======
+					if (Loader.homepageBG != null && Loader.boring != null) {
+						Composite composite = g2d.getComposite();
+						g2d.setComposite(AlphaComposite.getInstance(
+								AlphaComposite.SRC_OVER, 0.8f));
+						g2d.drawImage(Loader.homepageBG, 0, 0, 800, 530, this);
+						g2d.drawImage(Loader.boring, 335, 210, 80, 80, this);
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 						g2d.setComposite(composite);
 					}
 					g2d.dispose();

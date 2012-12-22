@@ -1913,6 +1913,7 @@ memberID:2 name:cus type:member ip:172.26.31.223 -connect at Fri Dec 21 03:10:03
 memberID:2 name:cus type:member ip:172.26.31.223 -keep alive at Fri Dec 21 03:10:08 CST 2012
 memberID:2 name:cus type:member ip:172.26.31.223 -keep alive at Fri Dec 21 03:10:18 CST 2012
 memberID:2 name:cus type:member ip:172.26.31.223 -disconnect at Fri Dec 21 03:10:21 CST 2012
+<<<<<<< HEAD
 userID:2 name:sale type:sales manager ip:172.25.132.79 -connect at Fri Dec 21 14:07:25 CST 2012
 userID:2 name:sale type:sales manager ip:172.25.132.79 -keep alive at Fri Dec 21 14:07:34 CST 2012
 userID:2 name:sale type:sales manager ip:172.25.132.79 -keep alive at Fri Dec 21 14:07:44 CST 2012
@@ -2383,3 +2384,5 @@ userID:2 name:sale type:sales manager ip:172.25.132.79 -disconnect at Fri Dec 21
 userID:2 name:sale type:sales manager ip:172.25.132.79 -connect at Fri Dec 21 21:15:24 CST 2012
 userID:2 name:sale type:sales manager ip:172.25.132.79 -keep alive at Fri Dec 21 21:15:28 CST 2012
 userID:2 name:sale type:sales manager ip:172.25.132.79 -disconnect at Fri Dec 21 21:15:33 CST 2012
+=======
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca

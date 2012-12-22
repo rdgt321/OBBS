@@ -1,5 +1,6 @@
 package User;
 
+<<<<<<< HEAD
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
@@ -7,6 +8,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+=======
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -22,7 +28,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import ClientRunner.Agent;
+<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
+=======
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.ImageDialog;
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
@@ -89,10 +98,17 @@ public class GenManagerPanel extends MPanel implements MouseListener,
 		obsLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 30));
 		obsLabel.setSize(300, 80);
 
+<<<<<<< HEAD
 		welcomLabel = new JLabel("欢迎您，总经理:" + Agent.userAgent.getName());
 		welcomLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		welcomLabel.setSize(200, 40);
 		welcomLabel.setLocation(500, 20);
+=======
+		welcomLabel = new JLabel("欢迎您，总经理");
+		welcomLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		welcomLabel.setSize(150, 40);
+		welcomLabel.setLocation(560, 20);
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		exitLabel = new JLabel("退出");
 		exitLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
@@ -151,14 +167,20 @@ public class GenManagerPanel extends MPanel implements MouseListener,
 		equiBond.setFocusable(false);
 		equiBond.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		equiBond.setLocation(100, 45);
+<<<<<<< HEAD
 		equiBond.setOpaque(false);
+=======
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		discountBond = new JRadioButton("打折券");
 		discountBond.setSize(100, 40);
 		discountBond.setFocusable(false);
 		discountBond.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		discountBond.setLocation(300, 45);
+<<<<<<< HEAD
 		discountBond.setOpaque(false);
+=======
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		equiPanel = new MPanel();
 		equiPanel.setSize(350, 120);
@@ -224,6 +246,7 @@ public class GenManagerPanel extends MPanel implements MouseListener,
 		startMonthField.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		startMonthField.setSize(40, 20);
 		startMonthField.setLocation(280, 236);
+<<<<<<< HEAD
 
 		startMonthLabel = new JLabel("月");
 		startMonthLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
@@ -240,6 +263,24 @@ public class GenManagerPanel extends MPanel implements MouseListener,
 		startDayLabel.setSize(20, 40);
 		startDayLabel.setLocation(380, 226);
 
+=======
+
+		startMonthLabel = new JLabel("月");
+		startMonthLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		startMonthLabel.setSize(20, 40);
+		startMonthLabel.setLocation(320, 226);
+
+		startDayfField = new MTextField();
+		startDayfField.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		startDayfField.setSize(40, 20);
+		startDayfField.setLocation(340, 236);
+
+		startDayLabel = new JLabel("日");
+		startDayLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		startDayLabel.setSize(20, 40);
+		startDayLabel.setLocation(380, 226);
+
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		startDateWarning = new JLabel("输入不合法!");
 		startDateWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		startDateWarning.setForeground(Color.RED);

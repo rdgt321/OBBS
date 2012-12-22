@@ -30,7 +30,11 @@ public class BookPanel extends MPanel {
 			publishDateYearField, publishDateMonthField, publishDateDateField,
 			priceField, specialPriceField;
 	private DirectoryComBox bookType;
+<<<<<<< HEAD
 	private ArrayList<DirectoryPO> list;
+=======
+
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	private JTextArea descriptionArea;
 
 	public BookPanel(BookUIController bookUIController) {
@@ -163,7 +167,12 @@ public class BookPanel extends MPanel {
 		bookType = new DirectoryComBox();
 		try {
 			ResultMessage resultMessage = Agent.bookService.getAllDirectories();
+<<<<<<< HEAD
 			list = resultMessage.getResultSet();
+=======
+			@SuppressWarnings("unchecked")
+			ArrayList<DirectoryPO> list = resultMessage.getResultSet();
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			if (list != null) {
 				for (int i = 0; i < list.size(); i++) {
 					bookType.addItem(list.get(i));
@@ -174,6 +183,7 @@ public class BookPanel extends MPanel {
 		}
 		bookType.setSize(120, 30);
 		bookType.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+<<<<<<< HEAD
 		bookType.setLocation(115, 325);
 
 		descriptionArea = new JTextArea();
@@ -181,6 +191,15 @@ public class BookPanel extends MPanel {
 		descriptionArea.setLocation(115, 370);
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
+=======
+		bookType.setFocusable(false);
+		bookType.setLocation(115, 325);
+
+		descriptionArea = new JTextArea();
+		descriptionArea.setSize(190, 80);
+		descriptionArea.setLocation(115, 370);
+		descriptionArea.setLineWrap(true);
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		descriptionArea.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		descriptionArea.setOpaque(false);
 
@@ -232,6 +251,7 @@ public class BookPanel extends MPanel {
 			int month = calendar.get(calendar.MONTH) + 1;
 			int date = calendar.get(calendar.DATE);
 
+<<<<<<< HEAD
 			int direcotoryID = bookPO.getDirectoryID();
 			for (DirectoryPO directory : list) {
 				if (directory.getID() == direcotoryID) {
@@ -240,6 +260,8 @@ public class BookPanel extends MPanel {
 				}
 			}
 
+=======
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			publishDateYearField.setText("" + year);
 			publishDateMonthField.setText("" + month);
 			publishDateDateField.setText("" + date);
@@ -284,6 +306,7 @@ public class BookPanel extends MPanel {
 				.getText().trim()) - 1, Integer.parseInt(publishDateDateField
 				.getText().trim()));
 
+<<<<<<< HEAD
 	}
 
 	public int getDirectoryID() {
@@ -298,6 +321,22 @@ public class BookPanel extends MPanel {
 		return Double.parseDouble(specialPriceField.getText().trim());
 	}
 
+=======
+	}
+
+	public int getDirectoryID() {
+		return ((DirectoryPO) bookType.getSelectedItem()).getID();
+	}
+
+	public double getPrice() {
+		return Double.parseDouble(priceField.getText().trim());
+	}
+
+	public double getSpecialPrice() {
+		return Double.parseDouble(specialPriceField.getText().trim());
+	}
+
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	public String getDescription() {
 		return descriptionArea.getText().trim();
 	}
@@ -335,6 +374,14 @@ public class BookPanel extends MPanel {
 		nameField.setEditable(true);
 	}
 
+<<<<<<< HEAD
+=======
+	// allow the user to modify or set the isbn of the book
+	private void enableModifyISBN() {
+		isbnField.setEditable(true);
+	}
+
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	// allow the user to modify or set the author of the book
 	private void enableModifyAuthor() {
 		authorField.setEditable(true);

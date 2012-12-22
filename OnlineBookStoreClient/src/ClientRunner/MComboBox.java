@@ -2,15 +2,22 @@ package ClientRunner;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+<<<<<<< HEAD
 import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+=======
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 
+<<<<<<< HEAD
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,6 +30,9 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.plaf.basic.ComboPopup;
+=======
+import javax.swing.JComboBox;
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 public class MComboBox<E> extends JComboBox {
 	GradientPaint p1;
@@ -65,5 +75,9 @@ public class MComboBox<E> extends JComboBox {
 		g2d.setPaint(p2);
 		g2d.drawRoundRect(1, 1, width - 3, height - 3, 18, 18);
 		g2d.dispose();
+<<<<<<< HEAD
+=======
+		super.paintBorder(g);
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	}
 }

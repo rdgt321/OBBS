@@ -17,7 +17,10 @@ import java.util.GregorianCalendar;
 
 import javax.swing.JLabel;
 
+<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
+=======
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.ImageDialog;
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
@@ -39,6 +42,11 @@ public class RegisterPanel extends MPanel implements ActionListener {
 	private MTextField birth_dateField = null;
 	private MButton registerbtn = null;
 	private MButton returnbtn = null;
+<<<<<<< HEAD
+=======
+
+	private Image bg = null;
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 	private MemberUIController memberUIController;
 
@@ -53,8 +61,13 @@ public class RegisterPanel extends MPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+<<<<<<< HEAD
 		if (IMGSTATIC.loginBG != null) {
 			g2d.drawImage(IMGSTATIC.loginBG, 0, 0, 800, 530, this);
+=======
+		if (bg != null) {
+			g2d.drawImage(bg, 0, 0, 800, 530, this);
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			Composite composite = g2d.getComposite();
 			g2d.setComposite(AlphaComposite.getInstance(
 					AlphaComposite.SRC_OVER, 0.6f));
@@ -69,6 +82,11 @@ public class RegisterPanel extends MPanel implements ActionListener {
 		setSize(800, 530);
 		setLayout(null);
 		setLocation(0, 70);
+<<<<<<< HEAD
+=======
+
+		bg = Toolkit.getDefaultToolkit().getImage("materials\\login.png");
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		nameLabel = new JLabel("ÓÃ»§Ãû:");
 		nameLabel.setSize(100, 50);

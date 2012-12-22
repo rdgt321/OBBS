@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+<<<<<<< HEAD
 <comment>Const</comment>
 <entry key="FIRSTRUN">0</entry>
 <entry key="ADMIN">0</entry>
@@ -28,4 +29,33 @@
 <entry key="MAX_CLIENT">200</entry>
 <entry key="CON_FAIL">0</entry>
 <entry key="LAST_BIRTH">2012-11-22</entry>
+=======
+	<comment>Const</comment>
+	<entry key="FIRSTRUN">0</entry>
+	<entry key="ADMIN">0</entry>
+	<entry key="TIMEOUT">5</entry>
+	<entry key="WAITING_FOR_PAYMENT">0</entry>
+	<entry key="SEARCH_BY_NAME">1</entry>
+	<entry key="ROUTINE">10</entry>
+	<entry key="BACKUP">7</entry>
+	<entry key="LOG_ACCESS_PATH">log/access.txt</entry>
+	<entry key="SQLPATH">Initial/SQLInit.sql</entry>
+	<entry key="DILIVERING">1</entry>
+	<entry key="TRADE_SUCCESS">4</entry>
+	<entry key="DILIVERING_CASH">2</entry>
+	<entry key="GENERALMANAGER">1</entry>
+	<entry key="SEARCH_BY_AUTHOR">2</entry>
+	<entry key="BACKUPPATH">BackUp/data.sql</entry>
+	<entry key="INTEGRAL_RATE">100</entry>
+	<entry key="MEMBER">3</entry>
+	<entry key="SALESMANAGER">2</entry>
+	<entry key="SEARCH_BY_MULTI">0</entry>
+	<entry key="dbuser">root</entry>
+	<entry key="ORDER_CANCEL">3</entry>
+	<entry key="dbpass">lczw123</entry>
+	<entry key="MAX_CLIENT">200</entry>
+	<entry key="CON_FAIL">0</entry>
+	<entry key="LAST_BIRTH">2012-11-21</entry>
+	<entry key="MAX_COLLECT">20</entry>
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 </properties>

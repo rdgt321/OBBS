@@ -20,7 +20,11 @@ import javax.swing.JLabel;
 
 import ClientRunner.Agent;
 import ClientRunner.Const;
+<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
+=======
+import ClientRunner.Loader;
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.MButton;
 import ClientRunner.MComboBox;
 import ClientRunner.MPanel;
@@ -51,11 +55,19 @@ public class NavigatePanel extends MPanel implements ActionListener,
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+<<<<<<< HEAD
 		if (IMGSTATIC.navigatorBG != null) {
 			Composite composite = g2d.getComposite();
 			g2d.setComposite(AlphaComposite.getInstance(
 					AlphaComposite.SRC_OVER, 0.6f));
 			g2d.drawImage(IMGSTATIC.navigatorBG, 0, 0, 800, 70, this);
+=======
+		if (Loader.navigatorBG != null) {
+			Composite composite = g2d.getComposite();
+			g2d.setComposite(AlphaComposite.getInstance(
+					AlphaComposite.SRC_OVER, 0.6f));
+			g2d.drawImage(Loader.navigatorBG, 0, 0, 800, 70, this);
+>>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			g2d.setComposite(composite);
 		}
 	}
