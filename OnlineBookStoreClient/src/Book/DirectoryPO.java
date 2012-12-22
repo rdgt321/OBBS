@@ -2,11 +2,8 @@ package Book;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class DirectoryPO implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2409803346848357208L;
 	private int ID;
 	private String name;
 	

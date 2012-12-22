@@ -11,17 +11,10 @@ import RMI.ResultMessage;
 public class SaleServiceImpl implements SaleService {
 	private SaleService service_stub = null;
 
-	public SaleServiceImpl() {
-		try {
-			service_stub = (SaleService) Naming.lookup(Const.SERVER
-					+ "SaleService");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			e.printStackTrace();
-		}
+	public SaleServiceImpl() throws MalformedURLException, RemoteException,
+			NotBoundException {
+		service_stub = (SaleService) Naming
+				.lookup(Const.SERVER + "SaleService");
 	}
 
 	@Override

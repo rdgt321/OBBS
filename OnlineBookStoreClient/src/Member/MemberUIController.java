@@ -2,6 +2,7 @@ package Member;
 
 import ClientRunner.Agent;
 import ClientRunner.MainFrame;
+import RMI.ResultMessage;
 
 public class MemberUIController {
 	private MainFrame mainFrame;
@@ -9,7 +10,7 @@ public class MemberUIController {
 	private RegisterPanel registerPanel;
 	private NavigatePanel navigatePanel;
 	private BookCollectionPanel bookCollectionPanel;
-
+	private SearchResultPanel searchResultPanel;
 	private InforCenterPanel inforCenterPanel;
 
 	public MemberUIController(MainFrame mainFrame) {
@@ -31,10 +32,12 @@ public class MemberUIController {
 			navigatePanel = new NavigatePanel(this);
 		}
 		navigatePanel.init(NavigatePanel.AFTER_STATE);
+		navigatePanel.repaint();
+		navigatePanel.validate();
 	}
 
 	public void setLoginView() {
-		loginPanel = new LoginPanel(this, Agent.memberService, Agent.userService);
+		loginPanel = new LoginPanel(this);
 		loginPanel.init();
 		mainFrame.clear();
 		mainFrame.add(loginPanel);
@@ -50,10 +53,8 @@ public class MemberUIController {
 	}
 
 	public void setBookCollView() {
-		if (bookCollectionPanel == null) {
-			bookCollectionPanel = new BookCollectionPanel(this);
-			bookCollectionPanel.init();
-		}
+		bookCollectionPanel = new BookCollectionPanel(this);
+		bookCollectionPanel.init();
 		mainFrame.clear();
 		mainFrame.add(bookCollectionPanel);
 		bookCollectionPanel.requestFocus();
@@ -62,10 +63,8 @@ public class MemberUIController {
 	}
 
 	public void setInforView() {
-		if (inforCenterPanel == null) {
-			inforCenterPanel = new InforCenterPanel(this);
-			inforCenterPanel.init();
-		}
+		inforCenterPanel = new InforCenterPanel(this);
+		inforCenterPanel.init();
 		mainFrame.clear();
 		mainFrame.add(inforCenterPanel);
 		inforCenterPanel.requestFocus();
@@ -77,26 +76,33 @@ public class MemberUIController {
 	}
 
 	public void setMainpageView() {
-		mainFrame.clear();
-		mainFrame.getBookUIController().createMainView();
+		mainFrame.getBookUIController().setReturnView();
 	}
 
 	public void setCartView() {
 		mainFrame.getSaleUIController().setCartView();
 	}
-	
-	public MainFrame getMainFrame(){
+
+	public void displaySearchResult(ResultMessage resultMessage) {
+		searchResultPanel = new SearchResultPanel(this, resultMessage);
+		searchResultPanel.init();
+		mainFrame.clear();
+		mainFrame.add(searchResultPanel);
+		searchResultPanel.requestFocus();
+		searchResultPanel.validate();
+	}
+
+	public MainFrame getMainFrame() {
 		return mainFrame;
 	}
 
-	public void hideNavigateView(){
+	public void hideNavigateView() {
 		navigatePanel.setVisible(false);
 		mainFrame.validate();
 	}
-	
-	public void displayNavigateView(){
+
+	public void displayNavigateView() {
 		navigatePanel.setVisible(true);
 		mainFrame.validate();
 	}
-	
 }

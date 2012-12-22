@@ -1,295 +1,564 @@
 package Sale;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.rmi.RemoteException;
+import java.text.AttributedCharacterIterator;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+import Book.BookInCartPanel;
+import ClientRunner.Agent;
+import ClientRunner.Const;
+import ClientRunner.ImageDialog;
+import ClientRunner.IMGSTATIC;
+import ClientRunner.MButton;
+import ClientRunner.MPanel;
+import ClientRunner.MTextField;
 import Member.MemberPO;
+import Promotion.CouponsPO;
+import Promotion.DiscoutBondBox;
+import Promotion.EquiBondBox;
+import Promotion.EquivalentBondPO;
+import RMI.ResultMessage;
 
 @SuppressWarnings("serial")
-public class CartPanel extends JPanel implements ActionListener {
+public class CartPanel extends MPanel implements ActionListener {
 	private SaleUIController saleUIController;
-	private String[] collectionBook = { "Œƒ—ß", "–°Àµ", "æ≠º√", "π‹¿Ì", "øº ‘", " ±…–",
-			"…Ÿ∂˘", "¬√”Œ" };
-	private JLabel[] bookLabels;
-	private JButton[] deleteButtons;
-	private JButton buyEnsureButton;
+	private ArrayList<CartPO> book_in_cart;
+	private MButton submitButton;
 	private JRadioButton useBondButton, notUseBondButton, useEarnedValue;
 	private JRadioButton useEquiBond, useDiscountBond;
-	private JLabel totalPriceLabel;
-	private int size = collectionBook.length;
-	private JPanel panel, useBondPanel, useEarnedValuePanel;
-	private JTextField earnedValueField;
-	private JComboBox<String> equiBondBox, discountBondBox;
-	private int pieceOfCommodity = 1;
+	private JLabel totalPriceLabel, realPirceLabel, integraltipLabel,
+			bondtipLabel;
+	private int size;
+	private MPanel contentPane, useBondPanel, useEarnedValuePanel;
+	private MTextField earnedValueField;
+	private EquiBondBox equiBondBox;
+	private DiscoutBondBox discountBondBox;
+	private BookInCartPanel[] bookInCartPanels;
+	private JScrollPane scrollPane;
+	private int num_of_item;
+	private double totalPrice;
+	private double realPrice;
 	private MemberPO memberPO;
-	
+	private CartPO cart;
 
 	public CartPanel(SaleUIController saleUIController) {
 		this.saleUIController = saleUIController;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void init() {
-		setSize(800, 520);
-		setLocation(5, 75);
+		setSize(800, 530);
+		setLocation(0, 70);
 		setVisible(true);
 		setLayout(null);
-		if(pieceOfCommodity != 0){
-			panel = new JPanel() {
 
+		try {
+			ResultMessage resultMessage = Agent.saleService
+					.getBooksInCart(Agent.userAgent.getId());
+			book_in_cart = resultMessage.getResultSet();
+			if (book_in_cart != null) {
+				size = 1;
+			} else {
+				size = 0;
+			}
+		} catch (RemoteException re) {
+			re.printStackTrace();
+		}
+
+		if (size != 0) {
+			contentPane = new MPanel() {
 				@Override
 				protected void paintComponent(Graphics g) {
 					super.paintComponent(g);
-					for (int i = 1; i <= size; i++) {
-						g.draw3DRect(0, 0, 770, 100 * i, true);
+					Graphics2D g2d = (Graphics2D) g.create();
+					g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+							RenderingHints.VALUE_ANTIALIAS_ON);
+					if (IMGSTATIC.homepageBG != null) {
+						int height = scrollPane.getVerticalScrollBar()
+								.getValue();
+						Composite composite = g2d.getComposite();
+						g2d.setComposite(AlphaComposite.getInstance(
+								AlphaComposite.SRC_OVER, 0.8f));
+						g2d.drawImage(IMGSTATIC.homepageBG, 0, height, 800,
+								530, this);
+						g2d.setComposite(composite);
 					}
+					g2d.dispose();
 				}
 
 			};
-			panel.setLayout(null);
-			panel.setPreferredSize(new Dimension(800, 980));
-			bookLabels = new JLabel[size];
-			deleteButtons = new JButton[size];
-
-			JScrollPane scroll[] = new JScrollPane[size];
-			for (int i = 0; i < size; i++) {
-				bookLabels[i] = new JLabel(collectionBook[i]);
-				deleteButtons[i] = new JButton("…æ≥˝");
-				deleteButtons[i].setFocusable(false);
-				scroll[i] = new JScrollPane();
-
-				bookLabels[i].setSize(80, 35);
-				deleteButtons[i].setSize(80, 35);
-				scroll[i].setSize(550, 80);
-
-				bookLabels[i].setLocation(10, 5 + 100 * i);
-				deleteButtons[i].setLocation(680, 15 + 100 * i);
-				scroll[i].setLocation(100, 10 + 100 * i);
-
-				bookLabels[i].setFont(new Font("ø¨ÃÂ_gb2312", Font.BOLD, 22));
-				deleteButtons[i].setFont(new Font("ø¨ÃÂ_gb2312", Font.PLAIN, 20));
-				scroll[i].setFont(new Font("ø¨ÃÂ_gb2312", Font.BOLD, 20));
-
-				deleteButtons[i].addActionListener(this);
-
-				panel.add(bookLabels[i]);
-				panel.add(deleteButtons[i]);
-				panel.add(scroll[i]);
-				
+			contentPane.setLayout(null);
+			contentPane.setPreferredSize(new Dimension(780,
+					150 + 70 * num_of_item));
+			cart = book_in_cart.get(0);
+			ArrayList<ItemPO> list = cart.getItems();
+			num_of_item = list.size();
+			bookInCartPanels = new BookInCartPanel[num_of_item];
+			for (int j = 0; j < num_of_item; j++) {
+				bookInCartPanels[j] = new BookInCartPanel(saleUIController
+						.getMainFrame().getBookUIController(), this,
+						list.get(j));
+				bookInCartPanels[j].init();
+				bookInCartPanels[j].setLocation(10, 10 + 70 * j);
+				contentPane.add(bookInCartPanels[j]);
 			}
-			
-			buyEnsureButton = new JButton("»∑»œ");
-			buyEnsureButton.setSize(80, 40);
-			buyEnsureButton.setFocusable(false);
-			buyEnsureButton.setFont(new Font("ø¨ÃÂ_gb2312", Font.BOLD, 20));
-			buyEnsureButton.setLocation(600, 100 + 100 * size);
-			
-			buyEnsureButton.addActionListener(this);
-			
-			notUseBondButton = new JRadioButton("»´∂Ó÷ß∏∂");
+			submitButton = new MButton("Êèê‰∫§ËÆ¢Âçï");
+			submitButton.setSize(120, 40);
+			submitButton.setFocusable(false);
+			submitButton.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.BOLD, 20));
+			submitButton.setLocation(580, 120 + 70 * num_of_item);
+			submitButton.addActionListener(this);
+
+			notUseBondButton = new JRadioButton("ÂÖ®È¢ùÊîØ‰ªò");
 			notUseBondButton.setSize(100, 25);
 			notUseBondButton.setFocusable(false);
 			notUseBondButton.setSelected(true);
-			notUseBondButton.setFont(new Font("ø¨ÃÂ_gb2312", Font.PLAIN, 18));
-			notUseBondButton.setLocation(80, 30 + 100 * size);
+			notUseBondButton.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 18));
+			notUseBondButton.setLocation(80, 30 + 60 * num_of_item);
 			notUseBondButton.addActionListener(this);
-			
-			useBondButton = new JRadioButton(" π”√”≈ª›»Ø");
+			notUseBondButton.setOpaque(false);
+
+			useBondButton = new JRadioButton("‰ΩøÁî®‰ºòÊÉ†Âà∏");
 			useBondButton.setSize(120, 25);
 			useBondButton.setFocusable(false);
-			useBondButton.setFont(new Font("ø¨ÃÂ_gb2312", Font.PLAIN, 18));
-			useBondButton.setLocation(185, 30 + 100 * size);
+			useBondButton.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 18));
+			useBondButton.setLocation(185, 30 + 60 * num_of_item);
 			useBondButton.addActionListener(this);
-			
-			useEarnedValue = new JRadioButton(" π”√ª˝∑÷");
+			useBondButton.setOpaque(false);
+
+			useEarnedValue = new JRadioButton("‰ΩøÁî®ÁßØÂàÜ");
 			useEarnedValue.setSize(100, 25);
 			useEarnedValue.setFocusable(false);
-			useEarnedValue.setFont(new Font("ø¨ÃÂ_gb2312", Font.PLAIN, 18));
-			useEarnedValue.setLocation(310, 30 + 100 * size);
+			useEarnedValue.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 18));
+			useEarnedValue.setLocation(310, 30 + 60 * num_of_item);
 			useEarnedValue.addActionListener(this);
-			
+			useEarnedValue.setOpaque(false);
+
 			ButtonGroup group = new ButtonGroup();
 			group.add(notUseBondButton);
 			group.add(useBondButton);
 			group.add(useEarnedValue);
-			
-			totalPriceLabel = new JLabel("…Ã∆∑◊‹º€£∫");
-			totalPriceLabel.setSize(140, 40);
-			totalPriceLabel.setLocation(500, 40 + 100 * size);
-			totalPriceLabel.setFont(new Font("ø¨ÃÂ_gb2312", Font.BOLD, 24));
 
-			panel.add(notUseBondButton);
-			panel.add(useBondButton);
-			panel.add(useEarnedValue);
-			panel.add(totalPriceLabel);
-			panel.add(buyEnsureButton);
-		}
-		else{
-			JLabel nothingLabel = new JLabel("ƒ˙µƒπ∫ŒÔ≥µ÷–µ±«∞√ª”–»Œ∫ŒÕº È!");
+			totalPriceLabel = new JLabel("ÂïÜÂìÅÊÄª‰ª∑Ôºö" + cart.totalprice);
+			totalPriceLabel.setSize(280, 40);
+			totalPriceLabel.setLocation(500, 40 + 60 * num_of_item);
+			totalPriceLabel.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.BOLD, 24));
+
+			realPirceLabel = new JLabel("ÂÆûÈôÖ‰ª∑Ê†º:" + cart.totalprice);
+			realPirceLabel.setSize(280, 40);
+			realPirceLabel.setLocation(500, 80 + 60 * num_of_item);
+			realPirceLabel.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.BOLD, 24));
+			realPirceLabel.setForeground(Color.RED.brighter());
+
+			contentPane.add(notUseBondButton);
+			contentPane.add(useBondButton);
+			contentPane.add(useEarnedValue);
+			contentPane.add(totalPriceLabel);
+			contentPane.add(realPirceLabel);
+			contentPane.add(submitButton);
+		} else {
+			JLabel nothingLabel = new JLabel("ÊÇ®ÁöÑË¥≠Áâ©ËΩ¶‰∏≠ÂΩìÂâçÊ≤°Êúâ‰ªª‰ΩïÂõæ‰π¶!");
 			nothingLabel.setSize(400, 30);
-			nothingLabel.setFont(new Font("ø¨ÃÂ_gb2312", Font.PLAIN, 20));
+			nothingLabel.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 20));
 			nothingLabel.setForeground(Color.red);
 			nothingLabel.setLocation(250, 100);
-			
-			panel = new JPanel(){
-				protected void paintComponent(Graphics g){
+
+			contentPane = new MPanel() {
+				@Override
+				protected void paintComponent(Graphics g) {
 					super.paintComponent(g);
-					ImageIcon imageIcon = new ImageIcon("materials/boring.gif");
-					Image image = imageIcon.getImage();
-					if(image != null){
-						g.drawImage(image, 335, 210, 80, 80, this);
+					Graphics2D g2d = (Graphics2D) g.create();
+					g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+							RenderingHints.VALUE_ANTIALIAS_ON);
+					if (IMGSTATIC.homepageBG != null
+							&& IMGSTATIC.boring != null) {
+						Composite composite = g2d.getComposite();
+						g2d.setComposite(AlphaComposite.getInstance(
+								AlphaComposite.SRC_OVER, 0.8f));
+						g2d.drawImage(IMGSTATIC.homepageBG, 0, 0, 800, 530,
+								this);
+						g2d.drawImage(IMGSTATIC.boring, 335, 210, 80, 80, this);
+						g2d.setComposite(composite);
 					}
+					g2d.dispose();
 				}
 			};
-			panel.setLayout(null);
-			panel.add(nothingLabel);
-			panel.setSize(780, 500);
-			panel.setLocation(0, 0);
+			contentPane.setLayout(null);
+			contentPane.add(nothingLabel);
+			contentPane.setSize(780, 530);
+			contentPane.setLocation(0, 0);
 		}
 
-		JScrollPane scrollPane = new JScrollPane(panel);
-		scrollPane.setSize(780, 500);
+		scrollPane = new JScrollPane(contentPane);
+		scrollPane.setSize(800, 530);
 		scrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		add(scrollPane);
+		CalcPrice();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		for (int i = 0; i < size; i++) {
-			if (e.getSource() == deleteButtons[i]) {
-				int confirm = JOptionPane.showConfirmDialog(this, " «∑Ò»∑»œ…æ≥˝∏√Õº È£ø");
-				if (confirm == JOptionPane.YES_OPTION) {
-					
-				}
-				break;
+		if (e.getSource() == submitButton) {
+			int confirm = -1;
+			int equivalentbondID = 0;
+			int couponsID = 0;
+			int integral = 0;
+			int orderID = 0;
+			if (useBondButton.isSelected() && useEquiBond != null
+					&& useEquiBond.isSelected()) {
+				EquivalentBondPO equivalentBondPO = (EquivalentBondPO) equiBondBox
+						.getSelectedItem();
+				equivalentbondID = equivalentBondPO.getEquivalentBondID();
+				confirm = JOptionPane
+						.showConfirmDialog(contentPane, "ÊòØÂê¶Á°ÆËÆ§‰ΩøÁî®ÁºñÂè∑‰∏∫:"
+								+ equivalentbondID + "ÁöÑÁ≠â‰ª∑Âà∏Âπ∂ÊîØ‰ªòÔºü", "Á°ÆËÆ§ÊîØ‰ªòÔºü",
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE);
+			} else if (useBondButton.isSelected() && useDiscountBond != null
+					&& useDiscountBond.isSelected()) {
+				CouponsPO couponsPO = (CouponsPO) discountBondBox
+						.getSelectedItem();
+				couponsID = couponsPO.getCounponsID();
+				confirm = JOptionPane
+						.showConfirmDialog(contentPane, "ÊòØÂê¶Á°ÆËÆ§‰ΩøÁî®ÁºñÂè∑‰∏∫:"
+								+ couponsID + "ÁöÑÊäòÊâ£Âà∏Âπ∂ÊîØ‰ªòÔºü", "Á°ÆËÆ§ÊîØ‰ªòÔºü",
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE);
+			} else if (useEarnedValue.isSelected()) {
+				integral = Integer.parseInt(earnedValueField.getText());
+				confirm = JOptionPane
+						.showConfirmDialog(contentPane, "ÊòØÂê¶Á°ÆËÆ§‰ΩøÁî®:" + integral
+								+ "ÁÇπÁßØÂàÜÂπ∂ÊîØ‰ªòÔºü", "Á°ÆËÆ§ÊîØ‰ªòÔºü",
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE);
+			} else {
+				confirm = JOptionPane.showConfirmDialog(contentPane, "ÊòØÂê¶Á°ÆËÆ§ÊîØ‰ªòÔºü",
+						"Á°ÆËÆ§ÊîØ‰ªòÔºü", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
 			}
-		}
-		if (e.getSource() == buyEnsureButton) {
-			saleUIController.setOrderEnsureView();
-		} else if(e.getSource() == useBondButton) {
+			if (confirm == JOptionPane.NO_OPTION) {
+				return;
+			} else if (confirm == JOptionPane.YES_OPTION) {
+				try {
+					if (equivalentbondID != 0) {
+						Agent.memberService.useEquivalentBond(equivalentbondID);
+					} else if (couponsID != 0) {
+						Agent.memberService.userCoupons(couponsID);
+					} else if (integral != 0) {
+						Agent.memberService.useIntegral(
+								Agent.userAgent.getId(), -integral);
+					}
+					Calendar calendar = Calendar.getInstance();
+					ResultMessage resultMessage = Agent.saleService
+							.addOrder(new OrderPO(-1, Agent.userAgent.getId(),
+									cart.getItems(), realPrice, calendar, 0));
+					if (resultMessage.isInvokeSuccess()) {
+						ImageDialog.showYesImage(this, "ËÆ¢ÂçïÊèê‰∫§ÊàêÂäü");
+						orderID = (Integer) resultMessage.getResultSet().get(0);
+					} else {
+						ImageDialog.showNOImage(this,
+								resultMessage.getPostScript());
+					}
+				} catch (RemoteException re) {
+					re.printStackTrace();
+				}
+				saleUIController.setPaymentView(orderID);
+			}
+		} else if (e.getSource() == useBondButton) {
 			setUseBondPanel();
-		}else if(e.getSource() == useEarnedValue) {
+		} else if (e.getSource() == useEarnedValue) {
 			setUseEarnedValuePanel();
-		}else if(e.getSource() == notUseBondButton){
+		} else if (e.getSource() == notUseBondButton) {
 			setPayAllPanel();
 		}
 	}
-	
-	private void setPayAllPanel(){
-		if(useBondPanel != null){
+
+	public void CalcPrice() {
+		totalPrice = 0;
+		for (int i = 0; i < num_of_item; i++) {
+			totalPrice += bookInCartPanels[i].getPrice()
+					* bookInCartPanels[i].getAmount();
+		}
+		realPrice = totalPrice;
+		if (useBondButton.isSelected() && useEquiBond != null
+				&& useEquiBond.isSelected()) {
+			EquivalentBondPO equivalentBondPO = (EquivalentBondPO) equiBondBox
+					.getSelectedItem();
+			double denomination = equivalentBondPO.getEquivalentDenomination();
+			realPrice = totalPrice - denomination;
+		} else if (useBondButton.isSelected() && useDiscountBond != null
+				&& useDiscountBond.isSelected()) {
+			CouponsPO couponsPO = (CouponsPO) discountBondBox.getSelectedItem();
+			double rate = couponsPO.getDiscountRate();
+			realPrice = totalPrice * rate;
+		} else if (useEarnedValue.isSelected()) {
+			double num = Integer.parseInt(earnedValueField.getText());
+			realPrice -= num / Const.INTEGRAL_RATE;
+		}
+		totalPriceLabel.setText("ÂïÜÂìÅÊÄª‰ª∑Ôºö" + totalPrice);
+		realPirceLabel.setText("ÂÆûÈôÖ‰ª∑Ê†º: " + String.format("%.2f", realPrice));
+	}
+
+	private void setPayAllPanel() {
+		if (useBondPanel != null) {
 			useEquiBond.setEnabled(false);
 			useDiscountBond.setEnabled(false);
 			useBondPanel.setVisible(false);
 		}
-		if(useEarnedValuePanel != null){
+		if (useEarnedValuePanel != null) {
 			useEarnedValuePanel.setVisible(false);
 		}
 	}
-	
-	private void setUseBondPanel(){
-		if(useBondPanel == null){
-			useBondPanel = new JPanel();
+
+	@SuppressWarnings("unchecked")
+	private void setUseBondPanel() {
+		if (useBondPanel == null) {
+			useBondPanel = new MPanel();
 			useBondPanel.setLayout(null);
 			useBondPanel.setSize(400, 200);
-			
-			useEquiBond = new JRadioButton(" π”√µ»º€»Ø");
+
+			useEquiBond = new JRadioButton("‰ΩøÁî®Á≠â‰ª∑Âà∏");
 			useEquiBond.setSize(120, 30);
-			useEquiBond.setFocusable(false);
-			useEquiBond.setSelected(true);
 			useEquiBond.setEnabled(false);
-			useEquiBond.setFont(new Font("ø¨ÃÂ_gb2312", Font.PLAIN, 18));
+			useEquiBond.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 18));
 			useEquiBond.setLocation(0, 0);
-			
-			useDiscountBond = new JRadioButton(" π”√¥Ú’€»Ø");
+			useEquiBond.setOpaque(false);
+
+			useDiscountBond = new JRadioButton("‰ΩøÁî®ÊâìÊäòÂà∏");
 			useDiscountBond.setSize(120, 30);
-			useDiscountBond.setFocusable(false);
 			useDiscountBond.setEnabled(false);
-			useDiscountBond.setFont(new Font("ø¨ÃÂ_gb2312", Font.PLAIN, 18));
+			useDiscountBond.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 18));
 			useDiscountBond.setLocation(130, 0);
-			
-			equiBondBox = new JComboBox<String>();
+			useDiscountBond.setOpaque(false);
+
+			equiBondBox = new EquiBondBox();
+			try {
+				ResultMessage resultMessage = Agent.memberService
+						.getEquivalentBond(Agent.userAgent.getId());
+				ArrayList<EquivalentBondPO> list = resultMessage.getResultSet();
+				if (list != null) {
+					for (int i = 0; i < list.size(); i++) {
+						equiBondBox.addItem(list.get(i));
+					}
+				}
+			} catch (RemoteException re) {
+				re.printStackTrace();
+			}
+
+			bondtipLabel = new JLabel("ËÆ¢ÂçïÈù¢È¢ùÂ∞è‰∫éÁ≠â‰ª∑Âà∏‰ΩøÁî®ÈôêÂà∂,Êó†Ê≥ï‰ΩøÁî®ËØ•Âà∏");
+			bondtipLabel.setSize(280, 20);
+			equiBondBox.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 15));
+			bondtipLabel.setForeground(Color.RED.brighter());
+			bondtipLabel.setLocation(20, 80);
+			bondtipLabel.setVisible(false);
+
 			equiBondBox.setSize(230, 20);
-			
-			equiBondBox.setFont(new Font("ø¨ÃÂ_gb2312", Font.PLAIN, 18));
-			
+			equiBondBox.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 18));
+			equiBondBox.setEnabled(false);
+			equiBondBox.setVisible(false);
+			equiBondBox.addItemListener(new ItemListener() {
+
+				Object pre = null;
+
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					if (((EquivalentBondPO) e.getItem()).getUseLimit() > totalPrice) {
+						equiBondBox.setSelectedItem(pre);
+						bondtipLabel.setVisible(true);
+					} else {
+						CalcPrice();
+						bondtipLabel.setVisible(false);
+					}
+					pre = e.getItem();
+				}
+			});
+			equiBondBox.setLocation(20, 50);
+
+			discountBondBox = new DiscoutBondBox();
+			try {
+				ResultMessage resultMessage = Agent.memberService
+						.getCoupons(Agent.userAgent.getId());
+				ArrayList<CouponsPO> list = resultMessage.getResultSet();
+				if (list != null) {
+					for (int i = 0; i < list.size(); i++) {
+						discountBondBox.addItem(list.get(i));
+					}
+				}
+			} catch (RemoteException re) {
+				re.printStackTrace();
+			}
+			discountBondBox.setSize(230, 20);
+			discountBondBox.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 18));
+			discountBondBox.setEnabled(false);
+			discountBondBox.setVisible(false);
+			discountBondBox.addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					CalcPrice();
+				}
+			});
+			discountBondBox.setLocation(20, 50);
+
+			useEquiBond.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					discountBondBox.setEnabled(false);
+					discountBondBox.setVisible(false);
+
+					equiBondBox.setEnabled(true);
+					equiBondBox.setVisible(true);
+				}
+			});
+
+			useDiscountBond.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					equiBondBox.setEnabled(false);
+					equiBondBox.setVisible(false);
+
+					discountBondBox.setEnabled(true);
+					discountBondBox.setVisible(true);
+				}
+			});
+
 			ButtonGroup group = new ButtonGroup();
 			group.add(useEquiBond);
 			group.add(useDiscountBond);
-			
+
 			useBondPanel.add(useEquiBond);
 			useBondPanel.add(useDiscountBond);
+			useBondPanel.add(equiBondBox);
+			useBondPanel.add(discountBondBox);
+			useBondPanel.add(bondtipLabel);
 			useBondPanel.setVisible(false);
-			useBondPanel.setLocation(80, 60 + 100 * size);
-			panel.add(useBondPanel);
+			useBondPanel.setLocation(80, 60 + 60 * num_of_item);
+			contentPane.add(useBondPanel);
 		}
-		
-		if(useEarnedValuePanel != null){
+
+		if (useEarnedValuePanel != null) {
 			useEarnedValuePanel.setVisible(false);
 		}
-		
+
 		useEquiBond.setEnabled(true);
 		useDiscountBond.setEnabled(true);
 		useBondPanel.setVisible(true);
 	}
-	
-	private void setUseEarnedValuePanel(){
-		if(useEarnedValuePanel == null){
-			useEarnedValuePanel = new JPanel();
+
+	private void setUseEarnedValuePanel() {
+		if (useEarnedValuePanel == null) {
+			useEarnedValuePanel = new MPanel();
 			useEarnedValuePanel.setLayout(null);
 			useEarnedValuePanel.setSize(400, 200);
-			
-//			String temp = "ƒ˙µ±«∞”µ”–" + memberPO.getIntegral() + "ª˝∑÷";
-			String temp = "ƒ˙µ±«∞”µ”–100ª˝∑÷";
+
+			// ÁßØÂàÜÊü•ËØ¢
+			try {
+				ResultMessage resultMessage = Agent.memberService
+						.queryMember(Agent.userAgent.getId());
+				memberPO = (MemberPO) resultMessage.getResultSet().get(0);
+			} catch (RemoteException re) {
+				re.printStackTrace();
+			}
+			String temp = "ÊÇ®ÂΩìÂâçÊã•Êúâ" + memberPO.getIntegral() + "ÁßØÂàÜ";
 			JLabel earnValueLabel = new JLabel(temp);
 			earnValueLabel.setSize(300, 30);
-			earnValueLabel.setFont(new Font("ø¨ÃÂ_gb2312", Font.PLAIN, 18));
+			earnValueLabel.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 18));
 			earnValueLabel.setLocation(0, 0);
-			
-			JLabel label = new JLabel("«Î ‰»ÎÀ˘“™∂“ªªµƒª˝∑÷µƒ÷µ:");
+
+			JLabel label = new JLabel("ËØ∑ËæìÂÖ•ÊâÄË¶ÅÂÖëÊç¢ÁöÑÁßØÂàÜÁöÑÂÄº:");
 			label.setSize(230, 30);
-			label.setFont(new Font("ø¨ÃÂ_gb2312", Font.PLAIN, 18));
+			label.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 18));
 			label.setLocation(0, 35);
-			
-			earnedValueField = new JTextField();
+
+			integraltipLabel = new JLabel();
+			integraltipLabel.setSize(250, 30);
+			integraltipLabel.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 18));
+			integraltipLabel.setLocation(0, 70);
+			integraltipLabel.setForeground(Color.RED);
+			integraltipLabel.setVisible(false);
+
+			earnedValueField = new MTextField();
 			earnedValueField.setSize(100, 30);
-			earnedValueField.setFont(new Font("ø¨ÃÂ_gb2312", Font.PLAIN, 18));
+			earnedValueField.setFont(new Font("Ê•∑‰Ωì_gb2312", Font.PLAIN, 18));
 			earnedValueField.setLocation(240, 35);
-			
+			earnedValueField.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					String txt = earnedValueField.getText();
+					if (txt.matches("[\\d]+")) {
+						int num = Integer.parseInt(txt);
+						if (num <= 0) {
+							earnedValueField.setText("");
+							earnedValueField.requestFocus();
+							integraltipLabel.setText("ÂÖëÊç¢Êï∞ÂÄºÂ∫î‰∏∫Â§ß‰∫é0ÁöÑÊ≠£Êï¥Êï∞");
+							integraltipLabel.setVisible(true);
+						} else if (num > memberPO.getIntegral()) {
+							earnedValueField.setText("");
+							earnedValueField.requestFocus();
+							integraltipLabel.setText("ÂÖëÊç¢Êï∞ÂÄº‰∏çËÉΩË∂ÖËøáÁßØÂàÜÊï∞ÂÄº");
+							integraltipLabel.setVisible(true);
+						} else {
+							CalcPrice();
+							integraltipLabel.setVisible(false);
+						}
+					} else {
+						earnedValueField.setText("");
+						earnedValueField.requestFocus();
+						integraltipLabel.setText("ËØ∑ËæìÂÖ•Êï¥Êï∞Êï∞Â≠ó");
+						integraltipLabel.setVisible(true);
+					}
+				}
+
+			});
+
 			useEarnedValuePanel.add(earnValueLabel);
 			useEarnedValuePanel.add(label);
 			useEarnedValuePanel.add(earnedValueField);
-			
+			useEarnedValuePanel.add(integraltipLabel);
+
 			useEarnedValuePanel.setVisible(false);
-			useEarnedValuePanel.setLocation(80, 60 + 100 * size);
-			panel.add(useEarnedValuePanel);
+			useEarnedValuePanel.setLocation(80, 60 + 60 * num_of_item);
+			contentPane.add(useEarnedValuePanel);
 		}
-		
-		if(useBondPanel != null){
+
+		if (useBondPanel != null) {
 			useEquiBond.setEnabled(false);
 			useDiscountBond.setEnabled(false);
 			useBondPanel.setVisible(false);
 		}
 		useEarnedValuePanel.setVisible(true);
 	}
-	
 }

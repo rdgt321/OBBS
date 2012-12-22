@@ -1,0 +1,17 @@
+#Fri Dec 21 03:22:37 CST 2012
+eclipse.preferences.version=1
+encoding//src/ClientRunner/MainFrame.java=GBK
+encoding//src/Member/BookCollectionPanel.java=GBK
+encoding//src/Member/InforCenterPanel.java=GBK
+encoding//src/Member/LoginPanel.java=GBK
+encoding//src/Member/MessageCenterPanel.java=GBK
+encoding//src/Member/NavigatePanel.java=GBK
+encoding//src/Member/RegisterPanel.java=GBK
+encoding//src/Member/SearchResultPanel.java=GBK
+encoding//src/Sale/CartPanel.java=UTF-8
+encoding//src/Sale/DealSuccessPanel.java=GBK
+encoding//src/Sale/PaymentPanel.java=GBK
+encoding//src/User/AdminPanel.java=GBK
+encoding//src/User/GenManagerPanel.java=GBK
+encoding//src/User/SalesManagerPanel.java=GBK
+encoding/<project>=UTF-8

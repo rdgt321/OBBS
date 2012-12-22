@@ -7,6 +7,6 @@ import RMI.getBooksInCart;
 import RMI.updateCart;
 
 public interface SaleService extends addToCart, deleteFromCart, addOrder,
-		getBooksInCart, updateCart {
+		getBooksInCart, updateCart{
 
 }

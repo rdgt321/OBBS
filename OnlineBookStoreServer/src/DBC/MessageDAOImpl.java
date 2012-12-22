@@ -25,9 +25,9 @@ public class MessageDAOImpl implements MessageDAO {
 					int memberID = resultSet.getInt(2);
 					String title = resultSet.getString(3);
 					String context = resultSet.getString(4);
-					updateMessage(messageID, true);
+					boolean sent = resultSet.getBoolean(5);
 					msg.add(new MessagePO(messageID, memberID, title, context,
-							true));
+							sent));
 				}
 				return msg;
 			}
@@ -38,16 +38,17 @@ public class MessageDAOImpl implements MessageDAO {
 	}
 
 	@Override
-	public ResultMessage addMessage(int memberID, String title, String msg) {
+	public synchronized ResultMessage addMessage(int memberID, String title, String msg) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "insert into message(memberid,msg,sent) values(?,?,?)";
+		String sql = "insert into message(memberid,title,msg,sent) values(?,?,?,?)";
 		PreparedStatement ps;
 		int row = 0;
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, memberID);
-			ps.setString(2, msg);
-			ps.setBoolean(3, false);
+			ps.setString(2, title);
+			ps.setString(3, msg);
+			ps.setBoolean(4, false);
 			row = ps.executeUpdate();
 			con.close();
 		} catch (SQLException e) {
@@ -60,7 +61,7 @@ public class MessageDAOImpl implements MessageDAO {
 	}
 
 	@Override
-	public ResultMessage updateMessage(int messageID, boolean sent) {
+	public synchronized ResultMessage updateMessage(int messageID, boolean sent) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "update message set sent=? where messageid=?";
 		PreparedStatement ps;
@@ -81,7 +82,7 @@ public class MessageDAOImpl implements MessageDAO {
 	}
 
 	@Override
-	public ResultMessage getMessage(int memberID) {
+	public synchronized ResultMessage getMessage(int memberID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from message where memberid=?";
 		PreparedStatement ps;

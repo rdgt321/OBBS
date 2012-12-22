@@ -66,7 +66,7 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public ResultMessage addBook(BookPO bookPO) {
+	public synchronized ResultMessage addBook(BookPO bookPO) {
 		ResultMessage isExist = queryBookByISBN(bookPO.getISBN());
 		if (isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "该ISBN已被占用，请检查输入");
@@ -103,7 +103,7 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public ResultMessage deleteBook(String bookISBN) {
+	public synchronized ResultMessage deleteBook(String bookISBN) {
 		ResultMessage isExist = queryBookByISBN(bookISBN);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "该图书不存在，请检查输入");
@@ -131,13 +131,13 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public ResultMessage updateBook(BookPO bookPO) {
+	public synchronized ResultMessage updateBook(BookPO bookPO) {
 		ResultMessage isExist = queryBookByISBN(bookPO.getISBN());
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "该图书不存在，请检查输入");
 		}
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "update book set name=?,author=?,press?,description=?,directoryID=?,publishdate=?,price=?,specialprice=? where isbn=?";
+		String sql = "update book set name=?,author=?,press=?,description=?,directoryID=?,publishdate=?,price=?,specialprice=? where isbn=?";
 		PreparedStatement ps;
 		int row = 0;
 		try {
@@ -168,7 +168,7 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public ResultMessage queryBookByISBN(String bookISBN) {
+	public synchronized ResultMessage queryBookByISBN(String bookISBN) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from book where ISBN=?";
 		PreparedStatement ps;
@@ -193,7 +193,7 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public ResultMessage searchBookByName(String keywords) {
+	public synchronized ResultMessage searchBookByName(String keywords) {
 		Connection con = ConnectionFactory.getConnection();
 		ResultSet resultSet = null;
 		String sql = "select * from book where name like ?";
@@ -218,7 +218,7 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public ResultMessage searchBookByAuthor(String keywords) {
+	public synchronized ResultMessage searchBookByAuthor(String keywords) {
 		Connection con = ConnectionFactory.getConnection();
 		ResultSet resultSet = null;
 		String sql = "select * from book where author like ?";
@@ -243,7 +243,7 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public ResultMessage searchBookByMulti(String keywords) {
+	public synchronized ResultMessage searchBookByMulti(String keywords) {
 		keywords = keywords.replaceAll("\u3000", "\u0020");
 		String[] keyword = keywords.split("[\u0020]+");
 		Connection con = ConnectionFactory.getConnection();
@@ -258,7 +258,6 @@ public class BookDAOImpl implements BookDAO {
 		ArrayList<BookPO> result = new ArrayList<BookPO>();
 		boolean exist = false;
 		for (String key : keyword) {
-			System.out.println("key:"+key);
 			try {
 				ps.setString(1, "%" + key + "%");
 				ps.setString(2, "%" + key + "%");
@@ -280,7 +279,6 @@ public class BookDAOImpl implements BookDAO {
 					}
 				}
 				if (!exist) {
-					System.out.println(book.getName());
 					result.add(book);
 				}
 			}
@@ -297,7 +295,7 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public ResultMessage queryAllBooks() {
+	public synchronized ResultMessage queryAllBooks() {
 		Connection con = ConnectionFactory.getConnection();
 		ArrayList<BookPO> polist = new ArrayList<BookPO>();
 		ResultSet resultSet = null;
@@ -321,7 +319,7 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public ResultMessage queryBookByDirectory(int directoryID) {
+	public synchronized ResultMessage queryBookByDirectory(int directoryID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from book where directoryid=?";
 		PreparedStatement ps;

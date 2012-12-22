@@ -25,10 +25,10 @@ public class CartItemDAOImpl implements CartItemDAO {
 				resultSet.beforeFirst();
 				for (int i = 0; i < len; i++) {
 					resultSet.next();
-					memberID = resultSet.getInt(2);
-					bookISBN = resultSet.getString(3);
-					nowprice = resultSet.getDouble(4);
-					count = resultSet.getInt(5);
+					memberID = resultSet.getInt(1);
+					bookISBN = resultSet.getString(2);
+					nowprice = resultSet.getDouble(3);
+					count = resultSet.getInt(4);
 					polist.add(new ItemPO(-1, memberID, bookISBN, nowprice,
 							count));
 				}
@@ -41,7 +41,7 @@ public class CartItemDAOImpl implements CartItemDAO {
 	}
 
 	@Override
-	public ResultMessage addCartItem(int memberID, ItemPO itemPO) {
+	public synchronized ResultMessage addCartItem(int memberID, ItemPO itemPO) {
 		ResultMessage isExist = queryCartItem(memberID, itemPO.getBookISBN());
 		if (isExist.isInvokeSuccess()) {
 			return updateCartItem(memberID, itemPO);
@@ -72,7 +72,7 @@ public class CartItemDAOImpl implements CartItemDAO {
 	}
 
 	@Override
-	public ResultMessage updateCartItem(int memberID, ItemPO itemPO) {
+	public synchronized ResultMessage updateCartItem(int memberID, ItemPO itemPO) {
 		ResultMessage isExist = queryCartItem(memberID, itemPO.getBookISBN());
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "该Item不存在 请重新操作");
@@ -98,7 +98,7 @@ public class CartItemDAOImpl implements CartItemDAO {
 	}
 
 	@Override
-	public ResultMessage deleteCartItem(int memberID, String bookISBN) {
+	public synchronized ResultMessage deleteCartItem(int memberID, String bookISBN) {
 		ResultMessage isExist = queryCartItem(memberID, bookISBN);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "该Item不存在 请重新操作");
@@ -127,7 +127,7 @@ public class CartItemDAOImpl implements CartItemDAO {
 	}
 
 	@Override
-	public ResultMessage queryCartItem(int memberID, String booISBN) {
+	public synchronized ResultMessage queryCartItem(int memberID, String booISBN) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from cart_item where memberID = ? and bookisbn = ?";
 		PreparedStatement ps;
@@ -153,7 +153,7 @@ public class CartItemDAOImpl implements CartItemDAO {
 	}
 
 	@Override
-	public ResultMessage clearCart(int memberID) {
+	public synchronized ResultMessage clearCart(int memberID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "delete from cart_item where memberID = ?";
 		PreparedStatement ps;
@@ -177,7 +177,7 @@ public class CartItemDAOImpl implements CartItemDAO {
 	}
 
 	@Override
-	public ResultMessage getBooksInCart(int memberID) {
+	public synchronized ResultMessage getBooksInCart(int memberID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from cart_item where memberID = ?";
 		PreparedStatement ps;
@@ -198,7 +198,7 @@ public class CartItemDAOImpl implements CartItemDAO {
 		if (polist != null) {
 			return new ResultMessage(true, polist, "get books in cart succes");
 		}
-		return new ResultMessage(true, null, "nothing in cart ");
+		return new ResultMessage(false, null, "nothing in cart ");
 	}
 
 }

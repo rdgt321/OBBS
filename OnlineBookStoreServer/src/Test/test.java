@@ -1,18 +1,6 @@
 package Test;
 
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.util.ArrayList;
-import java.util.Calendar;
-
-import Book.BookPO;
-import Book.BookService;
-import Book.BookServiceImpl;
-import Member.MemberPO;
-import Member.MemberService;
-import Member.MemberServiceImpl;
-import Server.Const;
-import User.UserService;
+import DBC.Encrypt;
 
 public class test {
 
@@ -52,25 +40,38 @@ public class test {
 		// System.out.println(simpleDateFormat.format(today.getTime()));
 		// System.out.println(simpleDateFormat.format(today2.getTime()));
 
-		try {
-			Const.loadConfig();
-			LocateRegistry.createRegistry(1099);
-			BookService bookService = new BookServiceImpl();
-			MemberService memberService = new MemberServiceImpl();
-			System.out.println(bookService.addBook(
-					new BookPO("test", "test", "test", "test", "test", 1,
-							Calendar.getInstance(), 0, 0)).isInvokeSuccess());
-			System.out.println(memberService.addMember(
-					new MemberPO(-1, "testcollect", "123", "1111111", Calendar
-							.getInstance())).isInvokeSuccess());
-			memberService.bookCollect("test", 1);
-			ArrayList<BookPO> books = memberService.getCollectedBook(1)
-					.getResultSet();
-			System.out.println(books.size());
-			System.out.println(books.get(0).getName());
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+		// try {
+		// Const.loadConfig();
+		// LocateRegistry.createRegistry(1099);
+		// BookService bookService = new BookServiceImpl();
+		// MemberService memberService = new MemberServiceImpl();
+		// System.out.println(bookService.addBook(
+		// new BookPO("test", "test", "test", "test", "test", 1,
+		// Calendar.getInstance(), 0, 0)).isInvokeSuccess());
+		// System.out.println(memberService.addMember(
+		// new MemberPO(-1, "testcollect", "123", "1111111", Calendar
+		// .getInstance())).isInvokeSuccess());
+		// memberService.bookCollect("test", 1);
+		// ArrayList<BookPO> books = memberService.getCollectedBook(1)
+		// .getResultSet();
+		// System.out.println(books.size());
+		// System.out.println(books.get(0).getName());
+		// } catch (RemoteException e) {
+		// e.printStackTrace();
+		// }
+
+		// try {
+		// Process process = Runtime.getRuntime().exec(
+		// "cmd /c notepad log\\access.txt");
+		// BufferedReader br = new BufferedReader(new InputStreamReader(
+		// process.getInputStream()));
+		// String out = "";
+		// while ((out = br.readLine()) != null) {
+		// System.out.println(out);
+		// }
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
 
 	}
 }

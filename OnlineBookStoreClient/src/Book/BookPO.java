@@ -3,11 +3,8 @@ package Book;
 import java.io.Serializable;
 import java.util.Calendar;
 
+@SuppressWarnings("serial")
 public class BookPO implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1142957228720804246L;
 	private String name;
 	private String ISBN;
 	private String author;

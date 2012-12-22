@@ -1,6 +1,9 @@
 package Sale;
 
-public class ItemPO {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class ItemPO implements Serializable{
 	private int orderID;
 	private int memberID;
 	private String bookISBN;

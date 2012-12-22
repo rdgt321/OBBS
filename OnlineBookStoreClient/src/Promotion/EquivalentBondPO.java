@@ -3,11 +3,8 @@ package Promotion;
 import java.io.Serializable;
 import java.util.Calendar;
 
+@SuppressWarnings("serial")
 public class EquivalentBondPO implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3534068356576591377L;
 	private int equivalentBondID;
 	private int ownerID;
 	private double useLimit;

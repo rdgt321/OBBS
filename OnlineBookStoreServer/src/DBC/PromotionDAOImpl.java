@@ -51,7 +51,7 @@ public class PromotionDAOImpl implements PromotionDAO {
 	}
 
 	@Override
-	public ResultMessage addPromotion(PromotionPO promotionPO) {
+	public synchronized ResultMessage addPromotion(PromotionPO promotionPO) {
 		ResultMessage isExist = queryPromotion(promotionPO.getPromotionID());
 		if (isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "promotion id exist,add fail");
@@ -82,7 +82,7 @@ public class PromotionDAOImpl implements PromotionDAO {
 	}
 
 	@Override
-	public ResultMessage deletePromotion(int promotionID) {
+	public synchronized ResultMessage deletePromotion(int promotionID) {
 		ResultMessage isExist = queryPromotion(promotionID);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null,
@@ -107,7 +107,7 @@ public class PromotionDAOImpl implements PromotionDAO {
 	}
 
 	@Override
-	public ResultMessage queryPromotion(int promotionID) {
+	public synchronized ResultMessage queryPromotion(int promotionID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from promotion where promotionid=?";
 		PreparedStatement ps;
@@ -132,7 +132,7 @@ public class PromotionDAOImpl implements PromotionDAO {
 	}
 
 	@Override
-	public ResultMessage updatePromotion(PromotionPO promotionPO) {
+	public synchronized ResultMessage updatePromotion(PromotionPO promotionPO) {
 		ResultMessage isExist = queryPromotion(promotionPO.getPromotionID());
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null,
@@ -164,7 +164,7 @@ public class PromotionDAOImpl implements PromotionDAO {
 	}
 
 	@Override
-	public ResultMessage getPromotionList() {
+	public synchronized ResultMessage getPromotionList() {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from promotion where startdate<=CURRENT_DATE() and enddate>=CURRENT_DATE() and name<> ?";
 		PreparedStatement ps;

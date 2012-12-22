@@ -8,12 +8,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.lang.management.MemoryMXBean;
+import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,16 +23,11 @@ import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -50,13 +46,13 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	private ArrayList<UserAgent> userAgents = new ArrayList<UserAgent>();
 
 	// 初始化界面的Components
-	private JTextField sqlUser = null;
-	private JTextField sqlPass = null;
+	private MTextField sqlUser = null;
+	private MPasswordField sqlPass = null;
 	private JTextArea sqlTip = null;
 	private JLabel userLabel = null;
 	private JLabel passLabel = null;
 	private JLabel failLabel = null;
-	private JButton sqlConfirm = null;
+	private MButton sqlConfirm = null;
 	private Image bgimg = null;
 
 	// 服务器工作界面
@@ -65,11 +61,11 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	private tableModel model = null;
 	private JScrollPane scrollPane = null;
 	private JTable table = null;
-	private JButton dumpConfirm = null;
-	private JButton loadConfirm = null;
-	private JButton config = null;
-	private JButton log = null;
-	private JButton init = null;
+	private MButton dumpConfirm = null;
+	private MButton loadConfirm = null;
+	private MButton config = null;
+	private MButton log = null;
+	private MButton init = null;
 
 	// 配置
 	private ConfigDialog configDialog = null;
@@ -152,6 +148,8 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
 		add(onlineNum);
 		add(num);
 		add(dumpConfirm);
@@ -166,8 +164,8 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 		if (Const.FIRST_RUN == 0 && Const.CON_FAIL == 0) {
 			return;
 		}
-		sqlUser = new JTextField();
-		sqlPass = new JPasswordField();
+		sqlUser = new MTextField();
+		sqlPass = new MPasswordField();
 		sqlTip = new JTextArea("运行服务器配置，请输入您的一个具备数据库创建权限的MYSQL账户");
 		userLabel = new JLabel("账户");
 		passLabel = new JLabel("密码");
@@ -178,11 +176,13 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 		sqlUser.setSize(250, 30);
 		sqlUser.setLocation(300, 250);
 		sqlUser.setFont(new Font("楷体", Font.PLAIN, 20));
+		sqlUser.setOpaque(false);
 
 		sqlPass.setLayout(null);
 		sqlPass.setSize(250, 30);
 		sqlPass.setLocation(300, 320);
 		sqlPass.setFont(new Font("楷体", Font.PLAIN, 20));
+		sqlPass.setOpaque(false);
 
 		sqlTip.setLayout(null);
 		sqlTip.setSize(480, 100);
@@ -271,8 +271,8 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	}
 
 	private void validateSQL() {
-		String name = sqlUser.getText();
-		String pass = sqlPass.getText();
+		String name = sqlUser.getText().trim();
+		String pass = sqlPass.getText().trim();
 		UserAgent userAgent = new UserAgent(0, name, pass, 0);
 		Connection con = ConnectionFactory.firstConnection(userAgent);
 		if (con == null) {
@@ -314,7 +314,7 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	private void dumpSQL() {
 		boolean success = Routines.getInstance().dumpSQL();
 		if (success) {
-			ImageDialog.showNOImage(this, "备份成功");
+			ImageDialog.showYesImage(this, "备份成功");
 			return;
 		}
 		ImageDialog.showNOImage(this, "备份失败，请联系技术人员");
@@ -323,7 +323,7 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	private void loadSQL() {
 		boolean success = Routines.getInstance().loadSQL();
 		if (success) {
-			ImageDialog.showNOImage(this, "还原成功");
+			ImageDialog.showYesImage(this, "还原成功");
 			return;
 		}
 		ImageDialog.showNOImage(this, "还原失败，请联系技术人员");
@@ -349,8 +349,17 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	private void log() {
 		String path = getClass().getResource("").getPath();
 		int index = path.lastIndexOf("bin");
-		path = path.substring(1, index);
+		if (index != -1) {
+			path = path.substring(1, index);
+		} else {
+			path = path.substring(1);
+		}
 		path = path + Const.LOG_ACCESS_PATH;
+		try {
+			path = URLDecoder.decode(path, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
 		try {
 			Runtime.getRuntime().exec("notepad " + path);
 		} catch (IOException e) {

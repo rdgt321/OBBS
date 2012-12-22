@@ -14,13 +14,11 @@ public interface MemberDAO {
 
 	public ResultMessage queryMemberByName(String memberName);
 
-	public ResultMessage getMembers(int pagenum, int num_per_page);
+	public ResultMessage updateIntegral(int memberID, int integral);
 
 	public ResultMessage getMembers();
-	
-	public ResultMessage getBirthMembers();
 
-	public ResultMessage getTotalNum();
+	public ResultMessage getBirthMembers();
 
 	public ResultMessage loginValidate(String ID, String password);
 }

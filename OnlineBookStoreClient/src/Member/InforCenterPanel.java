@@ -1,149 +1,198 @@
 package Member;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+
+import ClientRunner.Agent;
+import ClientRunner.ImageDialog;
+import ClientRunner.IMGSTATIC;
+import ClientRunner.MButton;
+import ClientRunner.MPanel;
+import ClientRunner.MPasswordField;
+import ClientRunner.MTextField;
+import Promotion.CouponsPO;
+import Promotion.EquivalentBondPO;
+import RMI.ResultMessage;
+import Sale.OrderPO;
 
 @SuppressWarnings("serial")
-public class InforCenterPanel extends JPanel implements MouseListener,
+public class InforCenterPanel extends MPanel implements MouseListener,
 		ActionListener {
-	
+
 	private MemberUIController memberUIController;
 	private MemberPO memberPO;
-	private JScrollPane resultPane;
 	private JLabel personalInfoLabel, buyHistoryLabel, passwordLabel,
-			promotionLabel;
-	
+			promotionLabel, messageCenterLabel;
+	private MPanel contentPane;
 	// personalInfoView
-	private JLabel nameLabel, phoneLabel, birthLabel, nameDetail, phoneDetail, birthDetail;
-	private JButton modifyButton, ensuremodifyButton, modifyreturnButton;
-	private JTextField nameField, phoneField, birthField;
+	private JLabel nameLabel, phoneLabel, birthLabel, nameDetail, phoneDetail,
+			birthDetail;
+	private MButton modifyButton, ensuremodifyButton, modifyreturnButton;
+	private MTextField nameField, phoneField, birth_yearField,
+			birth_monthField, birth_dateField;
 
 	// buyHistoryView
-	private JTable purchaseHistory;
+	private PurchaseRecordPanel purchaseRecordPanel;
+	ArrayList<OrderPO> list;
 
 	// passwordView
 	private JLabel prePassword, newPassword;
-	private JPasswordField prePasswordField, newPasswordField;
-	private JButton ensureButton, returnButton;
+	private MPasswordField prePasswordField, newPasswordField;
+	private MButton ensureButton, returnButton;
+
+	// promotionView
+	private JLabel equiBondLabel;
+	private JLabel discoutBondLabel;
+	private int equiBondNum;
+	private int discoutnBondNum;
+	private ArrayList<CouponsPO> coupons_list;
+	private ArrayList<EquivalentBondPO> equi_list;
+
+	// message center view
+	private MessageCenterPanel messageCenterPanel;
 
 	public InforCenterPanel(MemberUIController memberUIController) {
 		this.memberUIController = memberUIController;
 	}
 
-	// promotionView
-	private JLabel equiBondLabel;
-	private JLabel discoutBondLabel;
-	private int equiBondNum = 0;
-	private int discoutnBondNum = 0;
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g.create();
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		if (IMGSTATIC.otherBG != null) {
+			Composite composite = g2d.getComposite();
+			g2d.setComposite(AlphaComposite.getInstance(
+					AlphaComposite.SRC_OVER, 0.8f));
+			g2d.drawImage(IMGSTATIC.otherBG, 0, 0, 800, 530, this);
+			g2d.setComposite(composite);
+		}
+		g2d.dispose();
+	}
 
 	public void init() {
-		setSize(800, 520);
-		setLocation(5, 75);
+		setSize(800, 530);
+		setLocation(0, 70);
 		setVisible(true);
 		setLayout(null);
+		contentPane = new MPanel();
+		contentPane.setLocation(180, 50);
+		contentPane.setSize(600, 430);
+		contentPane.setLayout(null);
 
 		personalInfoLabel = new JLabel("个人信息");
 		personalInfoLabel.setSize(140, 40);
 		personalInfoLabel.setLocation(50, 50);
 		personalInfoLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 24));
-		
+
 		buyHistoryLabel = new JLabel("购买记录");
 		buyHistoryLabel.setSize(140, 40);
 		buyHistoryLabel.setLocation(50, 100);
 		buyHistoryLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 24));
-		
+
 		passwordLabel = new JLabel("修改密码");
 		passwordLabel.setSize(140, 40);
 		passwordLabel.setLocation(50, 150);
 		passwordLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 24));
-		
+
 		promotionLabel = new JLabel("优惠信息");
 		promotionLabel.setSize(140, 40);
 		promotionLabel.setLocation(50, 200);
 		promotionLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 24));
-		
+
+		messageCenterLabel = new JLabel("站内信");
+		messageCenterLabel.setSize(140, 40);
+		messageCenterLabel.setLocation(50, 250);
+		messageCenterLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 24));
+
 		personalInfoLabel.addMouseListener(this);
 		buyHistoryLabel.addMouseListener(this);
 		passwordLabel.addMouseListener(this);
 		promotionLabel.addMouseListener(this);
+		messageCenterLabel.addMouseListener(this);
 
 		add(personalInfoLabel);
 		add(buyHistoryLabel);
 		add(passwordLabel);
 		add(promotionLabel);
+		add(messageCenterLabel);
+		add(contentPane);
 
-		resultPane = new JScrollPane();
-		resultPane.setSize(600, 440);
-		resultPane.setLocation(180, 50);
-		resultPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		resultPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		resultPane.getVerticalScrollBar().setUnitIncrement(20);
-		add(resultPane);
+		try {
+			ResultMessage resultMessage = Agent.memberService
+					.queryMember(Agent.userAgent.getId());
+			if (resultMessage != null) {
+				memberPO = (MemberPO) resultMessage.getResultSet().get(0);
+			}
+		} catch (RemoteException re) {
+			re.printStackTrace();
+		}
 	}
 
-	public void initPersonalInfoView() {
-		JPanel panel = new JPanel();
+	private void initPersonalInfoView() {
+		MPanel panel = new MPanel();
 		panel.setLayout(null);
-		panel.setPreferredSize(new Dimension(500, 430));
+		panel.setSize(600, 430);
 
 		nameLabel = new JLabel("用户名:");
 		nameLabel.setSize(100, 40);
 		nameLabel.setLocation(100, 80);
 		nameLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
-		
-		nameDetail = new JLabel("memberPO传过来用户名");
-//		nameDetail = new JLabel(memberPO.getName());
+
+		nameDetail = new JLabel(memberPO.getName());
 		nameDetail.setSize(300, 40);
 		nameDetail.setLocation(200, 80);
 		nameDetail.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		
+
 		phoneLabel = new JLabel("联系电话:");
 		phoneLabel.setSize(100, 40);
 		phoneLabel.setLocation(100, 130);
 		phoneLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
-		
-		phoneDetail = new JLabel("memberPO传过来联系电话");
-//		phoneDetail = new JLabel(memberPO.getPhone());
+
+		phoneDetail = new JLabel(memberPO.getPhone());
 		phoneDetail.setSize(300, 40);
 		phoneDetail.setLocation(200, 130);
 		phoneDetail.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		
+
 		birthLabel = new JLabel("出生日期:");
 		birthLabel.setSize(100, 40);
 		birthLabel.setLocation(100, 180);
 		birthLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
-		
-		birthDetail = new JLabel("memberPO传过来出生日期");
-//		birthDetail = new JLabel(String.valueOf(memberPO.getBirth()));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+		String birth = sdf.format(memberPO.getBirth().getTime());
+		birthDetail = new JLabel(birth);
 		birthDetail.setSize(300, 40);
 		birthDetail.setLocation(200, 180);
 		birthDetail.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		
-		modifyButton = new JButton("修改");
+
+		modifyButton = new MButton("修改");
 		modifyButton.setSize(100, 40);
+		modifyButton.setFocusable(false);
 		modifyButton.setLocation(160, 240);
 		modifyButton.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
 		modifyButton.addActionListener(this);
-		
+
 		panel.add(nameLabel);
 		panel.add(nameDetail);
 		panel.add(phoneLabel);
@@ -151,90 +200,143 @@ public class InforCenterPanel extends JPanel implements MouseListener,
 		panel.add(birthLabel);
 		panel.add(birthDetail);
 		panel.add(modifyButton);
-		resultPane.setViewportView(panel);
+		contentPane.removeAll();
+		contentPane.add(panel);
+		contentPane.validate();
+		contentPane.requestFocus();
+		repaint();
 	}
 
+	@SuppressWarnings("static-access")
 	private void initmodifyView() {
-		JPanel panel = new JPanel();
+		MPanel panel = new MPanel();
 		panel.setLayout(null);
-		panel.setPreferredSize(new Dimension(500, 430));
+		panel.setSize(600, 430);
 
 		nameLabel = new JLabel("用户名:");
 		nameLabel.setSize(100, 40);
 		nameLabel.setLocation(100, 80);
 		nameLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
-		
-		nameField = new JTextField(30);
+
+		nameField = new MTextField(30);
 		nameField.setSize(150, 40);
-		nameField.setText("原用户名");
-//		nameField.setText(memberPO.getName());
+		nameField.setText(memberPO.getName());
 		nameField.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
 		nameField.setLocation(220, 80);
-		
+
 		phoneLabel = new JLabel("联系电话:");
 		phoneLabel.setSize(100, 40);
 		phoneLabel.setLocation(100, 130);
 		phoneLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
-		
-		phoneField = new JTextField(30);
+
+		phoneField = new MTextField(30);
 		phoneField.setSize(150, 40);
-		phoneField.setText("原联系电话");
-//		phoneField.setText(memberPO.getPhone());
+		phoneField.setText(memberPO.getPhone());
 		phoneField.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
 		phoneField.setLocation(220, 130);
-		
+
 		birthLabel = new JLabel("出生日期:");
 		birthLabel.setSize(100, 40);
 		birthLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
 		birthLabel.setLocation(100, 180);
-		
-		birthField = new JTextField(30);
-		birthField.setSize(150, 40);
-		birthField.setText("原来的生日");
-//		birthField.setText(String.valueOf(memberPO.getBirth()));
-		birthField.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
-		birthField.setLocation(220, 180);
-		
-		ensuremodifyButton = new JButton("确认修改");
+
+		Calendar calendar = memberPO.getBirth();
+
+		birth_yearField = new MTextField();
+		birth_yearField.setSize(60, 40);
+		birth_yearField.setText("" + calendar.get(calendar.YEAR));
+		birth_yearField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		birth_yearField.setLocation(220, 180);
+
+		JLabel yearLabel = new JLabel("年");
+		yearLabel.setSize(20, 40);
+		yearLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		yearLabel.setLocation(281, 180);
+
+		birth_monthField = new MTextField();
+		birth_monthField.setSize(40, 40);
+		birth_monthField.setText("" + (calendar.get(calendar.MONTH) + 1));
+		birth_monthField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		birth_monthField.setLocation(302, 180);
+
+		JLabel monthLabel = new JLabel("月");
+		monthLabel.setSize(20, 40);
+		monthLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		monthLabel.setLocation(343, 180);
+
+		birth_dateField = new MTextField();
+		birth_dateField.setSize(40, 40);
+		birth_dateField.setText("" + calendar.get(calendar.DATE));
+		birth_dateField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		birth_dateField.setLocation(364, 180);
+
+		JLabel dateLabel = new JLabel("日");
+		dateLabel.setSize(20, 40);
+		dateLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		dateLabel.setLocation(405, 180);
+
+		ensuremodifyButton = new MButton("确认修改");
 		ensuremodifyButton.setSize(120, 40);
 		ensuremodifyButton.setLocation(140, 240);
 		ensuremodifyButton.setFocusable(false);
 		ensuremodifyButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		ensuremodifyButton.addActionListener(this);
-		
-		modifyreturnButton = new JButton("返回");
+
+		modifyreturnButton = new MButton("返回");
 		modifyreturnButton.setSize(120, 40);
 		modifyreturnButton.setLocation(280, 240);
 		modifyreturnButton.setFocusable(false);
 		modifyreturnButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		modifyreturnButton.addActionListener(this);
-		
+
 		panel.add(nameLabel);
 		panel.add(phoneLabel);
 		panel.add(birthLabel);
 		panel.add(nameField);
 		panel.add(phoneField);
-		panel.add(birthField);
+		panel.add(birth_yearField);
+		panel.add(yearLabel);
+		panel.add(birth_monthField);
+		panel.add(monthLabel);
+		panel.add(birth_dateField);
+		panel.add(dateLabel);
 		panel.add(ensuremodifyButton);
 		panel.add(modifyreturnButton);
-		resultPane.setViewportView(panel);
+		contentPane.removeAll();
+		contentPane.add(panel);
+		contentPane.validate();
+		contentPane.requestFocus();
+		repaint();
 	}
 
-	public void initBuyHisView() {
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		panel.setPreferredSize(new Dimension(500, 430));
-		
-		//set the information of the purchase history table
-		purchaseHistory = new JTable();
-		purchaseHistory.setSize(500, 430);
-		resultPane.setViewportView(panel);
+	@SuppressWarnings("unchecked")
+	private void initBuyHisView() {
+		// set the information of the purchase history table
+		try {
+			ResultMessage resultMessage = Agent.memberService
+					.purchaseQuery(Agent.userAgent.getId());
+			list = resultMessage.getResultSet();
+			if (list != null) {
+				purchaseRecordPanel = new PurchaseRecordPanel(
+						memberUIController, list);
+				purchaseRecordPanel.init();
+				contentPane.removeAll();
+				contentPane.add(purchaseRecordPanel);
+				contentPane.validate();
+				contentPane.requestFocus();
+				repaint();
+			} else {
+				ImageDialog.showNOImage(this, resultMessage.getPostScript());
+			}
+		} catch (RemoteException re) {
+			re.printStackTrace();
+		}
 	}
 
-	public void initPasswordView() {
-		JPanel panel = new JPanel();
+	private void initPasswordView() {
+		MPanel panel = new MPanel();
 		panel.setLayout(null);
-		panel.setPreferredSize(new Dimension(500, 430));
+		panel.setSize(600, 430);
 
 		prePassword = new JLabel("旧密码:");
 		prePassword.setSize(100, 40);
@@ -245,26 +347,26 @@ public class InforCenterPanel extends JPanel implements MouseListener,
 		newPassword.setLocation(100, 130);
 		newPassword.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
 
-		prePasswordField = new JPasswordField(20);
+		prePasswordField = new MPasswordField(20);
 		prePasswordField.setSize(150, 40);
 		prePasswordField.setLocation(180, 80);
 		prePasswordField.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
-		
-		newPasswordField = new JPasswordField(20);
+
+		newPasswordField = new MPasswordField(20);
 		newPasswordField.setSize(150, 40);
 		newPasswordField.setLocation(180, 130);
 		newPasswordField.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
 
-		ensureButton = new JButton("确认修改");
+		ensureButton = new MButton("确认修改");
 		ensureButton.setSize(130, 40);
 		ensureButton.setLocation(120, 190);
 		ensureButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		
-		returnButton = new JButton("取消");
+
+		returnButton = new MButton("取消");
 		returnButton.setSize(120, 40);
 		returnButton.setLocation(270, 190);
 		returnButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		
+
 		ensureButton.addActionListener(this);
 		returnButton.addActionListener(this);
 
@@ -274,57 +376,101 @@ public class InforCenterPanel extends JPanel implements MouseListener,
 		panel.add(newPasswordField);
 		panel.add(ensureButton);
 		panel.add(returnButton);
-		resultPane.setViewportView(panel);
-
+		contentPane.removeAll();
+		contentPane.add(panel);
+		contentPane.validate();
+		contentPane.requestFocus();
+		repaint();
 	}
 
-	public void initPromotionView() {
-		JPanel panel = new JPanel();
+	@SuppressWarnings("unchecked")
+	private void initPromotionView() {
+		MPanel panel = new MPanel();
 		panel.setLayout(null);
-		panel.setPreferredSize(new Dimension(500, 430));
+		panel.setSize(600, 430);
 
-		if(equiBondNum == 0 && discoutnBondNum == 0){
+		try {
+			ResultMessage resultMessage = Agent.memberService
+					.getCoupons(Agent.userAgent.getId());
+			coupons_list = resultMessage.getResultSet();
+			if (coupons_list != null) {
+				discoutnBondNum = coupons_list.size();
+			} else {
+				discoutnBondNum = 0;
+			}
+
+		} catch (RemoteException re) {
+			re.printStackTrace();
+		}
+		try {
+			ResultMessage resultMessage = Agent.memberService
+					.getEquivalentBond(Agent.userAgent.getId());
+			equi_list = resultMessage.getResultSet();
+			if (equi_list != null) {
+				equiBondNum = equi_list.size();
+			} else {
+				equiBondNum = 0;
+			}
+		} catch (RemoteException re) {
+			re.printStackTrace();
+		}
+
+		if (equiBondNum == 0 && discoutnBondNum == 0) {
 			JLabel temp = new JLabel("对不起,您当前没有任何优惠券!");
-			JPanel nothing = new JPanel(){
-				public void paintComponent(Graphics g){
+			JPanel nothing = new JPanel() {
+				public void paintComponent(Graphics g) {
 					super.paintComponent(g);
-					ImageIcon imageIcon = new ImageIcon("materials/boring.gif");
-					Image image = imageIcon.getImage();
-					if(image != null){
-						g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+					if (IMGSTATIC.boring != null) {
+						g.drawImage(IMGSTATIC.boring, 0, 0, getWidth(),
+								getHeight(), this);
 					}
 				}
 			};
 			nothing.setLayout(null);
 			nothing.setSize(80, 80);
 			nothing.setLocation(235, 150);
-			
+			nothing.setOpaque(false);
+
 			temp.setSize(400, 30);
 			temp.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 			temp.setForeground(Color.red);
 			temp.setLocation(150, 70);
-			
+
 			panel.add(temp);
 			panel.add(nothing);
-		}
-		else{
+		} else {
 			String s1 = "您有" + equiBondNum + "张等价券";
 			equiBondLabel = new JLabel(s1);
 			equiBondLabel.setSize(400, 30);
 			equiBondLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 			equiBondLabel.setLocation(100, 50);
-			
+
 			String s2 = "您有" + discoutnBondNum + "张打折券";
 			discoutBondLabel = new JLabel(s2);
 			discoutBondLabel.setSize(400, 30);
 			discoutBondLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 			discoutBondLabel.setLocation(100, 90);
-			
+
 			panel.add(equiBondLabel);
 			panel.add(discoutBondLabel);
 		}
-		
-		resultPane.setViewportView(panel);
+		contentPane.removeAll();
+		contentPane.add(panel);
+		contentPane.validate();
+		contentPane.requestFocus();
+		repaint();
+	}
+
+	public void initMessageCenterView() {
+		if (messageCenterPanel == null) {
+			messageCenterPanel = new MessageCenterPanel(memberUIController);
+			messageCenterPanel.init();
+		}
+		contentPane.removeAll();
+		contentPane.add(messageCenterPanel);
+		contentPane.validate();
+		contentPane.requestFocus();
+		repaint();
 	}
 
 	@Override
@@ -334,7 +480,26 @@ public class InforCenterPanel extends JPanel implements MouseListener,
 		} else if (e.getSource() == modifyreturnButton) {
 			initPersonalInfoView();
 		} else if (e.getSource() == ensuremodifyButton) {
+			try {
+				int year = Integer.parseInt(birth_yearField.getText().trim());
+				int month = Integer.parseInt(birth_monthField.getText().trim());
+				int date = Integer.parseInt(birth_dateField.getText().trim());
 
+				ResultMessage resultMessage = Agent.memberService
+						.modifyMember(new MemberPO(memberPO.getID(), nameField
+								.getText().trim(), memberPO.getPassword(),
+								phoneField.getText(), new GregorianCalendar(
+										year, month, date), memberPO
+										.getIntegral()));
+				if (resultMessage.isInvokeSuccess()) {
+					ImageDialog.showYesImage(this, "信息修改成功");
+				} else {
+					ImageDialog
+							.showNOImage(this, resultMessage.getPostScript());
+				}
+			} catch (RemoteException re) {
+				re.printStackTrace();
+			}
 		} else if (e.getSource() == ensureButton) {
 
 		}
@@ -354,6 +519,9 @@ public class InforCenterPanel extends JPanel implements MouseListener,
 		} else if (e.getSource() == promotionLabel
 				&& e.getButton() == MouseEvent.BUTTON1) {
 			initPromotionView();
+		} else if (e.getSource() == messageCenterLabel
+				&& e.getButton() == MouseEvent.BUTTON1) {
+			initMessageCenterView();
 		}
 	}
 
@@ -376,9 +544,4 @@ public class InforCenterPanel extends JPanel implements MouseListener,
 	public void mouseExited(MouseEvent e) {
 
 	}
-	
-	public MemberUIController getMemberUIController(){
-		return memberUIController;
-	}
-
 }

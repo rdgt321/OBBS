@@ -9,6 +9,7 @@ import java.util.Calendar;
 
 import Book.BookPO;
 import RMI.ResultMessage;
+import Server.Const;
 
 public class CollectDAOImpl implements CollectDAO {
 
@@ -40,10 +41,15 @@ public class CollectDAOImpl implements CollectDAO {
 	}
 
 	@Override
-	public ResultMessage bookCollect(String bookISBN, int memberID) {
+	public synchronized ResultMessage bookCollect(String bookISBN, int memberID) {
 		ResultMessage isExist = queryCollect(memberID, bookISBN);
 		if (isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "already collect this book");
+		}
+		ResultMessage booknum = getCollectedBook(memberID);
+		if (booknum.isInvokeSuccess()
+				&& booknum.getResultSet().size() >= Const.MAX_COLLECT) {
+			return new ResultMessage(false, null, "已达书架上线，无法收藏更多图书");
 		}
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "insert into collect(memberid,bookisbn) values (?,?)";
@@ -70,7 +76,8 @@ public class CollectDAOImpl implements CollectDAO {
 	}
 
 	@Override
-	public ResultMessage cancelCollect(String bookISBN, int memberID) {
+	public synchronized ResultMessage cancelCollect(String bookISBN,
+			int memberID) {
 		ResultMessage isExist = queryCollect(memberID, bookISBN);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "not collect this book");
@@ -99,7 +106,7 @@ public class CollectDAOImpl implements CollectDAO {
 	}
 
 	@Override
-	public ResultMessage queryCollect(int memberID, String bookISBN) {
+	public synchronized ResultMessage queryCollect(int memberID, String bookISBN) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from collect where memberid=? and bookisbn=?";
 		PreparedStatement ps;
@@ -126,14 +133,14 @@ public class CollectDAOImpl implements CollectDAO {
 	}
 
 	@Override
-	public ResultMessage getCollectedBook(int memebrID) {
+	public synchronized ResultMessage getCollectedBook(int memberID) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "select * from collect where memberid=?";
 		PreparedStatement ps;
 		ResultSet resultSet = null;
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, memebrID);
+			ps.setInt(1, memberID);
 			resultSet = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();

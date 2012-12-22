@@ -1,7 +1,8 @@
 package ClientRunner;
 
 import java.awt.Component;
-import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
 
@@ -29,27 +30,11 @@ public class MainFrame extends JFrame {
 	private SaleUIController saleUIController = new SaleUIController(this);
 	private Component contentpanel;
 
-	Runnable paintThread = new Runnable() {
-		@Override
-		public void run() {
-			while (true) {
-				repaint();
-				try {
-					Thread.sleep(30);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	};
-
-	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
-	}
-
 	public MainFrame() {
 		setResizable(false);
+		setLayout(null);
+		Const.loadConfig();
+		IMGSTATIC.startLoading();
 		try {
 			UIManager
 					.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -62,26 +47,21 @@ public class MainFrame extends JFrame {
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		setLayout(null);
+		new Thread(Routines.getInstance()).start();
+		while (!Agent.alive) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		init();
 	}
 
 	public void init() {
-		
-		Agent.bookService = new BookServiceImpl();
-		Agent.memberService = new MemberServiceImpl();
-		Agent.promotionService = new PromotionServiceImpl();
-		Agent.saleService = new SaleServiceImpl();
-		Agent.userService = new UserServiceImpl();
-		
 		memberUIController.createNavigateView(NavigatePanel.BEFORE_STATE);
 		bookUIController.createMainView();
 		this.requestFocus();
-		new Thread(paintThread).start();
-
-		// agent = new Agent(new BookServiceImpl(), new MemberServiceImpl(), new
-		// PromotionServiceImpl(), new SaleServiceImpl(), new
-		// UserServiceImpl());
 	}
 
 	@Override
@@ -100,7 +80,9 @@ public class MainFrame extends JFrame {
 
 	public static void main(String[] args) {
 		MainFrame frame = new MainFrame();
-		frame.setTitle("网上图书购买系统");
+		frame.setTitle("在线图书销售系统");
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
+				"materials/icon.png"));
 		frame.setSize(806, 628);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -126,10 +108,10 @@ public class MainFrame extends JFrame {
 	protected void processWindowEvent(WindowEvent e) {
 		boolean flag = false;
 		if (e.getID() == WindowEvent.WINDOW_CLOSING) {
-			int result = JOptionPane.showConfirmDialog(this, ("确认要退出系统吗?"),
+			int result = JOptionPane.showConfirmDialog(this, ("确定要退出系统吗？"),
 					("提示"), JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION) {
-				if(Agent.userAgent != null){
+				if (Agent.userAgent != null) {
 					try {
 						if (Agent.userAgent.getUserType() == Const.MEMBER) {
 							Agent.memberService.logout(Agent.userAgent);
@@ -141,7 +123,7 @@ public class MainFrame extends JFrame {
 						e1.printStackTrace();
 					}
 				}
-							}
+			}
 			if (result == JOptionPane.NO_OPTION) {
 				flag = true;
 			}

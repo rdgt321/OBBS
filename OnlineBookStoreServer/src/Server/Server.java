@@ -97,7 +97,8 @@ public class Server extends JFrame {
 		boolean mysql = mysqlInstalled();
 		if (!mysql) {
 			int ok = JOptionPane.showConfirmDialog(this,
-					"您的机器尚未安装MYSQL(或独立版)，无法运行本系统，请点击确定下载官方最新版本");
+					"您的机器尚未安装MYSQL(或独立版)，无法运行本系统，请点击确定下载官方最新版本", "警告",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (ok == JOptionPane.OK_OPTION) {
 				if (java.awt.Desktop.isDesktopSupported()) {
 					try {
@@ -150,10 +151,6 @@ public class Server extends JFrame {
 			e.printStackTrace();
 		}
 		return out != null;
-	}
-
-	public void checkPromotionSuit(UserAgent userAgent) {
-
 	}
 
 	public static void main(String[] args) {
