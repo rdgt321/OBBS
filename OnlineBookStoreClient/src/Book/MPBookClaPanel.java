@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 
 import ClientRunner.Agent;
+import ClientRunner.Cache;
 import ClientRunner.MPanel;
 import RMI.ResultMessage;
 
@@ -50,8 +51,44 @@ public class MPBookClaPanel extends MPanel implements MouseListener {
 		g2d.dispose();
 	}
 
+	public void initWithCache(ArrayList<BookPO> books) {
+		bookclassifyName = directoryPO.getName();
+		list = books;
+		if (list != null) {
+			currentSize = list.size();
+		} else {
+			currentSize = 0;
+		}
+		setSize(250, 220);
+		setVisible(true);
+		setLayout(null);
+
+		bookLabel = new JLabel(bookclassifyName);
+		bookLabel.setSize(100, 40);
+		bookLabel.setLocation(10, 3);
+
+		moreLabel = new JLabel("更多>>");
+		moreLabel.setSize(80, 40);
+		moreLabel.setLocation(190, 2);
+		moreLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		moreLabel.addMouseListener(this);
+
+		bookLabel.setFont(new Font("宋体", Font.BOLD, 20));
+		bookLabel.addMouseListener(this);
+
+		bookRecords = new BookRecord[currentSize];
+
+		for (int i = 0; i < currentSize; i++) {
+			bookRecords[i] = new BookRecord(bookUIController, list.get(i));
+			bookRecords[i].setLocation(5, 47 + 43 * i);
+			this.add(bookRecords[i]);
+		}
+		this.add(bookLabel);
+		this.add(moreLabel);
+	}
+
 	@SuppressWarnings("unchecked")
-	public void draw() {
+	public void init() {
 		bookclassifyName = directoryPO.getName();
 		try {
 			ResultMessage resultMessage = Agent.bookService
@@ -62,6 +99,7 @@ public class MPBookClaPanel extends MPanel implements MouseListener {
 			} else {
 				currentSize = 0;
 			}
+			Cache.booksInDirectorys.add((ArrayList<BookPO>) list.clone());
 		} catch (RemoteException re) {
 			re.printStackTrace();
 		}

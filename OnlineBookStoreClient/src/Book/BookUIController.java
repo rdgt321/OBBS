@@ -1,8 +1,5 @@
 package Book;
 
-import javax.swing.JScrollPane;
-
-import ClientRunner.Agent;
 import ClientRunner.MainFrame;
 
 public class BookUIController {
@@ -16,19 +13,16 @@ public class BookUIController {
 	}
 
 	public void setReturnView() {
-		if (mainpagePanel == null) {
-			mainpagePanel = new MainpagePanel(this);
-			mainpagePanel.init();
-			mainFrame.clear();
-			mainFrame.add(mainpagePanel);
-			mainpagePanel.requestFocus();
-			mainpagePanel.validate();
-			return;
-		}
 		mainFrame.clear();
 		mainpagePanel.refresh();
 		mainFrame.add(mainpagePanel);
 		mainpagePanel.requestFocus();
+		mainpagePanel.validate();
+		mainpagePanel.repaint();
+	}
+	
+	public void refreshMainView(){
+		mainpagePanel.refresh();
 		mainpagePanel.validate();
 		mainpagePanel.repaint();
 	}
@@ -39,8 +33,8 @@ public class BookUIController {
 			mainpagePanel.init();
 		}
 		mainFrame.add(mainpagePanel);
-		mainpagePanel.repaint();
 		mainpagePanel.validate();
+		mainpagePanel.repaint();
 	}
 
 	public void createBookClassifyView(DirectoryPO directoryPO) {
@@ -48,8 +42,8 @@ public class BookUIController {
 		bookClassifyPanel.init();
 		mainFrame.clear();
 		mainFrame.add(bookClassifyPanel);
-		bookClassifyPanel.repaint();
 		bookClassifyPanel.validate();
+		bookClassifyPanel.repaint();
 	}
 
 	public void createBookDetailView(BookPO bookPO) {

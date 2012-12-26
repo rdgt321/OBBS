@@ -7,25 +7,18 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.InputMethodListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
-import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -35,12 +28,8 @@ import javax.swing.ScrollPaneConstants;
 import Book.BookInCartPanel;
 import ClientRunner.Agent;
 import ClientRunner.Const;
-import ClientRunner.ImageDialog;
-<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
-=======
-import ClientRunner.Loader;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
+import ClientRunner.ImageDialog;
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
 import ClientRunner.MTextField;
@@ -72,6 +61,7 @@ public class CartPanel extends MPanel implements ActionListener {
 	private double realPrice;
 	private MemberPO memberPO;
 	private CartPO cart;
+	private boolean bondCanUse;
 
 	public CartPanel(SaleUIController saleUIController) {
 		this.saleUIController = saleUIController;
@@ -105,23 +95,14 @@ public class CartPanel extends MPanel implements ActionListener {
 					Graphics2D g2d = (Graphics2D) g.create();
 					g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
-<<<<<<< HEAD
 					if (IMGSTATIC.homepageBG != null) {
-=======
-					if (Loader.homepageBG != null) {
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 						int height = scrollPane.getVerticalScrollBar()
 								.getValue();
 						Composite composite = g2d.getComposite();
 						g2d.setComposite(AlphaComposite.getInstance(
 								AlphaComposite.SRC_OVER, 0.8f));
-<<<<<<< HEAD
 						g2d.drawImage(IMGSTATIC.homepageBG, 0, height, 800,
 								530, this);
-=======
-						g2d.drawImage(Loader.homepageBG, 0, height, 800, 530,
-								this);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 						g2d.setComposite(composite);
 					}
 					g2d.dispose();
@@ -143,10 +124,6 @@ public class CartPanel extends MPanel implements ActionListener {
 				bookInCartPanels[j].setLocation(10, 10 + 70 * j);
 				contentPane.add(bookInCartPanels[j]);
 			}
-<<<<<<< HEAD
-=======
-
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			submitButton = new MButton("提交订单");
 			submitButton.setSize(120, 40);
 			submitButton.setFocusable(false);
@@ -159,7 +136,7 @@ public class CartPanel extends MPanel implements ActionListener {
 			notUseBondButton.setFocusable(false);
 			notUseBondButton.setSelected(true);
 			notUseBondButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
-			notUseBondButton.setLocation(80, 30 + 60 * num_of_item);
+			notUseBondButton.setLocation(80, 30 + 70 * num_of_item);
 			notUseBondButton.addActionListener(this);
 			notUseBondButton.setOpaque(false);
 
@@ -167,7 +144,7 @@ public class CartPanel extends MPanel implements ActionListener {
 			useBondButton.setSize(120, 25);
 			useBondButton.setFocusable(false);
 			useBondButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
-			useBondButton.setLocation(185, 30 + 60 * num_of_item);
+			useBondButton.setLocation(185, 30 + 70 * num_of_item);
 			useBondButton.addActionListener(this);
 			useBondButton.setOpaque(false);
 
@@ -175,7 +152,7 @@ public class CartPanel extends MPanel implements ActionListener {
 			useEarnedValue.setSize(100, 25);
 			useEarnedValue.setFocusable(false);
 			useEarnedValue.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
-			useEarnedValue.setLocation(310, 30 + 60 * num_of_item);
+			useEarnedValue.setLocation(310, 30 + 70 * num_of_item);
 			useEarnedValue.addActionListener(this);
 			useEarnedValue.setOpaque(false);
 
@@ -186,12 +163,12 @@ public class CartPanel extends MPanel implements ActionListener {
 
 			totalPriceLabel = new JLabel("商品总价：" + cart.totalprice);
 			totalPriceLabel.setSize(280, 40);
-			totalPriceLabel.setLocation(500, 40 + 60 * num_of_item);
+			totalPriceLabel.setLocation(500, 40 + 70 * num_of_item);
 			totalPriceLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 24));
 
 			realPirceLabel = new JLabel("实际价格:" + cart.totalprice);
 			realPirceLabel.setSize(280, 40);
-			realPirceLabel.setLocation(500, 80 + 60 * num_of_item);
+			realPirceLabel.setLocation(500, 80 + 70 * num_of_item);
 			realPirceLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 24));
 			realPirceLabel.setForeground(Color.RED.brighter());
 
@@ -201,6 +178,7 @@ public class CartPanel extends MPanel implements ActionListener {
 			contentPane.add(totalPriceLabel);
 			contentPane.add(realPirceLabel);
 			contentPane.add(submitButton);
+			CalcPrice();
 		} else {
 			JLabel nothingLabel = new JLabel("您的购物车中当前没有任何图书!");
 			nothingLabel.setSize(400, 30);
@@ -215,7 +193,6 @@ public class CartPanel extends MPanel implements ActionListener {
 					Graphics2D g2d = (Graphics2D) g.create();
 					g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
-<<<<<<< HEAD
 					if (IMGSTATIC.homepageBG != null
 							&& IMGSTATIC.boring != null) {
 						Composite composite = g2d.getComposite();
@@ -224,14 +201,6 @@ public class CartPanel extends MPanel implements ActionListener {
 						g2d.drawImage(IMGSTATIC.homepageBG, 0, 0, 800, 530,
 								this);
 						g2d.drawImage(IMGSTATIC.boring, 335, 210, 80, 80, this);
-=======
-					if (Loader.homepageBG != null && Loader.boring != null) {
-						Composite composite = g2d.getComposite();
-						g2d.setComposite(AlphaComposite.getInstance(
-								AlphaComposite.SRC_OVER, 0.8f));
-						g2d.drawImage(Loader.homepageBG, 0, 0, 800, 530, this);
-						g2d.drawImage(Loader.boring, 335, 210, 80, 80, this);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 						g2d.setComposite(composite);
 					}
 					g2d.dispose();
@@ -251,7 +220,6 @@ public class CartPanel extends MPanel implements ActionListener {
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		add(scrollPane);
-		CalcPrice();
 	}
 
 	@Override
@@ -263,7 +231,8 @@ public class CartPanel extends MPanel implements ActionListener {
 			int integral = 0;
 			int orderID = 0;
 			if (useBondButton.isSelected() && useEquiBond != null
-					&& useEquiBond.isSelected()) {
+					&& useEquiBond.isSelected() && bondCanUse
+					&& equiBondBox.getSelectedItem() != null) {
 				EquivalentBondPO equivalentBondPO = (EquivalentBondPO) equiBondBox
 						.getSelectedItem();
 				equivalentbondID = equivalentBondPO.getEquivalentBondID();
@@ -273,7 +242,8 @@ public class CartPanel extends MPanel implements ActionListener {
 								JOptionPane.YES_NO_OPTION,
 								JOptionPane.QUESTION_MESSAGE);
 			} else if (useBondButton.isSelected() && useDiscountBond != null
-					&& useDiscountBond.isSelected()) {
+					&& useDiscountBond.isSelected()
+					&& discountBondBox.getSelectedItem() != null) {
 				CouponsPO couponsPO = (CouponsPO) discountBondBox
 						.getSelectedItem();
 				couponsID = couponsPO.getCounponsID();
@@ -282,8 +252,9 @@ public class CartPanel extends MPanel implements ActionListener {
 								+ couponsID + "的折扣券并支付？", "确认支付？",
 								JOptionPane.YES_NO_OPTION,
 								JOptionPane.QUESTION_MESSAGE);
-			} else if (useEarnedValue.isSelected()) {
-				integral = Integer.parseInt(earnedValueField.getText());
+			} else if (useEarnedValue.isSelected()
+					&& !earnedValueField.getText().equals("")) {
+				integral = Integer.parseInt(earnedValueField.getText().trim());
 				confirm = JOptionPane
 						.showConfirmDialog(contentPane, "是否确认使用:" + integral
 								+ "点积分并支付？", "确认支付？",
@@ -324,10 +295,13 @@ public class CartPanel extends MPanel implements ActionListener {
 			}
 		} else if (e.getSource() == useBondButton) {
 			setUseBondPanel();
+			CalcPrice();
 		} else if (e.getSource() == useEarnedValue) {
 			setUseEarnedValuePanel();
+			CalcPrice();
 		} else if (e.getSource() == notUseBondButton) {
 			setPayAllPanel();
+			CalcPrice();
 		}
 	}
 
@@ -340,21 +314,39 @@ public class CartPanel extends MPanel implements ActionListener {
 		realPrice = totalPrice;
 		if (useBondButton.isSelected() && useEquiBond != null
 				&& useEquiBond.isSelected()) {
-			EquivalentBondPO equivalentBondPO = (EquivalentBondPO) equiBondBox
-					.getSelectedItem();
-			double denomination = equivalentBondPO.getEquivalentDenomination();
-			realPrice = totalPrice - denomination;
+			if (((EquivalentBondPO) equiBondBox.getSelectedItem())
+					.getUseLimit() > totalPrice) {
+				bondCanUse = false;
+				bondtipLabel.setVisible(true);
+			} else {
+				bondCanUse = true;
+				bondtipLabel.setVisible(false);
+			}
+			if (equiBondBox.getSelectedItem() != null && bondCanUse) {
+				EquivalentBondPO equivalentBondPO = (EquivalentBondPO) equiBondBox
+						.getSelectedItem();
+				double denomination = equivalentBondPO
+						.getEquivalentDenomination();
+				realPrice = totalPrice - denomination;
+			}
 		} else if (useBondButton.isSelected() && useDiscountBond != null
 				&& useDiscountBond.isSelected()) {
-			CouponsPO couponsPO = (CouponsPO) discountBondBox.getSelectedItem();
-			double rate = couponsPO.getDiscountRate();
-			realPrice = totalPrice * rate;
+			if (discountBondBox.getSelectedItem() != null) {
+				CouponsPO couponsPO = (CouponsPO) discountBondBox
+						.getSelectedItem();
+				double rate = couponsPO.getDiscountRate();
+				realPrice = totalPrice * rate;
+			}
 		} else if (useEarnedValue.isSelected()) {
-			double num = Integer.parseInt(earnedValueField.getText());
-			realPrice -= num / Const.INTEGRAL_RATE;
+			if (!earnedValueField.getText().trim().equals("")) {
+				double num = Integer
+						.parseInt(earnedValueField.getText().trim());
+				realPrice -= num / Const.INTEGRAL_RATE;
+			}
 		}
 		totalPriceLabel.setText("商品总价：" + totalPrice);
 		realPirceLabel.setText("实际价格: " + String.format("%.2f", realPrice));
+		repaint();
 	}
 
 	private void setPayAllPanel() {
@@ -389,7 +381,39 @@ public class CartPanel extends MPanel implements ActionListener {
 			useDiscountBond.setLocation(130, 0);
 			useDiscountBond.setOpaque(false);
 
+			bondtipLabel = new JLabel("订单面额小于等价券使用限制,无法使用该券");
+			bondtipLabel.setSize(280, 20);
+			bondtipLabel.setForeground(Color.RED.brighter());
+			bondtipLabel.setLocation(20, 80);
+			bondtipLabel.setVisible(false);
+
 			equiBondBox = new EquiBondBox();
+			equiBondBox.setSize(230, 20);
+			equiBondBox.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+			equiBondBox.setEnabled(false);
+			equiBondBox.setVisible(false);
+			equiBondBox.addItemListener(new ItemListener() {
+
+				Object pre = null;
+
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					if (e.getStateChange() == ItemEvent.SELECTED) {
+						if (((EquivalentBondPO) e.getItem()).getUseLimit() > totalPrice) {
+							bondtipLabel.setVisible(true);
+							bondCanUse = false;
+						} else {
+							bondtipLabel.setVisible(false);
+							bondCanUse = true;
+						}
+						CalcPrice();
+					}
+					if (e.getStateChange() == ItemEvent.DESELECTED) {
+						pre = e.getItem();
+					}
+				}
+			});
+			equiBondBox.setLocation(20, 50);
 			try {
 				ResultMessage resultMessage = Agent.memberService
 						.getEquivalentBond(Agent.userAgent.getId());
@@ -403,36 +427,18 @@ public class CartPanel extends MPanel implements ActionListener {
 				re.printStackTrace();
 			}
 
-			bondtipLabel = new JLabel("订单面额小于等价券使用限制,无法使用该券");
-			bondtipLabel.setSize(280, 20);
-			equiBondBox.setFont(new Font("楷体_gb2312", Font.PLAIN, 15));
-			bondtipLabel.setForeground(Color.RED.brighter());
-			bondtipLabel.setLocation(20, 80);
-			bondtipLabel.setVisible(false);
-
-			equiBondBox.setSize(230, 20);
-			equiBondBox.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
-			equiBondBox.setEnabled(false);
-			equiBondBox.setVisible(false);
-			equiBondBox.addItemListener(new ItemListener() {
-
-				Object pre = null;
-
+			discountBondBox = new DiscoutBondBox();
+			discountBondBox.setSize(230, 20);
+			discountBondBox.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+			discountBondBox.setEnabled(false);
+			discountBondBox.setVisible(false);
+			discountBondBox.addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-					if (((EquivalentBondPO) e.getItem()).getUseLimit() > totalPrice) {
-						equiBondBox.setSelectedItem(pre);
-						bondtipLabel.setVisible(true);
-					} else {
-						CalcPrice();
-						bondtipLabel.setVisible(false);
-					}
-					pre = e.getItem();
+					CalcPrice();
 				}
 			});
-			equiBondBox.setLocation(20, 50);
-
-			discountBondBox = new DiscoutBondBox();
+			discountBondBox.setLocation(20, 50);
 			try {
 				ResultMessage resultMessage = Agent.memberService
 						.getCoupons(Agent.userAgent.getId());
@@ -445,17 +451,6 @@ public class CartPanel extends MPanel implements ActionListener {
 			} catch (RemoteException re) {
 				re.printStackTrace();
 			}
-			discountBondBox.setSize(230, 20);
-			discountBondBox.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
-			discountBondBox.setEnabled(false);
-			discountBondBox.setVisible(false);
-			discountBondBox.addItemListener(new ItemListener() {
-				@Override
-				public void itemStateChanged(ItemEvent e) {
-					CalcPrice();
-				}
-			});
-			discountBondBox.setLocation(20, 50);
 
 			useEquiBond.addActionListener(new ActionListener() {
 
@@ -466,6 +461,8 @@ public class CartPanel extends MPanel implements ActionListener {
 
 					equiBondBox.setEnabled(true);
 					equiBondBox.setVisible(true);
+					bondtipLabel.setVisible(true);
+					CalcPrice();
 				}
 			});
 
@@ -475,9 +472,11 @@ public class CartPanel extends MPanel implements ActionListener {
 				public void actionPerformed(ActionEvent e) {
 					equiBondBox.setEnabled(false);
 					equiBondBox.setVisible(false);
+					bondtipLabel.setVisible(false);
 
 					discountBondBox.setEnabled(true);
 					discountBondBox.setVisible(true);
+					CalcPrice();
 				}
 			});
 

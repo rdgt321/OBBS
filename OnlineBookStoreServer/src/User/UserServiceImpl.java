@@ -6,6 +6,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+
 import DBC.BookDAO;
 import DBC.DAOFactory;
 import DBC.DirectoryDAO;
@@ -56,7 +57,7 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
 	@Override
 	public ResultMessage login(String ID, String password, String IP, int type)
 			throws RemoteException {
-		if (UserPool.getAgents().size() >= Const.MAX_CLIENT) {
+		if (UserPool.getAgents().getSize() >= Const.MAX_CLIENT) {
 			return new ResultMessage(false, null, "服务器繁忙，请稍后再试");
 		}
 		ResultMessage resultMessage = userDAO.loginValidate(ID, password);
@@ -75,7 +76,7 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
 			UserPool.connect(userAgent);
 			ArrayList<UserAgent> agent = new ArrayList<UserAgent>();
 			agent.add(userAgent);
-			return new ResultMessage(true, agent, "login success agent return");
+			return new ResultMessage(true, agent, "登录成功");
 		}
 		return resultMessage;
 	}

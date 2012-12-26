@@ -44,7 +44,7 @@ public class CartItemDAOImpl implements CartItemDAO {
 	public synchronized ResultMessage addCartItem(int memberID, ItemPO itemPO) {
 		ResultMessage isExist = queryCartItem(memberID, itemPO.getBookISBN());
 		if (isExist.isInvokeSuccess()) {
-			return updateCartItem(memberID, itemPO);
+			return isExist;
 		}
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "insert into cart_item(memberid,bookisbn,nowprice,count) values (?,?,?,?)";
@@ -98,7 +98,8 @@ public class CartItemDAOImpl implements CartItemDAO {
 	}
 
 	@Override
-	public synchronized ResultMessage deleteCartItem(int memberID, String bookISBN) {
+	public synchronized ResultMessage deleteCartItem(int memberID,
+			String bookISBN) {
 		ResultMessage isExist = queryCartItem(memberID, bookISBN);
 		if (!isExist.isInvokeSuccess()) {
 			return new ResultMessage(false, null, "该Item不存在 请重新操作");
@@ -147,9 +148,9 @@ public class CartItemDAOImpl implements CartItemDAO {
 			e.printStackTrace();
 		}
 		if (result != null) {
-			return new ResultMessage(true, result, "该物品存在 返回结果");
+			return new ResultMessage(true, result, "该书在购物车中");
 		}
-		return new ResultMessage(false, result, "该物品不存在");
+		return new ResultMessage(false, result, "该书不在购物车中");
 	}
 
 	@Override
@@ -171,9 +172,9 @@ public class CartItemDAOImpl implements CartItemDAO {
 			e.printStackTrace();
 		}
 		if (row != 0) {
-			return new ResultMessage(true, null, "clear cart_item success");
+			return new ResultMessage(true, null, "清空购物车成功");
 		}
-		return new ResultMessage(false, null, "clear cart_item fail");
+		return new ResultMessage(false, null, "清空购物车成功");
 	}
 
 	@Override
@@ -196,9 +197,9 @@ public class CartItemDAOImpl implements CartItemDAO {
 			e.printStackTrace();
 		}
 		if (polist != null) {
-			return new ResultMessage(true, polist, "get books in cart succes");
+			return new ResultMessage(true, polist, "查询成功，返回购物车");
 		}
-		return new ResultMessage(false, null, "nothing in cart ");
+		return new ResultMessage(false, null, "购物车中尚未存放商品");
 	}
 
 }

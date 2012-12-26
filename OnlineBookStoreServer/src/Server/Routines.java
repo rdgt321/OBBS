@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,10 +74,12 @@ public class Routines implements Runnable, Observer {
 			writeLog();
 			long loopEnd = System.currentTimeMillis();
 			long sleeptime = Const.ROUTINE * 1000 - (loopEnd - loopStart);
-			try {
-				Thread.sleep(sleeptime);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			if (sleeptime > 0) {
+				try {
+					Thread.sleep(sleeptime);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -105,6 +106,7 @@ public class Routines implements Runnable, Observer {
 			path = path.substring(1);
 		}
 		path = path + Const.BACKUPPATH;
+		path = "\"" + path + "\"";
 		try {
 			path = URLDecoder.decode(path, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
@@ -124,13 +126,16 @@ public class Routines implements Runnable, Observer {
 		int month = Integer.parseInt(times[1]);
 		int day = Integer.parseInt(times[2]);
 		Calendar now = Calendar.getInstance();
-		if (now.get(Calendar.YEAR) == year && now.get(Calendar.MONTH) == month
+		if (now.get(Calendar.YEAR) == year
+				&& now.get(Calendar.MONTH) == month - 1
 				&& now.get(Calendar.DAY_OF_MONTH) == day) {
 			return;
 		}
 		triggerBirth();
-		Const.store("LAST_BIRTH",
-				now.get(Calendar.YEAR) + "-" + now.get(Calendar.MONTH) + "-"
+		Const.store(
+				"LAST_BIRTH",
+				now.get(Calendar.YEAR) + "-"
+						+ String.valueOf(now.get(Calendar.MONTH) + 1) + "-"
 						+ now.get(Calendar.DAY_OF_MONTH));
 	}
 
@@ -274,6 +279,7 @@ public class Routines implements Runnable, Observer {
 			path = path.substring(1);
 		}
 		path = path + Const.BACKUPPATH;
+		path = "\"" + path + "\"";
 		try {
 			path = URLDecoder.decode(path, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
@@ -330,6 +336,7 @@ public class Routines implements Runnable, Observer {
 			path = path.substring(1);
 		}
 		path = path + Const.BACKUPPATH;
+		path = "\"" + path + "\"";
 		try {
 			path = URLDecoder.decode(path, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
@@ -355,6 +362,7 @@ public class Routines implements Runnable, Observer {
 			path = path.substring(1);
 		}
 		path = path + Const.SQLPATH;
+		path = "\"" + path + "\"";
 		try {
 			path = URLDecoder.decode(path, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
@@ -381,6 +389,6 @@ public class Routines implements Runnable, Observer {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void update(Observable o, Object arg) {
-		userAgents = (ArrayList<UserAgent>) arg;
+		userAgents = ((RBT) arg).toArray();
 	}
 }

@@ -1,14 +1,11 @@
 package Book;
 
 import java.awt.AlphaComposite;
-import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.rmi.RemoteException;
@@ -18,11 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import ClientRunner.Agent;
-<<<<<<< HEAD
+import ClientRunner.Cache;
 import ClientRunner.IMGSTATIC;
-=======
-import ClientRunner.Loader;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.MPanel;
 import RMI.ResultMessage;
 
@@ -42,6 +36,7 @@ public class MainpagePanel extends MPanel implements MouseListener {
 	}
 
 	public void refresh() {
+		Cache.clear();
 		if (scrollPane != null) {
 			remove(scrollPane);
 		}
@@ -51,6 +46,7 @@ public class MainpagePanel extends MPanel implements MouseListener {
 			if (list != null) {
 				size = list.size();
 				bcpanels = new MPBookClaPanel[size];
+				Cache.directorys = (ArrayList<DirectoryPO>) list.clone();
 			}
 		} catch (RemoteException re) {
 			re.printStackTrace();
@@ -62,20 +58,13 @@ public class MainpagePanel extends MPanel implements MouseListener {
 				Graphics2D g2d = (Graphics2D) g.create();
 				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 						RenderingHints.VALUE_ANTIALIAS_ON);
-<<<<<<< HEAD
 				if (IMGSTATIC.homepageBG != null) {
-=======
-				if (Loader.homepageBG != null) {
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 					int height = scrollPane.getVerticalScrollBar().getValue();
 					Composite composite = g2d.getComposite();
 					g2d.setComposite(AlphaComposite.getInstance(
 							AlphaComposite.SRC_OVER, 0.8f));
-<<<<<<< HEAD
-					g2d.drawImage(IMGSTATIC.homepageBG, 0, height, 800, 530, this);
-=======
-					g2d.drawImage(Loader.homepageBG, 0, height, 800, 530, this);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
+					g2d.drawImage(IMGSTATIC.homepageBG, 0, height, 800, 530,
+							this);
 					g2d.setComposite(composite);
 				}
 				g2d.dispose();
@@ -93,11 +82,12 @@ public class MainpagePanel extends MPanel implements MouseListener {
 			} else {
 				bcpanels[i].setLocation(270, 120 * i - 110);
 			}
-			bcpanels[i].draw();
+			bcpanels[i].init();
 			panel.add(bcpanels[i]);
 		}
 
 		rankPanel = new RankPanel(bookUIController);
+		rankPanel.init();
 		rankPanel.setLocation(550, 10);
 		panel.add(rankPanel);
 
@@ -109,19 +99,15 @@ public class MainpagePanel extends MPanel implements MouseListener {
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		add(scrollPane);
+		Cache.saveToCache();
 	}
 
 	@SuppressWarnings("unchecked")
 	public void init() {
-		try {
-			ResultMessage resultMessage = Agent.bookService.getAllDirectories();
-			list = resultMessage.getResultSet();
-			if (list != null) {
-				size = list.size();
-				bcpanels = new MPBookClaPanel[size];
-			}
-		} catch (RemoteException re) {
-			re.printStackTrace();
+		list = Cache.directorys;
+		if (list != null) {
+			size = list.size();
+			bcpanels = new MPBookClaPanel[size];
 		}
 		setSize(800, 530);
 		setLocation(0, 70);
@@ -136,20 +122,13 @@ public class MainpagePanel extends MPanel implements MouseListener {
 				Graphics2D g2d = (Graphics2D) g.create();
 				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 						RenderingHints.VALUE_ANTIALIAS_ON);
-<<<<<<< HEAD
 				if (IMGSTATIC.homepageBG != null) {
-=======
-				if (Loader.homepageBG != null) {
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 					int height = scrollPane.getVerticalScrollBar().getValue();
 					Composite composite = g2d.getComposite();
 					g2d.setComposite(AlphaComposite.getInstance(
 							AlphaComposite.SRC_OVER, 0.8f));
-<<<<<<< HEAD
-					g2d.drawImage(IMGSTATIC.homepageBG, 0, height, 800, 530, this);
-=======
-					g2d.drawImage(Loader.homepageBG, 0, height, 800, 530, this);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
+					g2d.drawImage(IMGSTATIC.homepageBG, 0, height, 800, 530,
+							this);
 					g2d.setComposite(composite);
 				}
 				g2d.dispose();
@@ -165,11 +144,12 @@ public class MainpagePanel extends MPanel implements MouseListener {
 			} else {
 				bcpanels[i].setLocation(270, 120 * i - 110);
 			}
-			bcpanels[i].draw();
+			bcpanels[i].initWithCache(Cache.booksInDirectorys.get(i));
 			panel.add(bcpanels[i]);
 		}
 
 		rankPanel = new RankPanel(bookUIController);
+		rankPanel.initWithCache();
 		rankPanel.setLocation(550, 10);
 		panel.add(rankPanel);
 		scrollPane = new JScrollPane(panel);

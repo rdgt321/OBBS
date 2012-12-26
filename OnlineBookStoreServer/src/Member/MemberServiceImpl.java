@@ -22,7 +22,6 @@ import Promotion.CouponsPO;
 import Promotion.EquivalentBondPO;
 import RMI.ResultMessage;
 import RMI.UserAgent;
-import Sale.ItemPO;
 import Sale.OrderPO;
 import Server.Const;
 import Server.UserPool;
@@ -64,7 +63,7 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 	@Override
 	public ResultMessage login(String ID, String password, String IP, int type)
 			throws RemoteException {
-		if (UserPool.getAgents().size() >= Const.MAX_CLIENT) {
+		if (UserPool.getAgents().getSize() >= Const.MAX_CLIENT) {
 			return new ResultMessage(false, null, "服务器繁忙，请稍后再试");
 		}
 		ResultMessage resultMessage = memberDAO.loginValidate(ID, password);
@@ -257,5 +256,11 @@ public class MemberServiceImpl extends UnicastRemoteObject implements
 			return updateMessage;
 		}
 		return ordeMessage;
+	}
+
+	@Override
+	public ResultMessage bookPurchased(String bookISBN, int memberID)
+			throws RemoteException {
+		return orderItemDAO.queryOrderItem(bookISBN, memberID);
 	}
 }

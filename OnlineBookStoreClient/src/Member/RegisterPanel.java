@@ -6,9 +6,7 @@ import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
@@ -17,10 +15,7 @@ import java.util.GregorianCalendar;
 
 import javax.swing.JLabel;
 
-<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.ImageDialog;
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
@@ -33,7 +28,7 @@ public class RegisterPanel extends MPanel implements ActionListener {
 
 	private MemberService memberService;
 	private JLabel nameLabel, passwordLabel, phoneLabel, birthLabel,
-			nameWarning, passwordWarning, phoneWarning;
+			nameWarning, passwordWarning, phoneWarning, birthWarning;
 	private MTextField regname = null;
 	private MPasswordField regpass = null;
 	private MTextField phone = null;
@@ -42,11 +37,6 @@ public class RegisterPanel extends MPanel implements ActionListener {
 	private MTextField birth_dateField = null;
 	private MButton registerbtn = null;
 	private MButton returnbtn = null;
-<<<<<<< HEAD
-=======
-
-	private Image bg = null;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 	private MemberUIController memberUIController;
 
@@ -61,13 +51,8 @@ public class RegisterPanel extends MPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-<<<<<<< HEAD
 		if (IMGSTATIC.loginBG != null) {
 			g2d.drawImage(IMGSTATIC.loginBG, 0, 0, 800, 530, this);
-=======
-		if (bg != null) {
-			g2d.drawImage(bg, 0, 0, 800, 530, this);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			Composite composite = g2d.getComposite();
 			g2d.setComposite(AlphaComposite.getInstance(
 					AlphaComposite.SRC_OVER, 0.6f));
@@ -82,11 +67,6 @@ public class RegisterPanel extends MPanel implements ActionListener {
 		setSize(800, 530);
 		setLayout(null);
 		setLocation(0, 70);
-<<<<<<< HEAD
-=======
-
-		bg = Toolkit.getDefaultToolkit().getImage("materials\\login.png");
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		nameLabel = new JLabel("用户名:");
 		nameLabel.setSize(100, 50);
@@ -114,6 +94,7 @@ public class RegisterPanel extends MPanel implements ActionListener {
 		nameWarning.setForeground(Color.red);
 		nameWarning.setLocation(535, 150);
 		nameWarning.setVisible(false);
+		nameWarning.setOpaque(false);
 
 		passwordWarning = new JLabel("密码不合法!");
 		passwordWarning.setSize(140, 50);
@@ -121,6 +102,7 @@ public class RegisterPanel extends MPanel implements ActionListener {
 		passwordWarning.setForeground(Color.red);
 		passwordWarning.setLocation(535, 210);
 		passwordWarning.setVisible(false);
+		passwordWarning.setOpaque(false);
 
 		phoneWarning = new JLabel("电话号码不合法!");
 		phoneWarning.setSize(148, 50);
@@ -128,6 +110,15 @@ public class RegisterPanel extends MPanel implements ActionListener {
 		phoneWarning.setForeground(Color.red);
 		phoneWarning.setLocation(535, 270);
 		phoneWarning.setVisible(false);
+		phoneWarning.setOpaque(false);
+
+		birthWarning = new JLabel("生日不合法!");
+		birthWarning.setSize(148, 50);
+		birthWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		birthWarning.setForeground(Color.red);
+		birthWarning.setLocation(535, 330);
+		birthWarning.setVisible(false);
+		birthWarning.setOpaque(false);
 
 		regname = new MTextField(30);
 		regname.setSize(180, 35);
@@ -223,6 +214,7 @@ public class RegisterPanel extends MPanel implements ActionListener {
 		add(nameWarning);
 		add(passwordWarning);
 		add(phoneWarning);
+		add(birthWarning);
 		repaint();
 		validate();
 	}
@@ -233,49 +225,71 @@ public class RegisterPanel extends MPanel implements ActionListener {
 			String reg_login_name = regname.getText().trim();
 			char[] reg_login_password = regpass.getPassword();
 			String reg_phone = phone.getText().trim();
-			Calendar calendar = new GregorianCalendar(
-					Integer.parseInt(birth_yearField.getText().trim()),
-					Integer.parseInt(birth_monthField.getText().trim()),
-					Integer.parseInt(birth_dateField.getText().trim()));
+			int year = 0;
+			if (!birth_yearField.getText().trim().equals("")) {
+				year = Integer.parseInt(birth_yearField.getText().trim());
+			} else
+				return;
+			int month = 0;
+			if (!birth_monthField.getText().trim().equals("")) {
+				month = Integer.parseInt(birth_monthField.getText().trim()) - 1;
+			} else
+				return;
+			int date = 0;
+			if (!birth_dateField.getText().trim().equals("")) {
+				date = Integer.parseInt(birth_dateField.getText().trim());
+			}
+			else
+				return;
+			Calendar calendar = new GregorianCalendar(year, month, date);
 			if (SafeCheck.isLegalName(reg_login_name)
 					&& SafeCheck.isLegalPassword(reg_login_password)
 					&& SafeCheck.isLegalPhoneNumber(reg_phone)) {
 				nameWarning.setVisible(false);
 				passwordWarning.setVisible(false);
 				phoneWarning.setVisible(false);
+				birthWarning.setVisible(false);
+				try {
+					ResultMessage resultMessage = memberService
+							.addMember(new MemberPO(-1, reg_login_name,
+									new String(reg_login_password), reg_phone,
+									calendar, 0));
+					if (resultMessage.isInvokeSuccess()) {
+						ImageDialog.showYesImage(this,
+								resultMessage.getPostScript());
+						memberUIController.setReturnView();
+					} else {
+						ImageDialog.showNOImage(this,
+								resultMessage.getPostScript());
+					}
+				} catch (RemoteException e1) {
+					e1.printStackTrace();
+				}
 			} else {
 				if (!SafeCheck.isLegalName(reg_login_name)) {
+					regname.setText("");
 					nameWarning.setVisible(true);
 				} else
 					nameWarning.setVisible(false);
 				if (!SafeCheck.isLegalPassword(reg_login_password)) {
+					regpass.setText("");
 					passwordWarning.setVisible(true);
 				} else
 					passwordWarning.setVisible(false);
 				if (!SafeCheck.isLegalPhoneNumber(reg_phone)) {
+					phone.setText("");
 					phoneWarning.setVisible(true);
 				} else
 					phoneWarning.setVisible(false);
 				if (!SafeCheck.isLegalBirth(calendar)) {
-
-				}
+					birth_yearField.setText("");
+					birth_monthField.setText("");
+					birth_dateField.setText("");
+					birthWarning.setVisible(true);
+				} else
+					birthWarning.setVisible(false);
 			}
 			validate();
-			try {
-				ResultMessage resultMessage = memberService
-						.addMember(new MemberPO(-1, reg_login_name, new String(
-								reg_login_password), reg_phone, calendar, 0));
-				if (resultMessage.isInvokeSuccess()) {
-					ImageDialog.showYesImage(this,
-							resultMessage.getPostScript());
-					memberUIController.setReturnView();
-				} else {
-					ImageDialog
-							.showNOImage(this, resultMessage.getPostScript());
-				}
-			} catch (RemoteException e1) {
-				e1.printStackTrace();
-			}
 		} else if (e.getSource() == returnbtn) {
 			memberUIController.setReturnView();
 		}

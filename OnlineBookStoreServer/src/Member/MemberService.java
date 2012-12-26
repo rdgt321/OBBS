@@ -3,6 +3,7 @@ package Member;
 import RMI.Login;
 import RMI.addMember;
 import RMI.bookCollect;
+import RMI.bookPurchased;
 import RMI.cancelCollect;
 import RMI.deleteMember;
 import RMI.getCollectedBook;
@@ -21,9 +22,9 @@ import RMI.useEquivalentBond;
 import RMI.useIntegral;
 
 public interface MemberService extends Login, addMember, deleteMember,
-		modifyMember, queryMember, queryRecord, bookCollect, cancelCollect,
-		getCollectedBook, getCoupons, getEquivalentBond, useCoupons,
-		useEquivalentBond, useIntegral, paymentFinishi, onlineValidate, logout,
-		getMessage, readMessage {
+		modifyMember, queryMember, queryRecord, bookPurchased, bookCollect,
+		cancelCollect, getCollectedBook, getCoupons, getEquivalentBond,
+		useCoupons, useEquivalentBond, useIntegral, paymentFinishi,
+		onlineValidate, logout, getMessage, readMessage {
 
 }

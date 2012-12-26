@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import RMI.ResultMessage;
 import Sale.ItemPO;
 
@@ -173,4 +174,29 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 		return new ResultMessage(false, null, "no such orderid");
 	}
 
+	@Override
+	public ResultMessage queryOrderItem(String bookISBN, int memberID) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "select * from order_item left join orders on order_item.orderid = orders.orderid where order_item.bookisbn=? and order_item.memberid=? and orders.state in (1,4)";
+		PreparedStatement ps;
+		ResultSet resultSet = null;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, bookISBN);
+			ps.setInt(2, memberID);
+			resultSet = ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		ArrayList<ItemPO> polist = map(resultSet);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (polist != null) {
+			return new ResultMessage(true, null, "购买过此书");
+		}
+		return new ResultMessage(false, null, "未曾购买");
+	}
 }

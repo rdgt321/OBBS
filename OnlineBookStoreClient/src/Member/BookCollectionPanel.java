@@ -7,16 +7,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -24,11 +18,7 @@ import javax.swing.ScrollPaneConstants;
 import Book.BookOnShelfPanel;
 import Book.BookPO;
 import ClientRunner.Agent;
-<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
-=======
-import ClientRunner.Loader;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.MPanel;
 import RMI.ResultMessage;
 
@@ -75,23 +65,14 @@ public class BookCollectionPanel extends MPanel {
 					Graphics2D g2d = (Graphics2D) g.create();
 					g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
-<<<<<<< HEAD
 					if (IMGSTATIC.homepageBG != null) {
-=======
-					if (Loader.homepageBG != null) {
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 						int height = scrollPane.getVerticalScrollBar()
 								.getValue();
 						Composite composite = g2d.getComposite();
 						g2d.setComposite(AlphaComposite.getInstance(
 								AlphaComposite.SRC_OVER, 0.8f));
-<<<<<<< HEAD
 						g2d.drawImage(IMGSTATIC.homepageBG, 0, height, 800,
 								530, this);
-=======
-						g2d.drawImage(Loader.homepageBG, 0, height, 800, 530,
-								this);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 						g2d.setComposite(composite);
 					}
 					g2d.dispose();
@@ -105,11 +86,7 @@ public class BookCollectionPanel extends MPanel {
 				bookOnShelfPanels[i] = new BookOnShelfPanel(memberUIController
 						.getMainFrame().getBookUIController(), list.get(i));
 				bookOnShelfPanels[i].init();
-<<<<<<< HEAD
 				bookOnShelfPanels[i].setLocation(10, 5 + 60 * i);
-=======
-				bookOnShelfPanels[i].setLocation(5, 5 + 60 * i);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 				contentPane.add(bookOnShelfPanels[i]);
 			}
 			scrollPane = new JScrollPane(contentPane);
@@ -131,10 +108,22 @@ public class BookCollectionPanel extends MPanel {
 			contentPane = new MPanel() {
 				public void paintComponent(Graphics g) {
 					super.paintComponent(g);
-					ImageIcon imageIcon = new ImageIcon("materials/boring.gif");
-					Image image = imageIcon.getImage();
-					if (image != null) {
-						g.drawImage(image, 335, 210, 80, 80, this);
+					Graphics2D g2d = (Graphics2D) g.create();
+					g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+							RenderingHints.VALUE_ANTIALIAS_ON);
+					if (IMGSTATIC.homepageBG != null) {
+						int height = scrollPane.getVerticalScrollBar()
+								.getValue();
+						Composite composite = g2d.getComposite();
+						g2d.setComposite(AlphaComposite.getInstance(
+								AlphaComposite.SRC_OVER, 0.8f));
+						g2d.drawImage(IMGSTATIC.homepageBG, 0, height, 800,
+								530, this);
+						g2d.setComposite(composite);
+					}
+					g2d.dispose();
+					if (IMGSTATIC.boring != null) {
+						g.drawImage(IMGSTATIC.boring, 335, 210, 80, 80, this);
 					}
 				}
 			};

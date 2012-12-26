@@ -1,12 +1,8 @@
 package User;
 
-<<<<<<< HEAD
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
-=======
-import java.awt.Color;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -32,10 +28,7 @@ import javax.swing.table.AbstractTableModel;
 
 import ClientRunner.Agent;
 import ClientRunner.Const;
-<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.ImageDialog;
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
@@ -405,7 +398,6 @@ public class AdminPanel extends MPanel implements ActionListener, MouseListener 
 		phoneLabel.setSize(100, 40);
 		phoneLabel.setLocation(120, 230);
 		phoneLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-<<<<<<< HEAD
 
 		birthLabel = new JLabel("生日:");
 		birthLabel.setSize(80, 40);
@@ -418,20 +410,6 @@ public class AdminPanel extends MPanel implements ActionListener, MouseListener 
 		nameLabel2.setLocation(240, 80);
 		nameLabel2.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-=======
-
-		birthLabel = new JLabel("生日:");
-		birthLabel.setSize(80, 40);
-		birthLabel.setLocation(120, 280);
-		birthLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-
-		nameLabel2 = new JLabel();
-		nameLabel2.setText(resultCustomers.get(selectedRow).getName());
-		nameLabel2.setSize(100, 40);
-		nameLabel2.setLocation(240, 80);
-		nameLabel2.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		passwordField = new MPasswordField();
 		passwordField.setSize(150, 30);
 		passwordField.setLocation(240, 135);
@@ -446,21 +424,12 @@ public class AdminPanel extends MPanel implements ActionListener, MouseListener 
 		phoneField.setSize(150, 30);
 		phoneField.setLocation(240, 235);
 		phoneField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-<<<<<<< HEAD
 
 		birth_yearField = new MTextField();
 		birth_yearField.setSize(60, 30);
 		birth_yearField.setLocation(240, 285);
 		birth_yearField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 
-=======
-
-		birth_yearField = new MTextField();
-		birth_yearField.setSize(60, 30);
-		birth_yearField.setLocation(240, 285);
-		birth_yearField.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		JLabel yearLabel = new JLabel("年");
 		yearLabel.setSize(20, 30);
 		yearLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
@@ -534,10 +503,6 @@ public class AdminPanel extends MPanel implements ActionListener, MouseListener 
 		cusmodifyPanel.add(passwordWarning);
 		cusmodifyPanel.add(phoneWarning);
 		cusmodifyPanel.add(dateWarning);
-<<<<<<< HEAD
-=======
-
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	}
 
 	private void initsalesAddView() {

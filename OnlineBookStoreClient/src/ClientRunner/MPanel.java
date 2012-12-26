@@ -31,8 +31,4 @@ public class MPanel extends JPanel {
 		g2d.setPaint(p2);
 		g2d.drawRoundRect(1, 1, width - 3, height - 3, 18, 18);
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 }

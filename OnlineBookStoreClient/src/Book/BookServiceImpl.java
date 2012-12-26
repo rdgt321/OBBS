@@ -94,4 +94,21 @@ public class BookServiceImpl implements BookService {
 		return service_stub.getTopDirectories(num);
 	}
 
+	@Override
+	public ResultMessage setRate(String bookISBN, int memberID, double rate)
+			throws RemoteException {
+		return service_stub.setRate(bookISBN, memberID, rate);
+	}
+
+	@Override
+	public ResultMessage getRate(String bookISBN) throws RemoteException {
+		return service_stub.getRate(bookISBN);
+	}
+
+	@Override
+	public ResultMessage queryRate(String bookISBN, int memberID)
+			throws RemoteException {
+		return service_stub.queryRate(bookISBN, memberID);
+	}
+
 }

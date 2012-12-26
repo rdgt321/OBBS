@@ -14,6 +14,7 @@ public class DAOFactory {
 	private static PromotionDAO promotionDAO;
 	private static UserDAO userDAO;
 	private static MessageDAO messageDAO;
+	private static RateDAO rateDAO;
 
 	private DAOFactory() {
 		super();
@@ -150,7 +151,7 @@ public class DAOFactory {
 		}
 		return userDAO;
 	}
-	
+
 	public static synchronized MessageDAO getMessageDAO() {
 		if (messageDAO == null) {
 			synchronized (DAOFactory.class) {
@@ -160,6 +161,17 @@ public class DAOFactory {
 			}
 		}
 		return messageDAO;
+	}
+
+	public static synchronized RateDAO getRateDAO() {
+		if (rateDAO == null) {
+			synchronized (DAOFactory.class) {
+				if (rateDAO == null) {
+					rateDAO = new RateDAOImpl();
+				}
+			}
+		}
+		return rateDAO;
 	}
 
 }

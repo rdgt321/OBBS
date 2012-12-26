@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import Book.DirectoryPO;
 import RMI.ResultMessage;
 
@@ -38,7 +39,7 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 	public synchronized ResultMessage addDirectory(DirectoryPO directoryPO) {
 		ResultMessage isExist = queryDirectoryByName(directoryPO.getName());
 		if (isExist.isInvokeSuccess()) {
-			return new ResultMessage(false, null, "directory name exist");
+			return new ResultMessage(false, null, "目录名称已存在");
 		}
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "insert into directory(name) values(?)";
@@ -57,16 +58,16 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 			e.printStackTrace();
 		}
 		if (row != 0) {
-			return new ResultMessage(true, null, "add directory success");
+			return new ResultMessage(true, null, "添加成功");
 		}
-		return new ResultMessage(false, null, "add directory failed");
+		return new ResultMessage(false, null, "添加失败");
 	}
 
 	@Override
 	public synchronized ResultMessage deleteDirectory(int directoryID) {
 		ResultMessage isExist = queryDirectoryByID(directoryID);
 		if (!isExist.isInvokeSuccess()) {
-			return new ResultMessage(false, null, "directory id does not exist");
+			return new ResultMessage(false, null, "不存在对应目录");
 		}
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "delete from directory where directoryid=?";
@@ -85,17 +86,16 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 			e.printStackTrace();
 		}
 		if (row != 0) {
-			return new ResultMessage(true, null, "delete directory success");
+			return new ResultMessage(true, null, "删除成功");
 		}
-		return new ResultMessage(false, null, "delete directory failed");
+		return new ResultMessage(false, null, "删除失败");
 	}
 
 	@Override
 	public synchronized ResultMessage modifyDirectory(DirectoryPO directoryPO) {
 		ResultMessage isExist = queryDirectoryByID(directoryPO.getID());
 		if (!isExist.isInvokeSuccess()) {
-			return new ResultMessage(false, null,
-					"directory id does not  exist");
+			return new ResultMessage(false, null, "目录不存在");
 		}
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "update directory set name=? where directoryid=?";
@@ -115,9 +115,9 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 			e.printStackTrace();
 		}
 		if (row != 0) {
-			return new ResultMessage(true, null, "update directory success");
+			return new ResultMessage(true, null, "修改成功");
 		}
-		return new ResultMessage(false, null, "update directory failed");
+		return new ResultMessage(false, null, "修改失败");
 	}
 
 	@Override
@@ -140,9 +140,9 @@ public class DirectoryDAOImpl implements DirectoryDAO {
 			e.printStackTrace();
 		}
 		if (polist != null) {
-			return new ResultMessage(true, polist, "query ok ,directory return");
+			return new ResultMessage(true, polist, "返回目录");
 		}
-		return new ResultMessage(false, null, "no such directory");
+		return new ResultMessage(false, null, "目录不存在");
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import RMI.ResultMessage;
 import Server.Const;
+import Server.Encrypt;
 import User.AdminPO;
 import User.GeneralManagerPO;
 import User.SalesManagerPO;
@@ -220,7 +221,7 @@ public class UserDAOImpl implements UserDAO {
 		if (po != null) {
 			return new ResultMessage(true, po, "login success");
 		}
-		return new ResultMessage(false, null, "login failed,password wrong");
+		return new ResultMessage(false, null, "password wrong");
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 
 import ClientRunner.Agent;
+import ClientRunner.Cache;
 import ClientRunner.MPanel;
 import RMI.ResultMessage;
 
@@ -38,7 +39,36 @@ public class RankPanel extends MPanel implements MouseListener {
 		ranklabel.setFont(new Font("宋体", Font.BOLD, 20));
 		ranklabel.setLocation(45, 5);
 		add(ranklabel);
-		init();
+	}
+	
+	public void initWithCache(){
+		bookPOs = Cache.rankBooks;
+		if (bookPOs != null) {
+			currentSize = bookPOs.size();
+		} else {
+			currentSize = 0;
+		}
+		rankLabels = new JLabel[currentSize];
+		nameLabels = new JLabel[currentSize];
+		for (int i = 0; i < currentSize; i++) {
+			rankLabels[i] = new JLabel("" + (i + 1) + ".");
+			rankLabels[i].setSize(30, 25);
+			rankLabels[i].setFont(new Font("宋体", Font.PLAIN, 20));
+			rankLabels[i].setForeground(Color.red);
+			rankLabels[i].setLocation(10, 55 + 33 * i);
+
+			nameLabels[i] = new JLabel(bookPOs.get(i).getName());
+			nameLabels[i].setCursor(Cursor
+					.getPredefinedCursor(Cursor.HAND_CURSOR));
+			nameLabels[i].setForeground(Color.red);
+			nameLabels[i].setSize(150, 25);
+			nameLabels[i].setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+			nameLabels[i].setLocation(41, 55 + 33 * i);
+			nameLabels[i].addMouseListener(this);
+
+			add(rankLabels[i]);
+			add(nameLabels[i]);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -49,6 +79,7 @@ public class RankPanel extends MPanel implements MouseListener {
 			bookPOs = resultMessage.getResultSet();
 			if (bookPOs != null) {
 				currentSize = bookPOs.size();
+				Cache.rankBooks = (ArrayList<BookPO>) bookPOs.clone();
 			} else {
 				currentSize = 0;
 			}

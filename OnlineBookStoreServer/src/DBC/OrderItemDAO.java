@@ -12,5 +12,7 @@ public interface OrderItemDAO {
 
 	public ResultMessage queryOrderItem(int orderID, ItemPO itemPO);
 
+	public ResultMessage queryOrderItem(String bookISBN, int memberID);
+
 	public ResultMessage getOrderItems(int orderID);
 }

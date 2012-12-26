@@ -18,7 +18,6 @@ import Member.MemberService;
 import Member.MemberServiceImpl;
 import Promotion.PromotionService;
 import Promotion.PromotionServiceImpl;
-import RMI.UserAgent;
 import Sale.SaleService;
 import Sale.SaleServiceImpl;
 import User.UserService;
@@ -29,13 +28,13 @@ public class Server extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 5311815554577548014L;
-	Routines routines = null;
-	BookService bookService = null;
-	MemberService memberService = null;
-	PromotionService promotionService = null;
-	SaleService saleService = null;
-	UserService userService = null;
-	ServerView serverView = null;
+	private Routines routines = null;
+	private BookService bookService = null;
+	private MemberService memberService = null;
+	private PromotionService promotionService = null;
+	private SaleService saleService = null;
+	private UserService userService = null;
+	private ServerView serverView = null;
 
 	public Server() {
 		super();

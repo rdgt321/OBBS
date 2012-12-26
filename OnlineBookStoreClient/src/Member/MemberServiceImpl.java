@@ -119,4 +119,10 @@ public class MemberServiceImpl implements MemberService {
 			throws RemoteException {
 		return service_stub.paymentFinishi(orderID, state);
 	}
+
+	@Override
+	public ResultMessage bookPurchased(String bookISBN, int memberID)
+			throws RemoteException {
+		return service_stub.bookPurchased(bookISBN, memberID);
+	}
 }

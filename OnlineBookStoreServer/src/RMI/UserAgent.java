@@ -1,11 +1,10 @@
 package RMI;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import Server.Const;
 
-public class UserAgent implements Serializable {
+public class UserAgent implements Serializable, Comparable<UserAgent> {
 	private int id;
 	private String name;
 	private String password;
@@ -51,5 +50,14 @@ public class UserAgent implements Serializable {
 			type = "member";
 		}
 		return id + " name:" + name + " type:" + type + " ip:" + ip;
+	}
+
+	public int getKey() {
+		return Integer.parseInt(String.valueOf(userType) + String.valueOf(id));
+	}
+
+	@Override
+	public int compareTo(UserAgent o) {
+		return this.getKey() - o.getKey();
 	}
 }

@@ -48,7 +48,7 @@ public class CouponsDAOImpl implements CouponsDAO {
 	public synchronized ResultMessage addCoupons(CouponsPO couponsPO) {
 		ResultMessage isExist = queryCoupons(couponsPO.getCounponsID());
 		if (isExist.isInvokeSuccess()) {
-			return new ResultMessage(false, null, "couponsid exists,add fail");
+			return new ResultMessage(false, null, "该打折券ID已存在，添加失败");
 		}
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "insert into coupons(ownerid,discountrate,enddate,used) values(?,?,?,?)";
@@ -71,16 +71,16 @@ public class CouponsDAOImpl implements CouponsDAO {
 			e.printStackTrace();
 		}
 		if (row != 0) {
-			return new ResultMessage(true, null, "add coupons success");
+			return new ResultMessage(true, null, "添加成功");
 		}
-		return new ResultMessage(false, null, "add coupons failed");
+		return new ResultMessage(false, null, "添加失败");
 	}
 
 	@Override
 	public synchronized ResultMessage deleteCoupons(int couponsID) {
 		ResultMessage isExist = queryCoupons(couponsID);
 		if (!isExist.isInvokeSuccess()) {
-			return new ResultMessage(false, null, "no such coupons");
+			return new ResultMessage(false, null, "不存在该打折券");
 		}
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "delete from coupons where couponsid=?";
@@ -99,20 +99,19 @@ public class CouponsDAOImpl implements CouponsDAO {
 			e.printStackTrace();
 		}
 		if (row != 0) {
-			return new ResultMessage(true, null, "delete coupons success");
+			return new ResultMessage(true, null, "删除成功");
 		}
-		return new ResultMessage(false, null, "delete coupons failed");
+		return new ResultMessage(false, null, "删除失败");
 	}
 
 	@Override
 	public synchronized ResultMessage updateCoupons(CouponsPO couponsPO) {
 		ResultMessage isExist = queryCoupons(couponsPO.getCounponsID());
 		if (!isExist.isInvokeSuccess()) {
-			return new ResultMessage(false, null,
-					"couponsid does not exists,update fail");
+			return new ResultMessage(false, null, "打折券不存在，更新失败");
 		}
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "update coupons set ownerid=?,discoutrate=?,enddate=?,used=? where couponsid=?";
+		String sql = "update coupons set ownerid=?,discountrate=?,enddate=?,used=? where couponsid=?";
 		int row = 0;
 		PreparedStatement ps;
 		try {
@@ -133,9 +132,9 @@ public class CouponsDAOImpl implements CouponsDAO {
 			e.printStackTrace();
 		}
 		if (row != 0) {
-			return new ResultMessage(true, null, "update coupons success");
+			return new ResultMessage(true, null, "更新成功");
 		}
-		return new ResultMessage(false, null, "update coupons failed");
+		return new ResultMessage(false, null, "更新失败");
 	}
 
 	@Override
@@ -158,9 +157,9 @@ public class CouponsDAOImpl implements CouponsDAO {
 			e.printStackTrace();
 		}
 		if (polist != null) {
-			return new ResultMessage(true, polist, "coupons exist ");
+			return new ResultMessage(true, polist, "打折券存在");
 		}
-		return new ResultMessage(false, null, "no coupons have");
+		return new ResultMessage(false, null, "打折券不存在");
 	}
 
 	@Override
@@ -184,9 +183,9 @@ public class CouponsDAOImpl implements CouponsDAO {
 			e.printStackTrace();
 		}
 		if (polist != null) {
-			return new ResultMessage(true, polist, "query ok,coupons return ");
+			return new ResultMessage(true, polist, "返回打折券列表");
 		}
-		return new ResultMessage(false, null, "no coupons have");
+		return new ResultMessage(false, null, "没有打折券");
 	}
 
 }

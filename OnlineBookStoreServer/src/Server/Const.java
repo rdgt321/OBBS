@@ -89,9 +89,10 @@ public class Const {
 		SQLPATH = properties.getProperty("SQLPATH");
 		BACKUPPATH = properties.getProperty("BACKUPPATH");
 		LOG_ACCESS_PATH = properties.getProperty("LOG_ACCESS_PATH");
-		dbuser = properties.getProperty("dbuser");
-		dbpass = properties.getProperty("dbpass");
 		LAST_BIRTH = properties.getProperty("LAST_BIRTH");
+
+		dbuser = Encrypt.decode(properties.getProperty("dbuser"));
+		dbpass = Encrypt.decode(properties.getProperty("dbpass"));
 	}
 
 	public static void store(String key, String value) {

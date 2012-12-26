@@ -3,34 +3,38 @@ package Book;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.rmi.RemoteException;
 
 import javax.swing.JLabel;
 
 import ClientRunner.Agent;
-import ClientRunner.ImageDialog;
-<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
-=======
-import ClientRunner.Loader;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
+import ClientRunner.ImageDialog;
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
+import ClientRunner.MSlider;
 import RMI.ResultMessage;
 import Sale.ItemPO;
 
 //show the detail information of a book
 
 @SuppressWarnings("serial")
-public class BookDisplayPanel extends MPanel implements ActionListener {
+public class BookDisplayPanel extends MPanel implements ActionListener,
+		MouseListener {
 	private BookUIController bookUIController;
 	private BookPanel bookPanel;
+	private MSlider rateBar;
+	private JLabel noRate;
+	private JLabel rateTip;
 
 	private MButton collectButton, addToCartButton, returnButton;
 
@@ -46,19 +50,11 @@ public class BookDisplayPanel extends MPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-<<<<<<< HEAD
 		if (IMGSTATIC.homepageBG != null) {
 			Composite composite = g2d.getComposite();
 			g2d.setComposite(AlphaComposite.getInstance(
 					AlphaComposite.SRC_OVER, 0.8f));
 			g2d.drawImage(IMGSTATIC.homepageBG, 0, 0, 800, 530, this);
-=======
-		if (Loader.homepageBG != null) {
-			Composite composite = g2d.getComposite();
-			g2d.setComposite(AlphaComposite.getInstance(
-					AlphaComposite.SRC_OVER, 0.8f));
-			g2d.drawImage(Loader.homepageBG, 0, 0, 800, 530, this);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			g2d.setComposite(composite);
 		}
 		g2d.dispose();
@@ -97,11 +93,73 @@ public class BookDisplayPanel extends MPanel implements ActionListener {
 		returnButton.setLocation(650, 440);
 		returnButton.addActionListener(this);
 
+		ResultMessage rateMessage = null;
+		ResultMessage rated = null;
+		ResultMessage purchased = null;
+		try {
+			rateMessage = Agent.bookService.getRate(bookPanel.getisbn());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		double rate = 0;
+		if (rateMessage.isInvokeSuccess()) {
+			rate = (Double) rateMessage.getResultSet().get(0);
+		} else {
+			noRate = new JLabel(rateMessage.getPostScript());
+			noRate.setSize(360, 50);
+			noRate.setLocation(420, 230);
+			noRate.setFont(new Font("楷体_gb2312", Font.BOLD, 25));
+			add(noRate);
+		}
+		if (Agent.userAgent == null) {
+			rateTip = new JLabel("评价功能需登录后方能使用");
+			rateTip.setFont(new Font("楷体_gb2312", Font.BOLD, 18));
+			rateTip.setSize(300, 50);
+			rateTip.setLocation(420, 170);
+		} else {
+			try {
+				purchased = Agent.memberService.bookPurchased(
+						bookPanel.getisbn(), Agent.userAgent.getId());
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+			if (purchased.isInvokeSuccess()) {
+				try {
+					rated = Agent.bookService.queryRate(bookPanel.getisbn(),
+							Agent.userAgent.getId());
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+				if (rated.isInvokeSuccess()) {
+					rateTip = new JLabel("您还未评价过此书，快来评价吧!");
+					rateTip.setFont(new Font("楷体_gb2312", Font.BOLD, 18));
+					rateTip.setSize(300, 50);
+					rateTip.setLocation(420, 170);
+					rateTip.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					rateTip.addMouseListener(this);
+				} else {
+					rateTip = new JLabel(rated.getPostScript());
+					rateTip.setFont(new Font("楷体_gb2312", Font.BOLD, 18));
+					rateTip.setSize(300, 50);
+					rateTip.setLocation(420, 170);
+				}
+			} else {
+				rateTip = new JLabel("成功购买后方能评价");
+				rateTip.setFont(new Font("楷体_gb2312", Font.BOLD, 18));
+				rateTip.setSize(300, 50);
+				rateTip.setLocation(420, 170);
+			}
+		}
+		add(rateTip);
+		rateBar = new MSlider(rate);
+		rateBar.setLocation(420, 100);
+
 		add(title);
 		add(bookPanel);
 		add(collectButton);
 		add(addToCartButton);
 		add(returnButton);
+		add(rateBar);
 	}
 
 	@Override
@@ -148,5 +206,69 @@ public class BookDisplayPanel extends MPanel implements ActionListener {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (e.getSource() == rateTip) {
+			dealRate();
+		}
+	}
+
+	private void dealRate() {
+		rateBar.EnableRating();
+		final BookDisplayPanel panel = this;
+		rateTip.removeMouseListener(this);
+		rateTip.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		new Thread((new Runnable() {
+			boolean success = false;
+
+			@Override
+			public void run() {
+				while (rateBar.isEnabled()) {
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				try {
+					ResultMessage rate = Agent.bookService.setRate(
+							bookPanel.getisbn(), Agent.userAgent.getId(),
+							rateBar.getRate());
+					if (rate.isInvokeSuccess()) {
+						rateTip.setText("评价成功！");
+						rateTip.setForeground(Color.RED.brighter());
+						rateTip.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+						success = true;
+					} else {
+						rateTip.setText("未知原因评价失败，请重新评价");
+						success = false;
+					}
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+				if (!success) {
+					rateTip.addMouseListener(panel);
+					rateTip.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
+			}
+		})).start();
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
 	}
 }

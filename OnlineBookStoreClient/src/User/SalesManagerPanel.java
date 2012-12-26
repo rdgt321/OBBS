@@ -1,12 +1,8 @@
 package User;
 
-<<<<<<< HEAD
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
-=======
-import java.awt.Color;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -35,15 +31,10 @@ import Book.BookPanel;
 import Book.CatalogAddPanel;
 import Book.DirectoryPO;
 import ClientRunner.Agent;
-<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
 import ClientRunner.ImageDialog;
 import ClientRunner.MButton;
 import ClientRunner.MComboBox;
-=======
-import ClientRunner.ImageDialog;
-import ClientRunner.MButton;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.MPanel;
 import Member.MemberPO;
 import Member.PurchaseRecordPanel;
@@ -67,19 +58,11 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 	String[] bookcolomn = { "名称", "ISBN", "作者", "出版社", "价格", "特价" };
 	String[] bookClassifyColomn = { "编号", "名称" };
 	String[] members = { "编号", "用户名" };
-<<<<<<< HEAD
-=======
-	String[] orders = { "订单编号", "状态" };
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 	static final int MANAGE_BOOK = 2;
 	static final int MANAGE_BOOKCLASSIFY = 3;
 	static final int MANAGE_MEMBER = 0;
-<<<<<<< HEAD
 	static final int MANAGE_PROMOTION = 1;
-=======
-	static final int MANAGE_ORDER = 1;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	private int manageType = 0;
 	int selectedRow = -1;
 
@@ -87,16 +70,10 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 	private JLabel obsLabel, welcomLabel, exitLabel;
 	tableModel tableModel;
 	JTable resultTable;
-<<<<<<< HEAD
 	MPanel resultPanel;
 	private JLabel cusInfoLabel, promotionLabel, bookLabel, bookclassifyLabel;
 	private MPanel memberContentPane, cusinfoPanel, promotionPanel;
 	private PurchaseRecordPanel orderPanel;
-=======
-	JScrollPane resultPanel;
-	private JLabel cusInfoLabel, promotionLabel, bookLabel, bookclassifyLabel;
-	private MPanel cusinfoPanel, orderPanel, promotionPanel;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	private MPanel bookPanel, catalogManagePanel;
 	private JScrollPane bookJScrollPane, bookClassifyJScrollPane;
 
@@ -104,30 +81,18 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 	private JLabel membername, membername1, memberphone, memberphone1,
 			memberdate, memberdate1, membernameWarning;
 	private MButton historyButton, searchButton, orderButton;
-<<<<<<< HEAD
 	private JScrollPane memberPOPane;
-=======
-	private JScrollPane memberJScrollPane, memberPOPane;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 	// order
 	private JLabel orderLabel2;
 	private MButton orderensureButton;
-<<<<<<< HEAD
 	String temp[] = { "尚未付款", "已发货", "已发货(货到付款)", "交易取消", "交易成功" };
-=======
-	String temp[] = { "尚未付款", "已付款", "已发货", "交易成功", "交易失败" };
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	JComboBox<String> orderBox;
 	// promotion
 	private JLabel bondLabel, proLabel;
 	private MButton ensureButton;
 	private PromotionComBox promotionName;
-<<<<<<< HEAD
 	private JScrollPane memPane;
-=======
-	JScrollPane memPane;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 	// book management
 	private MButton addBookButton, deleteBookButton, modifyBookButton,
@@ -189,15 +154,6 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 		cusInfoLabel.setLocation(10, 80);
 		cusInfoLabel.addMouseListener(this);
 
-<<<<<<< HEAD
-=======
-		// orderLabel = new JLabel("订单管理");
-		// orderLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		// orderLabel.setSize(120, 40);
-		// orderLabel.setLocation(140, 80);
-		// orderLabel.addMouseListener(this);
-
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		promotionLabel = new JLabel("优惠券赠送");
 		promotionLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		promotionLabel.setSize(120, 40);
@@ -220,10 +176,6 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 		this.add(welcomLabel);
 		this.add(exitLabel);
 		this.add(cusInfoLabel);
-<<<<<<< HEAD
-=======
-		// this.add(orderLabel);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		this.add(promotionLabel);
 		this.add(bookLabel);
 		this.add(bookclassifyLabel);
@@ -253,15 +205,9 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 			}
 		});
 
-<<<<<<< HEAD
 		resultPanel = new MPanel();
 		resultPanel.setLocation(0, 140);
 		resultPanel.setSize(800, 430);
-=======
-		resultPanel = new JScrollPane();
-		resultPanel.setLocation(5, 140);
-		resultPanel.setSize(780, 450);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		resultPanel.setVisible(true);
 		resultPanel.setLayout(null);
 		this.add(resultPanel);
@@ -276,58 +222,29 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 		tableModel = new tableModel();
 		resultTable.setModel(tableModel);
 		memberPOPane = new JScrollPane(resultTable);
-<<<<<<< HEAD
 		memberPOPane.setLocation(0, 0);
 		memberPOPane.setSize(200, 300);
-=======
-		memberPOPane.setLocation(0, 10);
-		memberPOPane.setSize(200, 400);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		memberPOPane.setVisible(true);
 		memberPOPane
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		memberPOPane
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-<<<<<<< HEAD
 		memberPOPane.setOpaque(false);
 		memberPOPane.getViewport().setOpaque(false);
 
 		searchButton = new MButton("查看信息");
 		searchButton.setSize(160, 30);
 		searchButton.setLocation(20, 305);
-=======
-
-		memberJScrollPane = new JScrollPane();
-		memberJScrollPane.setLocation(350, 10);
-		memberJScrollPane.setSize(400, 400);
-		memberJScrollPane.setVisible(true);
-		memberJScrollPane
-				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		memberJScrollPane
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-		searchButton = new MButton("查看信息");
-		searchButton.setSize(120, 30);
-		searchButton.setFocusable(false);
-		searchButton.setLocation(205, 10);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		searchButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		searchButton.addActionListener(this);
 
 		historyButton = new MButton("查看购买记录");
-<<<<<<< HEAD
 		historyButton.setSize(160, 30);
 		historyButton.setLocation(20, 345);
-=======
-		historyButton.setSize(140, 30);
-		historyButton.setFocusable(false);
-		historyButton.setLocation(205, 60);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		historyButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 17));
 		historyButton.addActionListener(this);
 
 		orderButton = new MButton("修改订单状态");
-<<<<<<< HEAD
 		orderButton.setSize(160, 30);
 		orderButton.setVisible(false);
 		orderButton.setEnabled(false);
@@ -386,64 +303,12 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 		memberContentPane.validate();
 		memberContentPane.requestFocus();
 		repaint();
-=======
-		orderButton.setSize(140, 30);
-		orderButton.setFocusable(false);
-		orderButton.setVisible(false);
-		orderButton.setEnabled(false);
-		orderButton.setLocation(205, 110);
-		orderButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 17));
-		orderButton.addActionListener(this);
-
-		cusinfoPanel.add(searchButton);
-		cusinfoPanel.add(historyButton);
-		cusinfoPanel.add(orderButton);
-		cusinfoPanel.add(memberJScrollPane);
-		cusinfoPanel.add(memberPOPane);
-
-		validate();
-
-	}
-
-	public void orderView() {
-		MPanel panel = new MPanel();
-		panel.setLayout(null);
-		panel.setPreferredSize(new Dimension(500, 430));
-
-		orderLabel2 = new JLabel("请选择新订单状态:");
-		orderLabel2.setSize(200, 40);
-		orderLabel2.setLocation(10, 10);
-		orderLabel2.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-
-		orderensureButton = new MButton("确认修改");
-		orderensureButton.setSize(120, 40);
-		orderensureButton.setVisible(true);
-		orderensureButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
-		orderensureButton.setLocation(40, 120);
-		orderensureButton.addActionListener(this);
-
-		orderBox = new JComboBox<String>(temp);
-		orderBox.setSelectedIndex(0);
-		orderBox.setSize(160, 40);
-		orderBox.setVisible(true);
-		orderBox.setLocation(10, 60);
-
-		panel.add(orderLabel2);
-		panel.add(orderensureButton);
-		panel.add(orderBox);
-		memberJScrollPane.setViewportView(panel);
-		panel.requestFocus();
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	}
 
 	public void memberInfoView(MemberPO memberPO) {
 		MPanel panel = new MPanel();
 		panel.setLayout(null);
-<<<<<<< HEAD
 		panel.setSize(new Dimension(600, 430));
-=======
-		panel.setPreferredSize(new Dimension(500, 430));
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		membername = new JLabel("用户名:");
 		membername.setSize(100, 40);
@@ -483,17 +348,12 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 		panel.add(memberphone1);
 		panel.add(memberdate);
 		panel.add(memberdate1);
-<<<<<<< HEAD
 		panel.requestFocus();
 		memberContentPane.removeAll();
 		memberContentPane.add(panel);
 		memberContentPane.validate();
 		memberContentPane.requestFocus();
 		repaint();
-=======
-		memberJScrollPane.setViewportView(panel);
-		panel.requestFocus();
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	}
 
 	public void initpromotionView() {
@@ -553,24 +413,16 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 		listButton.addActionListener(this);
 
 		bookJScrollPane = new JScrollPane(resultTable);
-<<<<<<< HEAD
 		bookJScrollPane.setLocation(160, 0);
 		bookJScrollPane.setSize(600, 430);
-=======
-		bookJScrollPane.setLocation(160, 10);
-		bookJScrollPane.setSize(600, 640);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		bookJScrollPane.setVisible(true);
 		bookJScrollPane
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		bookJScrollPane
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-<<<<<<< HEAD
 		bookJScrollPane.getVerticalScrollBar().setUnitIncrement(15);
 		bookJScrollPane.setOpaque(false);
 		bookJScrollPane.getViewport().setOpaque(false);
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		bookPanel.add(addBookButton);
 		bookPanel.add(deleteBookButton);
@@ -586,13 +438,9 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 		addBookPanel.createNewBookView();
 		addBookPanel.enableModification();
 		addBookPanel.setVisible(true);
-<<<<<<< HEAD
 		addBookPanel.setLocation(10, 0);
 		addBookPanel.setPreferredSize(new Dimension(addBookPanel.getWidth(),
 				addBookPanel.getHeight()));
-=======
-		addBookPanel.setLocation(10, 10);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		ensureAddButton = new MButton("确认添加");
 		ensureAddButton.setSize(120, 40);
@@ -669,13 +517,9 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 		addBookPanel.createBookInfoView();
 		addBookPanel.enableModification();
 		addBookPanel.setVisible(true);
-<<<<<<< HEAD
 		addBookPanel.setLocation(10, 0);
 		addBookPanel.setPreferredSize(new Dimension(addBookPanel.getWidth(),
 				addBookPanel.getHeight()));
-=======
-		addBookPanel.setLocation(10, 10);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		ensureModButton = new MButton("确认修改");
 		ensureModButton.setSize(120, 40);
@@ -785,11 +629,8 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		bookClassifyJScrollPane
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-<<<<<<< HEAD
 		bookClassifyJScrollPane.setOpaque(false);
 		bookClassifyJScrollPane.getViewport().setOpaque(false);
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		catalogManagePanel.add(addClassifyButton);
 		catalogManagePanel.add(delClassifyButton);
@@ -883,11 +724,7 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 		}
 		if (manageType == MANAGE_MEMBER) {
 			resultmembers.clear();
-<<<<<<< HEAD
 
-=======
-			resultpromotions.clear();
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			try {
 				ResultMessage exist = Agent.userService.getMembers();
 				if (exist.isInvokeSuccess()) {
@@ -898,13 +735,10 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
-<<<<<<< HEAD
 
 		}
 		if (manageType == MANAGE_PROMOTION) {
 			resultpromotions.clear();
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			try {
 				ResultMessage exist = Agent.promotionService.getPormotionList();
 				if (exist.isInvokeSuccess()) {
@@ -916,23 +750,6 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 				e.printStackTrace();
 			}
 		}
-<<<<<<< HEAD
-=======
-		if (manageType == MANAGE_ORDER) {
-			resultorders.clear();
-			try {
-				ResultMessage exist = Agent.memberService
-						.purchaseQuery(resultmembers.get(selectedRow).getID());
-				if (exist.isInvokeSuccess()) {
-					resultBooks = exist.getResultSet();
-				} else {
-					ImageDialog.showNOImage(this, "暂无图书");
-				}
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 	}
 
 	@Override
@@ -948,25 +765,16 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 		} else if (e.getSource() == cusInfoLabel
 				&& e.getButton() == MouseEvent.BUTTON1) {
 			initcusinfoView();
-<<<<<<< HEAD
 			resultPanel.removeAll();
 			resultPanel.add(cusinfoPanel);
 			resultPanel.validate();
 			validate();
 			repaint();
-=======
-
-			resultPanel.setViewportView(cusinfoPanel);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			cusinfoPanel.requestFocus();
 		} else if (e.getSource() == promotionLabel
 				&& e.getButton() == MouseEvent.BUTTON1) {
 			initpromotionView();
-<<<<<<< HEAD
 			manageType = MANAGE_PROMOTION;
-=======
-			manageType = MANAGE_MEMBER;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			getData();
 			if (resultpromotions.size() > 0) {
 				promotionName = new PromotionComBox();
@@ -986,7 +794,6 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 			memPane.setSize(460, 450);
 			memPane.setLocation(320, 0);
 			memPane.setViewportView(resultTable);
-<<<<<<< HEAD
 			memPane.setOpaque(false);
 			memPane.getViewport().setOpaque(false);
 			resultPanel.removeAll();
@@ -994,9 +801,6 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 			resultPanel.validate();
 			resultPanel.requestFocus();
 			repaint();
-=======
-			resultPanel.setViewportView(promotionPanel);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			promotionPanel.requestFocus();
 			promotionPanel.add(memPane);
 		} else if (e.getSource() == bookLabel
@@ -1007,15 +811,11 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 			tableModel = new tableModel();
 			resultTable.setModel(tableModel);
 			bookJScrollPane.setViewportView(resultTable);
-<<<<<<< HEAD
 			resultPanel.removeAll();
 			resultPanel.add(bookPanel);
 			resultPanel.validate();
 			resultPanel.requestFocus();
 			repaint();
-=======
-			resultPanel.setViewportView(bookPanel);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			bookPanel.requestFocus();
 		} else if (e.getSource() == bookclassifyLabel
 				&& e.getButton() == MouseEvent.BUTTON1) {
@@ -1025,15 +825,11 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 			tableModel = new tableModel();
 			resultTable.setModel(tableModel);
 			bookClassifyJScrollPane.setViewportView(resultTable);
-<<<<<<< HEAD
 			resultPanel.removeAll();
 			resultPanel.add(catalogManagePanel);
 			resultPanel.validate();
 			resultPanel.requestFocus();
 			repaint();
-=======
-			resultPanel.setViewportView(catalogManagePanel);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			catalogManagePanel.requestFocus();
 		}
 	}
@@ -1097,7 +893,6 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 									.getID());
 					if (resultMessage.isInvokeSuccess()) {
 						resultorders = resultMessage.getResultSet();
-<<<<<<< HEAD
 						orderPanel = new PurchaseRecordPanel(userUIController
 								.getMainFrame().getMemberUIController(),
 								resultorders);
@@ -1107,13 +902,6 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 						memberContentPane.validate();
 						memberContentPane.requestFocus();
 						repaint();
-=======
-						PurchaseRecordPanel panel = new PurchaseRecordPanel(
-								userUIController.getMainFrame()
-										.getMemberUIController(), resultorders);
-						memberJScrollPane.setViewportView(panel);
-						panel.requestFocus();
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 						orderButton.setVisible(true);
 						orderButton.setEnabled(true);
 						if (resultorders.size() == 0) {
@@ -1130,17 +918,10 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 				}
 			}
 		} else if (e.getSource() == orderButton) {
-<<<<<<< HEAD
 			if (orderPanel.getSelectedOrder() == -1) {
 				JOptionPane.showMessageDialog(this, "请先选择订单!");
 			} else {
 				orderView(orderPanel.getSelectedOrder());
-=======
-			if (selectedRow == -1) {
-				JOptionPane.showMessageDialog(this, "请先选择订单!");
-			} else {
-				orderView();
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			}
 
 		} else if (e.getSource() == orderensureButton) {
@@ -1183,39 +964,28 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 			getData();
 			tableModel.fireTableDataChanged();
 			bookJScrollPane.setViewportView(resultTable);
-<<<<<<< HEAD
 			resultPanel.removeAll();
 			resultPanel.add(bookPanel);
 			resultPanel.validate();
 			resultPanel.requestFocus();
 			repaint();
 			bookPanel.requestFocus();
-=======
-			resultPanel.setViewportView(bookPanel);
-			bookPanel.requestFocus();
-
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		} else if (e.getSource() == listButton2) {
 
 			getData();
 			tableModel.fireTableDataChanged();
 			bookClassifyJScrollPane.setViewportView(resultTable);
-<<<<<<< HEAD
 			resultPanel.removeAll();
 			resultPanel.add(catalogManagePanel);
 			resultPanel.validate();
 			resultPanel.requestFocus();
 			repaint();
-=======
-			resultPanel.setViewportView(catalogManagePanel);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			catalogManagePanel.requestFocus();
 
 		} else if (e.getSource() == addBookButton) {
 
 			initbookAddView();
 			bookJScrollPane.setViewportView(addBookPanel);
-<<<<<<< HEAD
 			resultPanel.removeAll();
 			resultPanel.add(bookPanel);
 			resultPanel.validate();
@@ -1223,12 +993,6 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 			repaint();
 			bookPanel.requestFocus();
 			validate();
-=======
-			resultPanel.setViewportView(bookPanel);
-			bookPanel.requestFocus();
-			validate();
-
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		} else if (e.getSource() == modifyBookButton) {
 			if (selectedRow != -1) {
 				try {
@@ -1243,15 +1007,11 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 				}
 				initbookModifyView();
 				bookJScrollPane.setViewportView(addBookPanel);
-<<<<<<< HEAD
 				resultPanel.removeAll();
 				resultPanel.add(bookPanel);
 				resultPanel.validate();
 				resultPanel.requestFocus();
 				repaint();
-=======
-				resultPanel.setViewportView(bookPanel);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 				bookPanel.requestFocus();
 			} else {
 				JOptionPane.showMessageDialog(this, "请先选择要修改的图书！");
@@ -1261,30 +1021,22 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 
 			initbookClaAddView();
 			bookClassifyJScrollPane.setViewportView(catalogAddPanel);
-<<<<<<< HEAD
 			resultPanel.removeAll();
 			resultPanel.add(catalogManagePanel);
 			resultPanel.validate();
 			resultPanel.requestFocus();
 			repaint();
-=======
-			resultPanel.setViewportView(catalogManagePanel);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			catalogManagePanel.requestFocus();
 
 		} else if (e.getSource() == modClassifyButton) {
 			if (selectedRow != -1) {
 				initbookClaModView();
 				bookClassifyJScrollPane.setViewportView(catalogAddPanel);
-<<<<<<< HEAD
 				resultPanel.removeAll();
 				resultPanel.add(catalogManagePanel);
 				resultPanel.validate();
 				resultPanel.requestFocus();
 				repaint();
-=======
-				resultPanel.setViewportView(catalogManagePanel);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 				catalogManagePanel.requestFocus();
 			} else {
 				JOptionPane.showMessageDialog(this, "请先选择要修改的图书类别！");
@@ -1530,13 +1282,8 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 
 	private MPanel initPanel(MPanel panel) {
 		panel = new MPanel();
-<<<<<<< HEAD
 		panel.setSize(800, 430);
 		panel.setLocation(0, 0);
-=======
-		panel.setSize(780, 450);
-		panel.setLocation(5, 140);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		panel.setLayout(null);
 		panel.setVisible(true);
 		return panel;
@@ -1552,13 +1299,8 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 				return resultBookClassifys.size();
 			case MANAGE_MEMBER:
 				return resultmembers.size();
-<<<<<<< HEAD
 			case MANAGE_PROMOTION:
 				return resultmembers.size();
-=======
-			case MANAGE_ORDER:
-				return resultorders.size();
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			default:
 				break;
 			}
@@ -1574,13 +1316,8 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 				return bookClassifyColomn.length;
 			case MANAGE_MEMBER:
 				return members.length;
-<<<<<<< HEAD
 			case MANAGE_PROMOTION:
 				return members.length;
-=======
-			case MANAGE_ORDER:
-				return orders.length;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			default:
 				break;
 			}
@@ -1631,21 +1368,12 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 					break;
 				}
 				break;
-<<<<<<< HEAD
 			case MANAGE_PROMOTION:
 				switch (columnIndex) {
 				case 0:
 					return resultmembers.get(rowIndex).getID();
 				case 1:
 					return resultmembers.get(rowIndex).getName();
-=======
-			case MANAGE_ORDER:
-				switch (columnIndex) {
-				case 0:
-					return resultorders.get(rowIndex).getOrderID();
-				case 1:
-					return resultorders.get(rowIndex).getState();
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 				default:
 					break;
@@ -1666,13 +1394,8 @@ public class SalesManagerPanel extends MPanel implements MouseListener,
 				return bookClassifyColomn[column];
 			case MANAGE_MEMBER:
 				return members[column];
-<<<<<<< HEAD
 			case MANAGE_PROMOTION:
 				return members[column];
-=======
-			case MANAGE_ORDER:
-				return orders[column];
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			default:
 				break;
 			}

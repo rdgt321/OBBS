@@ -1,7 +1,6 @@
 package Book;
 
 import java.net.MalformedURLException;
-
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -15,6 +14,7 @@ import DBC.BookDAO;
 import DBC.ConnectionFactory;
 import DBC.DAOFactory;
 import DBC.DirectoryDAO;
+import DBC.RateDAO;
 import RMI.ResultMessage;
 import Server.Const;
 
@@ -26,6 +26,7 @@ public class BookServiceImpl extends UnicastRemoteObject implements BookService 
 	private static final long serialVersionUID = 6312085607190371127L;
 	private BookDAO bookDAO = null;
 	private DirectoryDAO directoryDAO = null;
+	private RateDAO rateDAO = null;
 
 	public BookServiceImpl() throws RemoteException {
 		super();
@@ -36,6 +37,7 @@ public class BookServiceImpl extends UnicastRemoteObject implements BookService 
 		}
 		bookDAO = DAOFactory.getBookDAO();
 		directoryDAO = DAOFactory.getDirectoryDAO();
+		rateDAO = DAOFactory.getRateDAO();
 	}
 
 	@Override
@@ -171,6 +173,23 @@ public class BookServiceImpl extends UnicastRemoteObject implements BookService 
 					"query ok,return top directory");
 		}
 		return new ResultMessage(false, null, "query top directory fail");
+	}
+
+	@Override
+	public ResultMessage setRate(String bookISBN, int memberID, double rate)
+			throws RemoteException {
+		return rateDAO.addRate(bookISBN, memberID, rate);
+	}
+
+	@Override
+	public ResultMessage getRate(String bookISBN) throws RemoteException {
+		return rateDAO.getRate(bookISBN);
+	}
+
+	@Override
+	public ResultMessage queryRate(String bookISBN, int memberID)
+			throws RemoteException {
+		return rateDAO.queryRate(bookISBN, memberID);
 	}
 
 }

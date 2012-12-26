@@ -1913,7 +1913,6 @@ memberID:2 name:cus type:member ip:172.26.31.223 -connect at Fri Dec 21 03:10:03
 memberID:2 name:cus type:member ip:172.26.31.223 -keep alive at Fri Dec 21 03:10:08 CST 2012
 memberID:2 name:cus type:member ip:172.26.31.223 -keep alive at Fri Dec 21 03:10:18 CST 2012
 memberID:2 name:cus type:member ip:172.26.31.223 -disconnect at Fri Dec 21 03:10:21 CST 2012
-<<<<<<< HEAD
 userID:2 name:sale type:sales manager ip:172.25.132.79 -connect at Fri Dec 21 14:07:25 CST 2012
 userID:2 name:sale type:sales manager ip:172.25.132.79 -keep alive at Fri Dec 21 14:07:34 CST 2012
 userID:2 name:sale type:sales manager ip:172.25.132.79 -keep alive at Fri Dec 21 14:07:44 CST 2012
@@ -2384,5 +2383,700 @@ userID:2 name:sale type:sales manager ip:172.25.132.79 -disconnect at Fri Dec 21
 userID:2 name:sale type:sales manager ip:172.25.132.79 -connect at Fri Dec 21 21:15:24 CST 2012
 userID:2 name:sale type:sales manager ip:172.25.132.79 -keep alive at Fri Dec 21 21:15:28 CST 2012
 userID:2 name:sale type:sales manager ip:172.25.132.79 -disconnect at Fri Dec 21 21:15:33 CST 2012
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
+userID:1 name:admin type:admin ip:172.25.133.139 -connect at Sun Dec 23 14:34:50 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 14:34:59 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 14:35:09 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 14:35:19 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -disconnect at Sun Dec 23 14:35:24 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -connect at Sun Dec 23 14:35:33 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 14:35:39 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 14:35:49 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -disconnect at Sun Dec 23 14:35:55 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -connect at Sun Dec 23 14:36:00 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 14:36:09 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 14:36:19 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 14:36:29 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 14:36:39 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 14:36:49 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 14:37:00 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 14:37:10 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 14:37:20 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 14:37:30 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 14:37:40 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -disconnect at Sun Dec 23 14:37:46 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -connect at Sun Dec 23 15:10:10 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:10:19 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:10:29 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:10:39 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:10:49 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:10:59 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:11:09 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -connect at Sun Dec 23 15:12:22 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:12:27 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:12:37 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -disconnect at Sun Dec 23 15:12:43 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -connect at Sun Dec 23 15:19:21 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:19:26 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -disconnect at Sun Dec 23 15:19:31 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:19:36 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:19:46 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:19:56 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:20:06 CST 2012
+memberID:3 name:cus2 type:member ip:172.25.133.139 -connect at Sun Dec 23 15:20:10 CST 2012
+memberID:3 name:cus2 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:20:16 CST 2012
+memberID:3 name:cus2 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:20:26 CST 2012
+memberID:3 name:cus2 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:20:36 CST 2012
+memberID:3 name:cus2 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 15:20:44 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 15:43:42 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:43:49 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:43:59 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:44:09 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:44:19 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 15:45:13 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:45:15 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:45:25 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:45:35 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:45:45 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:45:55 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:46:05 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:46:15 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:46:25 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:46:35 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:46:45 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:46:55 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:47:05 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:47:15 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 15:47:25 CST 2012
+memberID:4 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 15:47:28 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -connect at Sun Dec 23 15:56:58 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:56:59 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:57:09 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:57:19 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:57:29 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:57:39 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:57:49 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:57:59 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:58:09 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:58:19 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:58:29 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:58:39 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:58:49 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:58:59 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:59:09 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:59:19 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:59:29 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 15:59:39 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -disconnect at Sun Dec 23 15:59:43 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -connect at Sun Dec 23 16:00:07 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:00:09 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:00:19 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:00:29 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:00:39 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:00:49 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:00:59 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:01:09 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:01:19 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:01:29 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:01:39 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:01:49 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:01:59 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:02:09 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:02:19 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:02:29 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 16:02:39 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -disconnect at Sun Dec 23 16:02:42 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -connect at Sun Dec 23 17:22:18 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:22:19 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:22:29 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -disconnect at Sun Dec 23 17:22:31 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -connect at Sun Dec 23 17:24:10 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:24:15 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -disconnect at Sun Dec 23 17:24:19 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -connect at Sun Dec 23 17:24:38 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:24:41 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:24:51 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:25:01 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:25:11 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:25:21 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:25:31 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:25:41 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:25:51 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:26:01 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:26:11 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:26:21 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:26:31 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:26:41 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:26:51 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:27:01 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:27:11 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:27:21 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:27:31 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:27:41 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:27:51 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:28:01 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:28:11 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:28:21 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:28:31 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:28:41 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -disconnect at Sun Dec 23 17:28:46 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -connect at Sun Dec 23 17:29:01 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:29:07 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:29:17 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:29:27 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:29:37 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:29:47 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:29:57 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:30:07 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -disconnect at Sun Dec 23 17:30:08 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -connect at Sun Dec 23 17:30:15 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:30:19 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:30:29 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:30:39 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:30:49 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:30:59 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:31:09 CST 2012
+userID:3 name:gen type:general maanger ip:172.25.133.139 -disconnect at Sun Dec 23 17:31:10 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -connect at Sun Dec 23 17:31:14 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:31:19 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:31:29 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:31:39 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:31:49 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:31:59 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:32:09 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:32:19 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:32:29 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:32:39 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:32:49 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:32:59 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:33:09 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:33:19 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:33:29 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:33:39 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:33:49 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:33:59 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:34:09 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:34:19 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:34:29 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:34:39 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:34:49 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:34:59 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:35:09 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:35:19 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:35:29 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -disconnect at Sun Dec 23 17:35:30 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -connect at Sun Dec 23 17:35:38 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:35:43 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:35:53 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:36:03 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:36:13 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:36:23 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:36:33 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:36:43 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:36:53 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -disconnect at Sun Dec 23 17:36:57 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -connect at Sun Dec 23 17:37:09 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:37:19 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:37:29 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:37:39 CST 2012
+memberID:2 name:cus type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:37:49 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -connect at Sun Dec 23 17:38:40 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -disconnect at Sun Dec 23 17:38:46 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -connect at Sun Dec 23 17:39:14 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:39:24 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:39:34 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:39:44 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:39:54 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:40:04 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -disconnect at Sun Dec 23 17:40:08 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -connect at Sun Dec 23 17:40:13 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 17:40:14 CST 2012
+userID:2 name:sale type:sales manager ip:172.25.133.139 -disconnect at Sun Dec 23 17:40:22 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -connect at Sun Dec 23 17:44:06 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:44:06 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:44:16 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:44:26 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:44:36 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:44:46 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:44:56 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:45:06 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:45:16 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:45:26 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:45:36 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:45:46 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:45:56 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -keep alive at Sun Dec 23 17:46:06 CST 2012
+userID:1 name:admin type:admin ip:172.25.133.139 -disconnect at Sun Dec 23 17:46:14 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 17:46:30 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:46:36 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:46:46 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:46:56 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:47:06 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 17:47:14 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 17:47:16 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -connect at Sun Dec 23 17:47:23 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:47:26 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:47:37 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:47:47 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:47:57 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:48:07 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:48:17 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:48:27 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:48:37 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:48:47 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:48:57 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:49:07 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:49:17 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:49:27 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:49:37 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:49:47 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:49:57 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:50:07 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:50:17 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:50:27 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:50:37 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:50:47 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:50:57 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:51:07 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:51:17 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:51:27 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:51:37 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:51:47 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:51:57 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:52:07 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:52:17 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:52:27 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:52:37 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:52:47 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:52:57 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:53:07 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:53:17 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:53:27 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:53:37 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:53:47 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:53:57 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:54:07 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:54:17 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:54:27 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:54:37 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:54:47 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:54:57 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:55:07 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:55:17 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:55:27 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:55:37 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:55:47 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:55:57 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -disconnect at Sun Dec 23 17:56:02 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -connect at Sun Dec 23 17:56:12 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 17:56:13 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -disconnect at Sun Dec 23 17:56:15 CST 2012
+userID:4 name:sale type:sales manager ip:172.25.133.139 -connect at Sun Dec 23 17:57:56 CST 2012
+userID:4 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 17:57:58 CST 2012
+userID:4 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 17:58:08 CST 2012
+userID:4 name:sale type:sales manager ip:172.25.133.139 -keep alive at Sun Dec 23 17:58:18 CST 2012
+userID:4 name:sale type:sales manager ip:172.25.133.139 -disconnect at Sun Dec 23 17:58:22 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -connect at Sun Dec 23 18:00:44 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:00:48 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:00:58 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:01:08 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:01:18 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:01:28 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:01:38 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:01:48 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:01:58 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:02:08 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:02:18 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:02:28 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:02:38 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:02:48 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:02:58 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:03:08 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:03:18 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:03:28 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -disconnect at Sun Dec 23 18:03:33 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -connect at Sun Dec 23 18:04:54 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:04:58 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:05:08 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -disconnect at Sun Dec 23 18:05:08 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -connect at Sun Dec 23 18:05:30 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:05:34 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:05:44 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -disconnect at Sun Dec 23 18:05:47 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -connect at Sun Dec 23 18:06:25 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:06:30 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:06:40 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:06:50 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:07:00 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:07:10 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -disconnect at Sun Dec 23 18:07:13 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -connect at Sun Dec 23 18:07:52 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:07:54 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:08:04 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:08:14 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:08:24 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:08:34 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:08:44 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:08:54 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:09:04 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:09:14 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:09:24 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:09:34 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:09:44 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:09:54 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:10:04 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:10:14 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:10:25 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:10:35 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:10:45 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -disconnect at Sun Dec 23 18:10:49 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 18:10:55 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 18:10:55 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:11:05 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:11:15 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:11:25 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:11:35 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:11:45 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:11:55 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:12:05 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 18:12:10 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:12:15 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 18:12:20 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:12:25 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:12:35 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 18:12:43 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 18:16:30 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:16:31 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:16:41 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:16:51 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 18:17:01 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 18:17:08 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:02:23 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:02:27 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:02:37 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:02:47 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:02:57 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:03:07 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:03:17 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:03:27 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:03:37 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:03:47 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:03:57 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:04:07 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:04:11 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:17:31 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:17:35 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:17:45 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:17:55 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:18:05 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:18:15 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:18:25 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:18:35 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:18:45 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:18:55 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:19:05 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:19:15 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:19:25 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:19:35 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:19:45 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:19:55 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:19:57 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:20:04 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:20:08 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:20:18 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:20:28 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:20:38 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:20:40 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:20:48 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:20:51 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:21:01 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:21:11 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:21:21 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:21:31 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:21:41 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:21:51 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:22:01 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:22:11 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:22:16 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:33:53 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:33:55 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:34:05 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:34:15 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:34:24 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:34:34 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:34:35 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:34:45 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:34:55 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:35:05 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:35:15 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:35:25 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:35:35 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:35:45 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:35:50 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:35:56 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:36:01 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:36:11 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:36:21 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:36:31 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:36:41 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:36:51 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:37:01 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:37:11 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:37:21 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:37:30 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:37:41 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:37:43 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:37:53 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:38:03 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:38:13 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:38:23 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:38:33 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:38:43 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:38:47 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:39:53 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:39:56 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:40:06 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:40:16 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:40:26 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:40:36 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:40:46 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:40:56 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:41:06 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:41:16 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:41:26 CST 2012
+memberID:5 name:cus1 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:41:30 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:43:27 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:43:31 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:43:41 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:43:51 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:43:57 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:44:01 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -connect at Sun Dec 23 19:44:07 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 19:44:11 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 19:44:21 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -disconnect at Sun Dec 23 19:44:29 CST 2012
+userID:5 name:gen type:general maanger ip:172.25.133.139 -keep alive at Sun Dec 23 19:44:31 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:44:33 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:44:41 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:44:51 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:45:01 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:45:11 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:45:21 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:45:31 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:45:41 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:45:51 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:46:01 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:46:11 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:46:21 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:46:31 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:46:41 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:46:51 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:47:01 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:47:11 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:47:21 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:47:31 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:47:41 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:47:51 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:48:01 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:48:11 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:48:21 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:48:31 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:48:41 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:48:51 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:49:02 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:49:12 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:49:22 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:49:32 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:49:42 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:49:52 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:50:02 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:50:12 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:50:22 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:50:32 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:50:42 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:50:52 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:51:02 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:51:12 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:51:22 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:51:32 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:51:42 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:51:52 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:51:59 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:52:14 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:52:16 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:52:26 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:52:55 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:53:00 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:53:10 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:53:20 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:53:30 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:53:40 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:53:50 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:54:00 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:54:10 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:54:20 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:54:30 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:54:32 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:55:19 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:55:23 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:55:33 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:55:43 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:55:53 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:56:03 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:56:13 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:56:23 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:56:33 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:56:43 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:56:53 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:57:03 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:57:13 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:57:23 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:57:33 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:57:43 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:57:53 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:58:03 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:58:13 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:58:23 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:58:33 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:58:43 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:58:53 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:59:03 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:59:13 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:59:23 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 19:59:26 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 19:59:33 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:59:37 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:59:47 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 19:59:57 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:00:07 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:00:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:00:27 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:00:37 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:00:47 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:00:57 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:01:07 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:01:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:01:27 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:01:37 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:01:47 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:01:57 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:02:07 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:02:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 20:02:26 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 20:02:34 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:02:37 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:02:47 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:02:57 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:03:07 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:03:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 20:03:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 20:03:44 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:03:48 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:03:58 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:04:08 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:04:18 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:04:28 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:04:39 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:04:49 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:04:59 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:05:09 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:05:19 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:05:29 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:05:39 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:05:49 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:05:59 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:06:09 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:06:19 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:06:29 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:06:39 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 20:06:40 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 20:08:38 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:08:41 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:08:51 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:09:01 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:09:11 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:09:21 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:09:31 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:09:41 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:09:51 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:10:01 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:10:11 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:10:21 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:10:31 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:10:41 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:10:51 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:11:01 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:11:11 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:11:21 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:11:31 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:11:41 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:11:51 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 20:11:55 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 20:12:04 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:12:07 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:12:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:12:27 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:12:37 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 20:13:35 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:13:37 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:13:47 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:13:57 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:14:07 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:14:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:14:27 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:14:37 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:14:47 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:14:57 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:15:07 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:15:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:15:27 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:15:37 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:15:47 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:15:57 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:16:07 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:16:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 20:16:26 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 20:17:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:17:22 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:17:32 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:17:42 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:17:52 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:18:02 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:18:12 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:18:22 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:18:32 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:18:42 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -connect at Sun Dec 23 20:27:55 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:27:57 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:28:07 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:28:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:28:27 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:28:37 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:28:47 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:28:57 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:29:07 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:29:17 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:29:27 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:29:37 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:29:47 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:29:57 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -keep alive at Sun Dec 23 20:30:07 CST 2012
+memberID:7 name:cus3 type:member ip:172.25.133.139 -disconnect at Sun Dec 23 20:30:07 CST 2012
+memberID:7 name:cus3 type:member ip:192.168.1.135 -connect at Mon Dec 24 20:15:33 CST 2012
+memberID:7 name:cus3 type:member ip:192.168.1.135 -keep alive at Mon Dec 24 20:15:36 CST 2012
+memberID:7 name:cus3 type:member ip:192.168.1.135 -keep alive at Mon Dec 24 20:15:46 CST 2012
+memberID:7 name:cus3 type:member ip:192.168.1.135 -keep alive at Mon Dec 24 20:15:56 CST 2012
+memberID:7 name:cus3 type:member ip:192.168.1.135 -keep alive at Mon Dec 24 20:16:06 CST 2012
+memberID:7 name:cus3 type:member ip:192.168.1.135 -keep alive at Mon Dec 24 20:16:16 CST 2012
+memberID:7 name:cus3 type:member ip:192.168.1.135 -keep alive at Mon Dec 24 20:16:26 CST 2012
+memberID:7 name:cus3 type:member ip:192.168.1.135 -keep alive at Mon Dec 24 20:16:36 CST 2012
+memberID:7 name:cus3 type:member ip:172.26.31.223 -connect at Wed Dec 26 23:35:28 CST 2012
+memberID:7 name:cus3 type:member ip:172.26.31.223 -disconnect at Wed Dec 26 23:35:32 CST 2012
+memberID:7 name:cus3 type:member ip:172.26.31.223 -connect at Wed Dec 26 23:36:55 CST 2012
+memberID:7 name:cus3 type:member ip:172.26.31.223 -keep alive at Wed Dec 26 23:36:58 CST 2012
+memberID:7 name:cus3 type:member ip:172.26.31.223 -disconnect at Wed Dec 26 23:37:01 CST 2012
+memberID:7 name:cus3 type:member ip:172.26.31.223 -connect at Wed Dec 26 23:41:19 CST 2012
+memberID:7 name:cus3 type:member ip:172.26.31.223 -disconnect at Wed Dec 26 23:41:20 CST 2012
+memberID:7 name:cus3 type:member ip:172.26.31.223 -connect at Wed Dec 26 23:41:25 CST 2012
+memberID:7 name:cus3 type:member ip:172.26.31.223 -disconnect at Wed Dec 26 23:41:26 CST 2012
+memberID:7 name:cus3 type:member ip:172.26.31.223 -connect at Wed Dec 26 23:41:29 CST 2012
+memberID:7 name:cus3 type:member ip:172.26.31.223 -disconnect at Wed Dec 26 23:41:31 CST 2012

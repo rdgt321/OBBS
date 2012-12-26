@@ -44,7 +44,7 @@ public class CollectDAOImpl implements CollectDAO {
 	public synchronized ResultMessage bookCollect(String bookISBN, int memberID) {
 		ResultMessage isExist = queryCollect(memberID, bookISBN);
 		if (isExist.isInvokeSuccess()) {
-			return new ResultMessage(false, null, "already collect this book");
+			return new ResultMessage(false, null, "已经收藏此书");
 		}
 		ResultMessage booknum = getCollectedBook(memberID);
 		if (booknum.isInvokeSuccess()
@@ -69,10 +69,9 @@ public class CollectDAOImpl implements CollectDAO {
 			e.printStackTrace();
 		}
 		if (row != 0) {
-			return new ResultMessage(true, null, "collect success");
+			return new ResultMessage(true, null, "收藏成功！");
 		}
-		return new ResultMessage(false, null,
-				"collect book failed,please check again");
+		return new ResultMessage(false, null, "收藏失败");
 	}
 
 	@Override
@@ -80,7 +79,7 @@ public class CollectDAOImpl implements CollectDAO {
 			int memberID) {
 		ResultMessage isExist = queryCollect(memberID, bookISBN);
 		if (!isExist.isInvokeSuccess()) {
-			return new ResultMessage(false, null, "not collect this book");
+			return new ResultMessage(false, null, "未曾收藏此书");
 		}
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "delete from collect where memberid=? and bookisbn=?";
@@ -100,9 +99,9 @@ public class CollectDAOImpl implements CollectDAO {
 			e.printStackTrace();
 		}
 		if (row != 0) {
-			return new ResultMessage(true, null, "cancel collect success");
+			return new ResultMessage(true, null, "删除收藏成功");
 		}
-		return new ResultMessage(false, null, "cancel collect failed");
+		return new ResultMessage(false, null, "删除收藏失败");
 	}
 
 	@Override
@@ -126,10 +125,9 @@ public class CollectDAOImpl implements CollectDAO {
 			e.printStackTrace();
 		}
 		if (polist != null) {
-			return new ResultMessage(true, polist,
-					"collect isbns return,need to be cast ");
+			return new ResultMessage(true, polist, "返回收藏");
 		}
-		return new ResultMessage(false, null, "query collect failed");
+		return new ResultMessage(false, null, "查询收藏失败");
 	}
 
 	@Override
@@ -152,10 +150,9 @@ public class CollectDAOImpl implements CollectDAO {
 			e.printStackTrace();
 		}
 		if (polist != null) {
-			return new ResultMessage(true, polist,
-					"query ok,return collected book,collect isbns return,need to be cast ");
+			return new ResultMessage(true, polist, "收藏图书列表返回");
 		}
-		return new ResultMessage(false, null, "no book in collection");
+		return new ResultMessage(false, null, "尚未收藏图书");
 	}
 
 }

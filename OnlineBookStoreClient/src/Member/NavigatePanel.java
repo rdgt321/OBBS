@@ -7,11 +7,11 @@ import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.rmi.RemoteException;
@@ -20,11 +20,7 @@ import javax.swing.JLabel;
 
 import ClientRunner.Agent;
 import ClientRunner.Const;
-<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
-=======
-import ClientRunner.Loader;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.MButton;
 import ClientRunner.MComboBox;
 import ClientRunner.MPanel;
@@ -55,19 +51,11 @@ public class NavigatePanel extends MPanel implements ActionListener,
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-<<<<<<< HEAD
 		if (IMGSTATIC.navigatorBG != null) {
 			Composite composite = g2d.getComposite();
 			g2d.setComposite(AlphaComposite.getInstance(
 					AlphaComposite.SRC_OVER, 0.6f));
 			g2d.drawImage(IMGSTATIC.navigatorBG, 0, 0, 800, 70, this);
-=======
-		if (Loader.navigatorBG != null) {
-			Composite composite = g2d.getComposite();
-			g2d.setComposite(AlphaComposite.getInstance(
-					AlphaComposite.SRC_OVER, 0.6f));
-			g2d.drawImage(Loader.navigatorBG, 0, 0, 800, 70, this);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			g2d.setComposite(composite);
 		}
 	}
@@ -86,6 +74,14 @@ public class NavigatePanel extends MPanel implements ActionListener,
 		searchField.setLocation(20, 10);
 		searchField.setVisible(true);
 		searchField.setOpaque(false);
+		searchField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					dealSearch();
+				}
+			}
+		});
 
 		condition = new MComboBox<String>();
 		condition.setFont(new Font("¿¬Ìå_gb2312", Font.PLAIN, 20));
@@ -227,39 +223,43 @@ public class NavigatePanel extends MPanel implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == searchButton) {
-			String keyWord = searchField.getText().trim();
-			int type = condition.getSelectedIndex();
-			switch (type) {
-			case 0:
-				try {
-					ResultMessage resultMessage = Agent.bookService.searchBook(
-							keyWord, Const.SEARCH_BY_MULTI);
-					memberUIController.displaySearchResult(resultMessage);
-				} catch (RemoteException e1) {
-					e1.printStackTrace();
-				}
-				break;
-			case 1:
-				try {
-					ResultMessage resultMessage = Agent.bookService.searchBook(
-							keyWord, Const.SEARCH_BY_NAME);
-					memberUIController.displaySearchResult(resultMessage);
-				} catch (RemoteException re) {
-					re.printStackTrace();
-				}
-				break;
-			case 2:
-				try {
-					ResultMessage resultMessage = Agent.bookService.searchBook(
-							keyWord, Const.SEARCH_BY_AUTHOR);
-					memberUIController.displaySearchResult(resultMessage);
-				} catch (RemoteException re) {
-					re.printStackTrace();
-				}
-				break;
-			}
+			dealSearch();
 		}
 
+	}
+
+	private void dealSearch() {
+		String keyWord = searchField.getText().trim();
+		int type = condition.getSelectedIndex();
+		switch (type) {
+		case 0:
+			try {
+				ResultMessage resultMessage = Agent.bookService.searchBook(
+						keyWord, Const.SEARCH_BY_MULTI);
+				memberUIController.displaySearchResult(resultMessage);
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+			break;
+		case 1:
+			try {
+				ResultMessage resultMessage = Agent.bookService.searchBook(
+						keyWord, Const.SEARCH_BY_NAME);
+				memberUIController.displaySearchResult(resultMessage);
+			} catch (RemoteException re) {
+				re.printStackTrace();
+			}
+			break;
+		case 2:
+			try {
+				ResultMessage resultMessage = Agent.bookService.searchBook(
+						keyWord, Const.SEARCH_BY_AUTHOR);
+				memberUIController.displaySearchResult(resultMessage);
+			} catch (RemoteException re) {
+				re.printStackTrace();
+			}
+			break;
+		}
 	}
 
 	@Override
@@ -287,6 +287,7 @@ public class NavigatePanel extends MPanel implements ActionListener,
 			this.init(BEFORE_STATE);
 			try {
 				Agent.memberService.logout(Agent.userAgent);
+				Agent.userAgent = null;
 			} catch (RemoteException e1) {
 				e1.printStackTrace();
 			}

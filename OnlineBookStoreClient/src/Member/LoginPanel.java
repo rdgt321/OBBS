@@ -6,23 +6,21 @@ import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 
 import ClientRunner.Agent;
 import ClientRunner.Const;
-<<<<<<< HEAD
+import ClientRunner.Encrypt;
 import ClientRunner.IMGSTATIC;
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.ImageDialog;
 import ClientRunner.MButton;
 import ClientRunner.MComboBox;
@@ -44,11 +42,7 @@ public class LoginPanel extends MPanel implements ActionListener {
 	private MPasswordField loginpass = null;
 	private MButton loginbtn = null;
 	private MButton returnbtn = null;
-<<<<<<< HEAD
-=======
-
-	private Image bg = null;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
+	private JCheckBox auto_save = null;
 
 	private MemberUIController memberUIController;
 	private UserUIController userUIController;
@@ -62,18 +56,13 @@ public class LoginPanel extends MPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-<<<<<<< HEAD
 		if (IMGSTATIC.loginBG != null) {
 			g2d.drawImage(IMGSTATIC.loginBG, 0, 0, 800, 530, this);
-=======
-		if (bg != null) {
-			g2d.drawImage(bg, 0, 0, 800, 530, this);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			Composite composite = g2d.getComposite();
 			g2d.setComposite(AlphaComposite.getInstance(
 					AlphaComposite.SRC_OVER, 0.6f));
 			g2d.setColor(Color.BLUE);
-			g2d.fillRoundRect(215, 130, 380, 240, 20, 20);
+			g2d.fillRoundRect(215, 130, 380, 260, 20, 20);
 			g2d.setComposite(composite);
 		}
 		g2d.dispose();
@@ -84,11 +73,6 @@ public class LoginPanel extends MPanel implements ActionListener {
 		setLayout(null);
 		setLocation(0, 70);
 
-<<<<<<< HEAD
-=======
-		bg = Toolkit.getDefaultToolkit().getImage("materials\\login.png");
-
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		nameLabel = new JLabel("用户名:");
 		nameLabel.setSize(100, 50);
 		nameLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
@@ -112,10 +96,6 @@ public class LoginPanel extends MPanel implements ActionListener {
 		loginname.setText("");
 		loginname.setSize(180, 35);
 		loginname.setLocation(350, 170);
-<<<<<<< HEAD
-=======
-		loginname.setVisible(true);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		loginname.setOpaque(false);
 
 		loginpass = new MPasswordField(30);
@@ -123,26 +103,13 @@ public class LoginPanel extends MPanel implements ActionListener {
 		loginpass.setText("");
 		loginpass.setSize(180, 35);
 		loginpass.setLocation(350, 240);
-<<<<<<< HEAD
-=======
-		loginpass.setVisible(true);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		loginpass.setOpaque(false);
 
 		String[] types = { "顾客", "销售经理", "总经理", "系统管理员" };
 		classify = new MComboBox<String>(types);
-<<<<<<< HEAD
-=======
-		classify.setSelectedIndex(0);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		classify.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		classify.setSize(180, 35);
 		classify.setLocation(350, 305);
-<<<<<<< HEAD
-=======
-		classify.setOpaque(false);
-		classify.setForeground(Color.BLUE);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		nameWarning = new JLabel("用户名不合法!");
 		nameWarning.setSize(140, 20);
@@ -150,6 +117,7 @@ public class LoginPanel extends MPanel implements ActionListener {
 		nameWarning.setForeground(Color.red);
 		nameWarning.setLocation(350, 215);
 		nameWarning.setVisible(false);
+		nameWarning.setOpaque(false);
 
 		passwordWarning = new JLabel("密码不合法!");
 		passwordWarning.setSize(140, 20);
@@ -157,21 +125,35 @@ public class LoginPanel extends MPanel implements ActionListener {
 		passwordWarning.setForeground(Color.red);
 		passwordWarning.setLocation(350, 280);
 		passwordWarning.setVisible(false);
+		passwordWarning.setOpaque(false);
+
+		auto_save = new JCheckBox("保存密码");
+		auto_save.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+		auto_save.setSize(140, 40);
+		auto_save.setLocation(400, 350);
+		auto_save.setOpaque(false);
 
 		loginbtn = new MButton("登陆");
 		loginbtn.setButtonColor(Color.BLUE);
 		loginbtn.setSize(90, 40);
-		loginbtn.setLocation(285, 380);
+		loginbtn.setLocation(285, 400);
 		loginbtn.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		loginbtn.addActionListener(this);
 
 		returnbtn = new MButton("返回");
 		returnbtn.setButtonColor(Color.BLUE);
 		returnbtn.setSize(90, 40);
-		returnbtn.setLocation(410, 380);
+		returnbtn.setLocation(410, 400);
 		returnbtn.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		returnbtn.addActionListener(this);
 
+		if (Const.SAVE_PASS == 1) {
+			auto_save.setSelected(true);
+			loginname.setText(Const.USER_NAME);
+			loginpass.setText(Const.USER_PASS);
+			classify.setSelectedIndex(Const.SAVE_TYPE);
+			loginpass.requestFocus();
+		}
 		add(nameLabel);
 		add(passwordLabel);
 		add(classifyLabel);
@@ -182,6 +164,7 @@ public class LoginPanel extends MPanel implements ActionListener {
 		add(returnbtn);
 		add(nameWarning);
 		add(passwordWarning);
+		add(auto_save);
 		validate();
 		repaint();
 	}
@@ -204,17 +187,20 @@ public class LoginPanel extends MPanel implements ActionListener {
 													.getHostAddress(),
 											Const.MEMBER);
 							if (resultMessage.isInvokeSuccess()) {
-<<<<<<< HEAD
+								if (auto_save.isSelected()) {
+									Const.store("USER_NAME",
+											Encrypt.encode(login_name));
+									Const.store("USER_PASS", Encrypt
+											.encode(new String(password)));
+									Const.store("SAVE_TYPE", "0");
+									Const.store("SAVE_PASS", "1");
+								} else {
+									Const.store("SAVE_PASS", "0");
+								}
 								Agent.userAgent = (UserAgent) resultMessage
 										.getResultSet().get(0);
 								memberUIController.setMainpageView();
 								memberUIController.setAfterLoginNavigate();
-=======
-								memberUIController.setMainpageView();
-								memberUIController.setAfterLoginNavigate();
-								Agent.userAgent = (UserAgent) resultMessage
-										.getResultSet().get(0);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 							} else {
 								ImageDialog.showNOImage(this,
 										resultMessage.getPostScript());
@@ -233,22 +219,24 @@ public class LoginPanel extends MPanel implements ActionListener {
 													.getHostAddress(),
 											Const.SALESMANAGER);
 							if (resultMessage.isInvokeSuccess()) {
-<<<<<<< HEAD
+								if (auto_save.isSelected()) {
+									Const.store("USER_NAME",
+											Encrypt.encode(login_name));
+									Const.store("USER_PASS", Encrypt
+											.encode(new String(password)));
+									Const.store("SAVE_TYPE", "1");
+									Const.store("SAVE_PASS", "1");
+								} else {
+									Const.store("SAVE_PASS", "0");
+								}
 								Agent.userAgent = (UserAgent) resultMessage
 										.getResultSet().get(0);
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 								memberUIController.hideNavigateView();
 								MainFrame mainFrame = memberUIController
 										.getMainFrame();
 								userUIController = new UserUIController(
 										mainFrame);
 								userUIController.createSalesManagerView();
-<<<<<<< HEAD
-=======
-								Agent.userAgent = (UserAgent) resultMessage
-										.getResultSet().get(0);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 							} else {
 								ImageDialog.showNOImage(this,
 										resultMessage.getPostScript());
@@ -267,22 +255,24 @@ public class LoginPanel extends MPanel implements ActionListener {
 													.getHostAddress(),
 											Const.GENERALMANAGER);
 							if (resultMessage.isInvokeSuccess()) {
-<<<<<<< HEAD
+								if (auto_save.isSelected()) {
+									Const.store("USER_NAME",
+											Encrypt.encode(login_name));
+									Const.store("USER_PASS", Encrypt
+											.encode(new String(password)));
+									Const.store("SAVE_TYPE", "2");
+									Const.store("SAVE_PASS", "1");
+								} else {
+									Const.store("SAVE_PASS", "0");
+								}
 								Agent.userAgent = (UserAgent) resultMessage
 										.getResultSet().get(0);
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 								memberUIController.hideNavigateView();
 								MainFrame mainFrame = memberUIController
 										.getMainFrame();
 								userUIController = new UserUIController(
 										mainFrame);
 								userUIController.createManagerView();
-<<<<<<< HEAD
-=======
-								Agent.userAgent = (UserAgent) resultMessage
-										.getResultSet().get(0);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 							} else {
 								ImageDialog.showNOImage(this,
 										resultMessage.getPostScript());
@@ -301,22 +291,24 @@ public class LoginPanel extends MPanel implements ActionListener {
 													.getHostAddress(),
 											Const.ADMIN);
 							if (resultMessage.isInvokeSuccess()) {
-<<<<<<< HEAD
+								if (auto_save.isSelected()) {
+									Const.store("USER_NAME",
+											Encrypt.encode(login_name));
+									Const.store("USER_PASS", Encrypt
+											.encode(new String(password)));
+									Const.store("SAVE_TYPE", "3");
+									Const.store("SAVE_PASS", "1");
+								} else {
+									Const.store("SAVE_PASS", "0");
+								}
 								Agent.userAgent = (UserAgent) resultMessage
 										.getResultSet().get(0);
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 								memberUIController.hideNavigateView();
 								MainFrame mainFrame = memberUIController
 										.getMainFrame();
 								userUIController = new UserUIController(
 										mainFrame);
 								userUIController.createAdminView();
-<<<<<<< HEAD
-=======
-								Agent.userAgent = (UserAgent) resultMessage
-										.getResultSet().get(0);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 							} else {
 								ImageDialog.showNOImage(this,
 										resultMessage.getPostScript());

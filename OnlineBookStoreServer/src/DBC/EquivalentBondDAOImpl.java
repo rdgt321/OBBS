@@ -30,8 +30,8 @@ public class EquivalentBondDAOImpl implements EquivalentBondDAO {
 					resultSet.next();
 					equivalentBondID = resultSet.getInt(1);
 					ownerID = resultSet.getInt(2);
-					equivalentDenomination = resultSet.getDouble(3);
-					useLimit = resultSet.getDouble(4);
+					useLimit = resultSet.getDouble(3);
+					equivalentDenomination = resultSet.getDouble(4);
 					endDate = Calendar.getInstance();
 					endDate.setTimeInMillis(resultSet.getDate(5).getTime());
 					used = resultSet.getBoolean(6);

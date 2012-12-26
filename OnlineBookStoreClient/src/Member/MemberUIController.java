@@ -25,6 +25,8 @@ public class MemberUIController {
 			navigatePanel.init(NavigatePanel.BEFORE_STATE);
 		}
 		mainFrame.add(navigatePanel);
+		navigatePanel.validate();
+		navigatePanel.repaint();
 	}
 
 	public void setAfterLoginNavigate() {
@@ -32,8 +34,8 @@ public class MemberUIController {
 			navigatePanel = new NavigatePanel(this);
 		}
 		navigatePanel.init(NavigatePanel.AFTER_STATE);
-		navigatePanel.repaint();
 		navigatePanel.validate();
+		navigatePanel.repaint();
 	}
 
 	public void setLoginView() {

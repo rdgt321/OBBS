@@ -1,7 +1,6 @@
 package ClientRunner;
 
 import java.awt.Component;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
@@ -11,15 +10,10 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import Book.BookServiceImpl;
 import Book.BookUIController;
-import Member.MemberServiceImpl;
 import Member.MemberUIController;
 import Member.NavigatePanel;
-import Promotion.PromotionServiceImpl;
-import Sale.SaleServiceImpl;
 import Sale.SaleUIController;
-import User.UserServiceImpl;
 import User.UserUIController;
 
 @SuppressWarnings("serial")
@@ -31,14 +25,12 @@ public class MainFrame extends JFrame {
 	private Component contentpanel;
 
 	public MainFrame() {
-		setResizable(false);
-		setLayout(null);
-		Const.loadConfig();
-<<<<<<< HEAD
-		IMGSTATIC.startLoading();
-=======
-		Loader.startLoading();
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
+		init();
+		createView();
+		startService();
+	}
+
+	private void init() {
 		try {
 			UIManager
 					.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -51,6 +43,26 @@ public class MainFrame extends JFrame {
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
+		Const.loadConfig();
+		IMGSTATIC.startLoading();
+		Cache.loadFromCache();
+	}
+
+	private void createView() {
+		setTitle("在线图书销售系统");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("materials/icon.png"));
+		setSize(806, 628);
+		setResizable(false);
+		setLayout(null);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+
+		memberUIController.createNavigateView(NavigatePanel.BEFORE_STATE);
+		bookUIController.createMainView();
+	}
+
+	private void startService() {
 		new Thread(Routines.getInstance()).start();
 		while (!Agent.alive) {
 			try {
@@ -59,13 +71,7 @@ public class MainFrame extends JFrame {
 				e.printStackTrace();
 			}
 		}
-		init();
-	}
-
-	public void init() {
-		memberUIController.createNavigateView(NavigatePanel.BEFORE_STATE);
-		bookUIController.createMainView();
-		this.requestFocus();
+		bookUIController.refreshMainView();
 	}
 
 	@Override
@@ -84,13 +90,6 @@ public class MainFrame extends JFrame {
 
 	public static void main(String[] args) {
 		MainFrame frame = new MainFrame();
-		frame.setTitle("在线图书销售系统");
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				"materials/icon.png"));
-		frame.setSize(806, 628);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
 	}
 
 	public MemberUIController getMemberUIController() {

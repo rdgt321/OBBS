@@ -5,22 +5,15 @@ import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import ClientRunner.GIFImage;
-<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
-=======
-import ClientRunner.Loader;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
 
@@ -38,7 +31,7 @@ public class DealSuccessPanel extends MPanel implements ActionListener {
 
 	public void init() {
 		setLayout(null);
-		setSize(800, 520);
+		setSize(800, 530);
 		setLocation(0, 70);
 
 		promptLabel = new JLabel("交易成功!");
@@ -63,19 +56,11 @@ public class DealSuccessPanel extends MPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-<<<<<<< HEAD
 		if (IMGSTATIC.homepageBG != null) {
 			Composite composite = g2d.getComposite();
 			g2d.setComposite(AlphaComposite.getInstance(
 					AlphaComposite.SRC_OVER, 0.8f));
 			g2d.drawImage(IMGSTATIC.homepageBG, 0, 0, 800, 530, this);
-=======
-		if (Loader.homepageBG != null) {
-			Composite composite = g2d.getComposite();
-			g2d.setComposite(AlphaComposite.getInstance(
-					AlphaComposite.SRC_OVER, 0.8f));
-			g2d.drawImage(Loader.homepageBG, 0, 0, 800, 530, this);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			image.paintComponent(g2d, 335, 150);
 			g2d.setComposite(composite);
 		}
@@ -96,7 +81,7 @@ public class DealSuccessPanel extends MPanel implements ActionListener {
 		public void run() {
 			while (true) {
 				try {
-					Thread.sleep(50);
+					Thread.sleep(70);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

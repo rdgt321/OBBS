@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.management.MemoryMXBean;
 import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -289,8 +288,8 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 		}
 		if (Const.CON_FAIL == 1) {
 			Const.store("CON_FAIL", "0");
-			Const.store("dbuser", name);
-			Const.store("dbpass", pass);
+			Const.store("dbuser", Encrypt.encode(name));
+			Const.store("dbpass", Encrypt.encode(pass));
 			removeSQLView();
 			initComponents();
 			return;
@@ -298,8 +297,8 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 		if (Const.FIRST_RUN == 1) {
 			boolean success = Routines.getInstance().initSQL();
 			if (success) {
-				Const.store("dbuser", name);
-				Const.store("dbpass", pass);
+				Const.store("dbuser", Encrypt.encode(name));
+				Const.store("dbpass", Encrypt.encode(pass));
 				Const.store("FIRSTRUN", "0");
 				removeSQLView();
 				initComponents();
@@ -443,7 +442,7 @@ public class ServerView extends JPanel implements ActionListener, Observer {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void update(Observable o, Object arg) {
-		userAgents = (ArrayList<UserAgent>) arg;
+		userAgents = ((RBT) arg).toArray();
 		num.setText(userAgents.size() + "");
 		model.fireTableDataChanged();
 		fitColumn();

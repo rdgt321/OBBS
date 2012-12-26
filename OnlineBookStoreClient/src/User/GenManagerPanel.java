@@ -1,6 +1,5 @@
 package User;
 
-<<<<<<< HEAD
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
@@ -8,11 +7,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-=======
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -28,10 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import ClientRunner.Agent;
-<<<<<<< HEAD
 import ClientRunner.IMGSTATIC;
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 import ClientRunner.ImageDialog;
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
@@ -60,10 +51,12 @@ public class GenManagerPanel extends MPanel implements MouseListener,
 			noUseLabel, endYearLabel, endMonthLabel, endDayLabel,
 			discountRateLabel, zheLabel, equiValueWarning, useConWarning,
 			disRateWarning, startDateWarning, endDateWarning,
-			promotionNameLabel, promotionNameWarning;
+			promotionNameLabel, promotionNameWarning, leastLabel,
+			leastIntegralWarning;
 	private MTextField equiValueField, useConditionField, startYearField,
 			startMonthField, startDayfField, endYearField, endMonthField,
-			endDayfField, discountRateField, promotionNameField;
+			endDayfField, discountRateField, promotionNameField,
+			leastLabelField;
 	private MButton addButton;
 
 	// deliver promotion
@@ -98,17 +91,10 @@ public class GenManagerPanel extends MPanel implements MouseListener,
 		obsLabel.setFont(new Font("楷体_gb2312", Font.BOLD, 30));
 		obsLabel.setSize(300, 80);
 
-<<<<<<< HEAD
 		welcomLabel = new JLabel("欢迎您，总经理:" + Agent.userAgent.getName());
 		welcomLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		welcomLabel.setSize(200, 40);
 		welcomLabel.setLocation(500, 20);
-=======
-		welcomLabel = new JLabel("欢迎您，总经理");
-		welcomLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
-		welcomLabel.setSize(150, 40);
-		welcomLabel.setLocation(560, 20);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		exitLabel = new JLabel("退出");
 		exitLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
@@ -167,20 +153,14 @@ public class GenManagerPanel extends MPanel implements MouseListener,
 		equiBond.setFocusable(false);
 		equiBond.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		equiBond.setLocation(100, 45);
-<<<<<<< HEAD
 		equiBond.setOpaque(false);
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		discountBond = new JRadioButton("打折券");
 		discountBond.setSize(100, 40);
 		discountBond.setFocusable(false);
 		discountBond.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
 		discountBond.setLocation(300, 45);
-<<<<<<< HEAD
 		discountBond.setOpaque(false);
-=======
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 
 		equiPanel = new MPanel();
 		equiPanel.setSize(350, 120);
@@ -230,105 +210,103 @@ public class GenManagerPanel extends MPanel implements MouseListener,
 		startDateLabel = new JLabel("开始日期:");
 		startDateLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		startDateLabel.setSize(80, 40);
-		startDateLabel.setLocation(100, 226);
+		startDateLabel.setLocation(100, 216);
 
 		startYearField = new MTextField();
 		startYearField.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		startYearField.setSize(80, 20);
-		startYearField.setLocation(180, 236);
+		startYearField.setLocation(180, 226);
 
 		startYearLabel = new JLabel("年");
 		startYearLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		startYearLabel.setSize(20, 40);
-		startYearLabel.setLocation(260, 226);
+		startYearLabel.setLocation(260, 216);
 
 		startMonthField = new MTextField();
 		startMonthField.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		startMonthField.setSize(40, 20);
-		startMonthField.setLocation(280, 236);
-<<<<<<< HEAD
+		startMonthField.setLocation(280, 226);
 
 		startMonthLabel = new JLabel("月");
 		startMonthLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		startMonthLabel.setSize(20, 40);
-		startMonthLabel.setLocation(320, 226);
+		startMonthLabel.setLocation(320, 216);
 
 		startDayfField = new MTextField();
 		startDayfField.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		startDayfField.setSize(40, 20);
-		startDayfField.setLocation(340, 236);
+		startDayfField.setLocation(340, 226);
 
 		startDayLabel = new JLabel("日");
 		startDayLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		startDayLabel.setSize(20, 40);
-		startDayLabel.setLocation(380, 226);
+		startDayLabel.setLocation(380, 216);
 
-=======
-
-		startMonthLabel = new JLabel("月");
-		startMonthLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
-		startMonthLabel.setSize(20, 40);
-		startMonthLabel.setLocation(320, 226);
-
-		startDayfField = new MTextField();
-		startDayfField.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
-		startDayfField.setSize(40, 20);
-		startDayfField.setLocation(340, 236);
-
-		startDayLabel = new JLabel("日");
-		startDayLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
-		startDayLabel.setSize(20, 40);
-		startDayLabel.setLocation(380, 226);
-
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 		startDateWarning = new JLabel("输入不合法!");
 		startDateWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		startDateWarning.setForeground(Color.RED);
 		startDateWarning.setSize(120, 40);
-		startDateWarning.setLocation(420, 226);
+		startDateWarning.setLocation(420, 216);
 		startDateWarning.setVisible(false);
 
 		endDateLabel = new JLabel("结束日期:");
 		endDateLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		endDateLabel.setSize(80, 40);
-		endDateLabel.setLocation(100, 276);
+		endDateLabel.setLocation(100, 266);
 
 		endYearField = new MTextField();
 		endYearField.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		endYearField.setSize(80, 20);
-		endYearField.setLocation(180, 286);
+		endYearField.setLocation(180, 276);
 
 		endYearLabel = new JLabel("年");
 		endYearLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		endYearLabel.setSize(20, 40);
-		endYearLabel.setLocation(260, 276);
+		endYearLabel.setLocation(260, 266);
 
 		endMonthField = new MTextField();
 		endMonthField.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		endMonthField.setSize(40, 20);
-		endMonthField.setLocation(280, 286);
+		endMonthField.setLocation(280, 276);
 
 		endMonthLabel = new JLabel("月");
 		endMonthLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		endMonthLabel.setSize(20, 40);
-		endMonthLabel.setLocation(320, 276);
+		endMonthLabel.setLocation(320, 266);
 
 		endDayfField = new MTextField();
 		endDayfField.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		endDayfField.setSize(40, 20);
-		endDayfField.setLocation(340, 286);
+		endDayfField.setLocation(340, 276);
 
 		endDayLabel = new JLabel("日");
 		endDayLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		endDayLabel.setSize(20, 40);
-		endDayLabel.setLocation(380, 276);
+		endDayLabel.setLocation(380, 266);
 
 		endDateWarning = new JLabel("输入不合法!");
 		endDateWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
 		endDateWarning.setForeground(Color.RED);
 		endDateWarning.setSize(120, 40);
-		endDateWarning.setLocation(420, 276);
+		endDateWarning.setLocation(420, 266);
 		endDateWarning.setVisible(false);
+
+		leastLabel = new JLabel("最低促销积分:");
+		leastLabel.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		leastLabel.setSize(120, 40);
+		leastLabel.setLocation(100, 316);
+
+		leastLabelField = new MTextField();
+		leastLabelField.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		leastLabelField.setSize(80, 20);
+		leastLabelField.setLocation(220, 326);
+
+		leastIntegralWarning = new JLabel("输入不合法!");
+		leastIntegralWarning.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
+		leastIntegralWarning.setForeground(Color.RED);
+		leastIntegralWarning.setSize(120, 40);
+		leastIntegralWarning.setLocation(460, 316);
+		leastIntegralWarning.setVisible(false);
 
 		addButton = new MButton("添加");
 		addButton.setFont(new Font("楷体_gb2312", Font.PLAIN, 18));
@@ -432,6 +410,9 @@ public class GenManagerPanel extends MPanel implements MouseListener,
 		setPromotionPanel.add(endDateWarning);
 		setPromotionPanel.add(promotionNameWarning);
 		setPromotionPanel.add(equiPanel);
+		setPromotionPanel.add(leastIntegralWarning);
+		setPromotionPanel.add(leastLabel);
+		setPromotionPanel.add(leastLabelField);
 	}
 
 	@Override
@@ -513,7 +494,12 @@ public class GenManagerPanel extends MPanel implements MouseListener,
 			} else {
 				startDateWarning.setVisible(false);
 			}
-
+			if (!leastLabelField.getText().matches("[\\d]+")) {
+				leastIntegralWarning.setVisible(true);
+				valid = false;
+			} else {
+				leastIntegralWarning.setVisible(false);
+			}
 			validate();
 			if (!valid) {
 				return;
@@ -524,6 +510,7 @@ public class GenManagerPanel extends MPanel implements MouseListener,
 				equivalentDenomination = Double.parseDouble(equiValueField
 						.getText());
 				bondUseLimit = Double.parseDouble(useConditionField.getText());
+				leastIntegral = Integer.parseInt(leastLabelField.getText());
 				ResultMessage resultMessage = Agent.promotionService
 						.addPromotion(new PromotionPO(promotionID,
 								leastIntegral, name, startDate, endDate,

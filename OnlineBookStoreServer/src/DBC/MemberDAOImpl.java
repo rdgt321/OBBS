@@ -9,6 +9,7 @@ import java.util.Calendar;
 
 import Member.MemberPO;
 import RMI.ResultMessage;
+import Server.Encrypt;
 
 public class MemberDAOImpl implements MemberDAO {
 

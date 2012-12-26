@@ -3,8 +3,6 @@ package Member;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import RMI.bookCollect;
-
 /*safe discipline*/
 public class SafeCheck {
 

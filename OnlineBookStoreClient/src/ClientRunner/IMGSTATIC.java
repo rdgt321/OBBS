@@ -17,5 +17,6 @@ public class IMGSTATIC {
 		navigatorBG = Toolkit.getDefaultToolkit().getImage(
 				"materials/nvgtbg.png");
 		loginBG = Toolkit.getDefaultToolkit().getImage("materials/login.png");
+
 	}
 }

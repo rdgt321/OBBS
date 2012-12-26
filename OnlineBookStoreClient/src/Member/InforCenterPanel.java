@@ -6,7 +6,6 @@ import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,17 +17,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import ClientRunner.Agent;
-import ClientRunner.ImageDialog;
-<<<<<<< HEAD
+import ClientRunner.Encrypt;
 import ClientRunner.IMGSTATIC;
-=======
-import ClientRunner.Loader;
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
+import ClientRunner.ImageDialog;
 import ClientRunner.MButton;
 import ClientRunner.MPanel;
 import ClientRunner.MPasswordField;
@@ -59,7 +54,7 @@ public class InforCenterPanel extends MPanel implements MouseListener,
 	ArrayList<OrderPO> list;
 
 	// passwordView
-	private JLabel prePassword, newPassword;
+	private JLabel prePassword, newPassword, notMatch, passFormat;
 	private MPasswordField prePasswordField, newPasswordField;
 	private MButton ensureButton, returnButton;
 
@@ -84,19 +79,11 @@ public class InforCenterPanel extends MPanel implements MouseListener,
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-<<<<<<< HEAD
 		if (IMGSTATIC.otherBG != null) {
 			Composite composite = g2d.getComposite();
 			g2d.setComposite(AlphaComposite.getInstance(
 					AlphaComposite.SRC_OVER, 0.8f));
 			g2d.drawImage(IMGSTATIC.otherBG, 0, 0, 800, 530, this);
-=======
-		if (Loader.otherBG != null) {
-			Composite composite = g2d.getComposite();
-			g2d.setComposite(AlphaComposite.getInstance(
-					AlphaComposite.SRC_OVER, 0.8f));
-			g2d.drawImage(Loader.otherBG, 0, 0, 800, 530, this);
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 			g2d.setComposite(composite);
 		}
 		g2d.dispose();
@@ -338,7 +325,36 @@ public class InforCenterPanel extends MPanel implements MouseListener,
 				contentPane.requestFocus();
 				repaint();
 			} else {
-				ImageDialog.showNOImage(this, resultMessage.getPostScript());
+				MPanel panel = new MPanel();
+				panel.setLayout(null);
+				panel.setSize(600, 430);
+				JLabel temp = new JLabel("对不起,您当前没有任何订单!");
+				JPanel nothing = new JPanel() {
+					public void paintComponent(Graphics g) {
+						super.paintComponent(g);
+						if (IMGSTATIC.boring != null) {
+							g.drawImage(IMGSTATIC.boring, 0, 0, getWidth(),
+									getHeight(), this);
+						}
+					}
+				};
+				nothing.setLayout(null);
+				nothing.setSize(80, 80);
+				nothing.setLocation(235, 150);
+				nothing.setOpaque(false);
+
+				temp.setSize(400, 30);
+				temp.setFont(new Font("楷体_gb2312", Font.PLAIN, 20));
+				temp.setForeground(Color.red);
+				temp.setLocation(150, 70);
+
+				panel.add(temp);
+				panel.add(nothing);
+				contentPane.removeAll();
+				contentPane.add(panel);
+				contentPane.validate();
+				contentPane.requestFocus();
+				repaint();
 			}
 		} catch (RemoteException re) {
 			re.printStackTrace();
@@ -364,10 +380,24 @@ public class InforCenterPanel extends MPanel implements MouseListener,
 		prePasswordField.setLocation(180, 80);
 		prePasswordField.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
 
+		notMatch = new JLabel("密码不正确!");
+		notMatch.setSize(120, 40);
+		notMatch.setLocation(350, 80);
+		notMatch.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
+		notMatch.setForeground(Color.RED);
+		notMatch.setVisible(false);
+
 		newPasswordField = new MPasswordField(20);
 		newPasswordField.setSize(150, 40);
 		newPasswordField.setLocation(180, 130);
 		newPasswordField.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
+
+		passFormat = new JLabel("新密码不合法!");
+		passFormat.setSize(160, 40);
+		passFormat.setLocation(350, 130);
+		passFormat.setFont(new Font("楷体_gb2312", Font.BOLD, 20));
+		passFormat.setForeground(Color.RED);
+		passFormat.setVisible(false);
 
 		ensureButton = new MButton("确认修改");
 		ensureButton.setSize(130, 40);
@@ -382,6 +412,8 @@ public class InforCenterPanel extends MPanel implements MouseListener,
 		ensureButton.addActionListener(this);
 		returnButton.addActionListener(this);
 
+		panel.add(notMatch);
+		panel.add(passFormat);
 		panel.add(prePassword);
 		panel.add(newPassword);
 		panel.add(prePasswordField);
@@ -432,13 +464,8 @@ public class InforCenterPanel extends MPanel implements MouseListener,
 			JPanel nothing = new JPanel() {
 				public void paintComponent(Graphics g) {
 					super.paintComponent(g);
-<<<<<<< HEAD
 					if (IMGSTATIC.boring != null) {
 						g.drawImage(IMGSTATIC.boring, 0, 0, getWidth(),
-=======
-					if (Loader.boring != null) {
-						g.drawImage(Loader.boring, 0, 0, getWidth(),
->>>>>>> b6f5894d301826f968c00258bd419a29af4e5eca
 								getHeight(), this);
 					}
 				}
@@ -518,7 +545,36 @@ public class InforCenterPanel extends MPanel implements MouseListener,
 				re.printStackTrace();
 			}
 		} else if (e.getSource() == ensureButton) {
-
+			String prePass = new String(prePasswordField.getPassword());
+			if (Encrypt.md5(prePass).compareTo(Agent.userAgent.getPassword()) == 0) {
+				ResultMessage resultMessage = null;
+				if (SafeCheck.isLegalPassword(newPasswordField.getPassword())) {
+					try {
+						resultMessage = Agent.memberService
+								.modifyMember(new MemberPO(memberPO.getID(),
+										memberPO.getName(),
+										new String(newPasswordField
+												.getPassword()), memberPO
+												.getPhone(), memberPO
+												.getBirth(), memberPO
+												.getIntegral()));
+					} catch (RemoteException e1) {
+						e1.printStackTrace();
+					}
+					if (resultMessage.isInvokeSuccess()) {
+						ImageDialog.showYesImage(this, "修改成功");
+					} else {
+						ImageDialog.showNOImage(this,
+								resultMessage.getPostScript());
+					}
+					passFormat.setVisible(false);
+				} else {
+					passFormat.setVisible(true);
+				}
+				notMatch.setVisible(false);
+			} else {
+				notMatch.setVisible(true);
+			}
 		}
 	}
 

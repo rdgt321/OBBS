@@ -7,7 +7,7 @@ import java.util.Observer;
 import RMI.UserAgent;
 
 public class UserPool {
-	private static ArrayList<UserAgent> userAgents = new ArrayList<UserAgent>();
+	private static RBT userAgents = new RBT();
 	private static ArrayList<Observer> observers = new ArrayList<Observer>();
 
 	private static void update() {
@@ -20,23 +20,17 @@ public class UserPool {
 		observers.add(observer);
 	}
 
-	public synchronized static ArrayList<UserAgent> getAgents() {
+	public synchronized static RBT getAgents() {
 		return userAgents;
 	}
 
 	public synchronized static boolean isOnline(UserAgent userAgent) {
-		for (UserAgent agent : userAgents) {
-			if (agent.getId() == userAgent.getId()
-					&& agent.getName().equals(userAgent.getName())
-					&& agent.getUserType() == userAgent.getUserType()) {
-				return true;
-			}
-		}
-		return false;
+		UserAgent result = userAgents.search(userAgent).userAgent;
+		return result != null;
 	}
 
 	public synchronized static void connect(UserAgent userAgent) {
-		userAgents.add(userAgent);
+		userAgents.insert(userAgent);
 		update();
 		Routines.getInstance().log(
 				userAgent.toString() + " -connect" + " at "
@@ -44,14 +38,7 @@ public class UserPool {
 	}
 
 	public synchronized static void disconnect(UserAgent userAgent) {
-		for (UserAgent agent : userAgents) {
-			if (agent.getId() == userAgent.getId()
-					&& agent.getName().equals(userAgent.getName())
-					&& agent.getUserType() == userAgent.getUserType()) {
-				userAgents.remove(agent);
-				break;
-			}
-		}
+		userAgents.delete(userAgent);
 		update();
 		Routines.getInstance().log(
 				userAgent.toString() + " -disconnect" + " at "
@@ -59,15 +46,12 @@ public class UserPool {
 	}
 
 	public synchronized static void onlineValidate(UserAgent userAgent) {
-		for (UserAgent agent : userAgents) {
-			if (agent.getId() == userAgent.getId()
-					&& agent.getName().equals(userAgent.getName())
-					&& agent.getUserType() == userAgent.getUserType()) {
-				agent.ip = userAgent.ip;
-				agent.lastRequest = System.currentTimeMillis();
-				break;
-			}
+		UserAgent agent = userAgents.search(userAgent).userAgent;
+		if (agent == null) {
+			return;
 		}
+		agent.ip = userAgent.ip;
+		agent.lastRequest = System.currentTimeMillis();
 		update();
 		Routines.getInstance().log(
 				userAgent.toString() + " -keep alive" + " at "
